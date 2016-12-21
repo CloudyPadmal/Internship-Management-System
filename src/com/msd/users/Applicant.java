@@ -1,15 +1,13 @@
 package com.msd.users;
 
-import java.util.ArrayList;
+import com.msd.pool.Preferences;
 
 public class Applicant extends User {
 	
 	private String indexNumber;
-	private ArrayList<String> preferences;
+	private Preferences preferences;
 	
-	public Applicant() {
-		preferences = new ArrayList<>();
-	}
+	public Applicant() {/**/}
 	
 	public String getIndexNumber() {
 		return indexNumber;
@@ -17,10 +15,10 @@ public class Applicant extends User {
 	public void setIndexNumber(String indexNumber) {
 		this.indexNumber = indexNumber;
 	}
-	public ArrayList<String> getPreferences() {
+	public Preferences getPreferences() {
 		return preferences;
 	}
-	public void setPreferences(ArrayList<String> preferences) {
+	public void setPreferences(Preferences preferences) {
 		this.preferences = preferences;
 	}
 }
