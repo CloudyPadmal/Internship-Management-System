@@ -15,6 +15,7 @@ public class Preferences {
 	private boolean semiConductors;
 	private boolean circuitDesign;
 	private boolean antennas;
+	private boolean processorDesign;
 
 	public boolean isArduino() {
 		return arduino;
@@ -118,5 +119,13 @@ public class Preferences {
 
 	public void setAntennas(boolean antennas) {
 		this.antennas = antennas;
+	}
+
+	public boolean isProcessorDesign() {
+		return processorDesign;
+	}
+
+	public void setProcessorDesign(boolean processorDesign) {
+		this.processorDesign = processorDesign;
 	}
 }
