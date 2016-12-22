@@ -8,13 +8,6 @@
 	</head>
 
 	<body class="homebody">
-		<div class="homepage" align="center">
-			<a href=user_login>
-				<button class="bigbutton positivebtn">User Login</button>
-			</a><br />
-			<a href="company_login">
-				<button class="bigbutton positivebtn">Company Login</button>
-			</a><br />
-		</div>
+		<h1>Hello!!!</h1>
 	</body>
 </html>

@@ -1,4 +1,4 @@
-.button {
+.bigbutton {
 	background-color: #4CAF50; /* Green */
 	border: none;
 	color: white;
@@ -14,24 +14,13 @@
 	cursor: pointer;
 }
 
-.userbtn {
+.positivebtn {
 	background-color: white;
 	color: black;
 	border: 2px solid #4CAF50;
 }
 
-.userbtn:hover {
-	background-color: #000000;
-	color: white;
-}
-
-.companybtn {
-	background-color: white;
-	color: black;
-	border: 2px solid #4CAF50;
-}
-
-.companybtn:hover {
+.positivebtn:hover {
 	background-color: #000000;
 	color: white;
 }

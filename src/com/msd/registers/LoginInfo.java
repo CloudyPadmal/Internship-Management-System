@@ -11,12 +11,7 @@ public final class LoginInfo {
 		// Default Constructor
 	}
 
-	public LoginInfo(String username, String password) {
-		setUsername(username);
-		this.password = getencodedPassword(password);
-	}
-
-	private String getencodedPassword(String password) {
+	public String getencodedPassword() {
 		// Creates a base 64 encoded password
 		return Base64.encode(password.getBytes());
 	}
@@ -36,6 +31,14 @@ public final class LoginInfo {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+	
+	public String getPassword() {
+		return password;
+	}
+	
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public void writeCredentialsToDB(LoginInfo info) {

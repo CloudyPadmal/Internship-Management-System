@@ -5,11 +5,11 @@
 </head>
 <body>
 
-<h2>User Login</h2>
-<form:form method="POST" action="company/log_user">
+<h2>Admin Login</h2>
+<form:form method="POST" action="log_user">
    <table>
     <tr>
-        <td><form:label path="username">Company</form:label></td>
+        <td><form:label path="username">Admin</form:label></td>
         <td><form:input path="username" /></td>
     </tr>
     <tr>
