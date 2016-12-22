@@ -7,17 +7,19 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class SystemController {
-
-	@RequestMapping("/hello")
-	public ModelAndView helloWorld() {
-		String message = "Hello World!!!";
-		return new ModelAndView("hello", "message", message);
-	}
 	
-	@RequestMapping("index")
+	@RequestMapping("/index")
 	public String loadIndex(ModelMap map) {
 		return "index";
 	}
 	
+	@RequestMapping("/user_login")
+    public ModelAndView loadUserLogin(){
+        return new ModelAndView("logins/user_login");
+    }
 	
+	@RequestMapping("/company_login")
+    public ModelAndView loadCompanyLogin(){
+        return new ModelAndView("logins/company_login");
+    }	
 }

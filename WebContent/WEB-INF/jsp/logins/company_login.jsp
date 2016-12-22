@@ -1,9 +1,9 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <html>
 <head>
-<title>Hello World</title>
+<title>MSD Project</title>
 </head>
 <body>
-	<h2>${message}</h2>
+	<h2>This is company login</h2>
 </body>
 </html>
