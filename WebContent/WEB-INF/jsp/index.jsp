@@ -1,5 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ include file="/WEB-INF/jsp/head.jsp" %>
 
 <html>
 	<head>

@@ -14,7 +14,14 @@ public class AdminController {
 	
 	@RequestMapping("/")
 	public ModelAndView loginAdmin() {
-		return new ModelAndView("logins/admin_login", "command", new LoginInfo());
+		ModelAndView loginModel = new ModelAndView();
+		loginModel.setViewName("logins/login");
+		loginModel.addObject("command", new LoginInfo());
+		loginModel.addObject("action_url", new String("log_user"));
+		loginModel.addObject("principal", "Admin");
+		loginModel.addObject("type", true);
+		loginModel.addObject("admin", true);
+		return loginModel;
 	}
 	
 	@RequestMapping(value = "/log_user", method = RequestMethod.POST)
