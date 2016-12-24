@@ -16,6 +16,11 @@ public class Preferences {
 	private boolean circuitDesign;
 	private boolean antennas;
 	private boolean processorDesign;
+	private boolean networking;
+	private boolean internetOfThings;
+	private boolean artificialIntelligence;
+	private boolean signalProcessing;
+		
 
 	public boolean isArduino() {
 		return arduino;
@@ -127,5 +132,37 @@ public class Preferences {
 
 	public void setProcessorDesign(boolean processorDesign) {
 		this.processorDesign = processorDesign;
+	}
+
+	public boolean isNetworking() {
+		return networking;
+	}
+
+	public void setNetworking(boolean networking) {
+		this.networking = networking;
+	}
+
+	public boolean isInternetOfThings() {
+		return internetOfThings;
+	}
+
+	public void setInternetOfThings(boolean internetOfThings) {
+		this.internetOfThings = internetOfThings;
+	}
+
+	public boolean isArtificialIntelligence() {
+		return artificialIntelligence;
+	}
+
+	public void setArtificialIntelligence(boolean artificialIntelligence) {
+		this.artificialIntelligence = artificialIntelligence;
+	}
+
+	public boolean isSignalProcessing() {
+		return signalProcessing;
+	}
+
+	public void setSignalProcessing(boolean signalProcessing) {
+		this.signalProcessing = signalProcessing;
 	}
 }
