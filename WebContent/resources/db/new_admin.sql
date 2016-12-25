@@ -1,0 +1,1 @@
+INSERT INTO admin_table (username, password, user_type) VALUES ('root', 'cm9vdA==', true);
