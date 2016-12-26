@@ -8,8 +8,11 @@ public final class LoginInfo {
 	private String password;
 	private boolean company;
 
-	public LoginInfo() {
-		// Default Constructor
+	public LoginInfo() {/**/}
+	
+	public LoginInfo(String username, String password) {
+		this.username = username;
+		this.password = password;
 	}
 
 	public String getencodedPassword() {

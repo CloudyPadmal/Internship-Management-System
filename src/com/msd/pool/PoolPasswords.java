@@ -28,8 +28,22 @@ public class PoolPasswords implements PasswordDAO {
 	}
 
 	@Override
-	public LoginInfo fetchPassword(String username) {
+	public LoginInfo fetchUser(String username) {
 		String sql = "SELECT * FROM " + PasswordDAO.TABLE + " WHERE username = ?";
+		try {
+			LoginInfo info = dbHandler.queryForObject(sql, new Object[] { username },
+					new BeanPropertyRowMapper<LoginInfo>(LoginInfo.class));
+			return info;
+		} catch (org.springframework.dao.EmptyResultDataAccessException e) {
+			return null;
+		} catch (org.springframework.dao.IncorrectResultSizeDataAccessException n) {
+			return null;
+		}
+	}
+	
+	@Override
+	public LoginInfo fetchAdmin(String username) {
+		String sql = "SELECT * FROM " + PasswordDAO.ADMIN + " WHERE username = ?";
 		try {
 			LoginInfo info = dbHandler.queryForObject(sql, new Object[] { username },
 					new BeanPropertyRowMapper<LoginInfo>(LoginInfo.class));
@@ -68,7 +82,7 @@ public class PoolPasswords implements PasswordDAO {
 	// Checks if the typed password and username match with the one in the table
 	public boolean matchThisAndThat(LoginInfo typedData) {
 		// Fetch data in the password table
-		LoginInfo originalData = fetchPassword(typedData.getUsername());
+		LoginInfo originalData = fetchUser(typedData.getUsername());
 		// If there are no matching password or no account, data will be passed
 		// null
 		if (originalData == null) {
@@ -81,10 +95,25 @@ public class PoolPasswords implements PasswordDAO {
 		return decodedPW.equals(typedPW) && (originalData.isCompany() == typedData.isCompany());
 	}
 
+	// Validate admin passwords
+	public boolean matchThisAndAdmin(LoginInfo typedData) {
+		// Fetch data from the admin password table
+		LoginInfo originalData = fetchAdmin(typedData.getUsername());
+		// If there are no matching password or no account, data will be passed
+		// null
+		if (originalData == null) {
+			return false;
+		}
+		// Decode both passwords
+		String adminPW = originalData.decodePassword(originalData.getPassword());
+		String typedPW = typedData.getPassword();
+		// Check if the passwords are correct as well as the user types
+		return adminPW.equals(typedPW);
+	}
+
 	@Override
 	public List<LoginInfo> listTypeOfPWs(boolean type) {
-		List<LoginInfo> list = dbHandler.query(
-				"SELECT * FROM " + PasswordDAO.TABLE + " WHERE user_type = " + type,
+		List<LoginInfo> list = dbHandler.query("SELECT * FROM " + PasswordDAO.TABLE + " WHERE user_type = " + type,
 				new RowMapper<LoginInfo>() {
 					public LoginInfo mapRow(ResultSet rs, int row) throws SQLException {
 						LoginInfo info = new LoginInfo();

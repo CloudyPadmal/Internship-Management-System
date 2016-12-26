@@ -24,23 +24,23 @@ public class UserController {
 
 	// This view will display the correctness of the user credentials
 	@RequestMapping(value = "/log", method = RequestMethod.POST, params = "login")
-	public String logUserIn(LoginInfo info, ModelMap model, RedirectAttributes redirects) {
+	public String logUserIn(@ModelAttribute("command") LoginInfo info, ModelMap model, RedirectAttributes redirects) {
 		if (poolPW.matchThisAndThat(info)) {
 			model.addAttribute("response", "Successful!");
 			model.addAttribute("username", info.getUsername());
 			model.addAttribute("password", info.getencodedPassword());
 		} else {
-			redirects.addFlashAttribute("error","Username or Password is wrong!");
+			redirects.addFlashAttribute("error", "Username or Password is wrong!");
 			return "redirect:/user_login";
 		}
 		return "result";
 	}
-	
+
 	// This view will direct to the register view
 	@RequestMapping(value = "/log", method = RequestMethod.POST, params = "register")
 	public String register(LoginInfo info, ModelMap model, RedirectAttributes redirects) {
 		poolPW.addPassword(info);
-		return "redirect:user_list";
+		return "redirect:/reg/user/";
 	}
 
 	// This will display all the users and their passwords <REMOVE>

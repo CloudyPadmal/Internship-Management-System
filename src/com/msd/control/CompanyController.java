@@ -25,7 +25,6 @@ public class CompanyController {
 	// This view will display the correctness of the user credentials
 	@RequestMapping(value = "/log", method = RequestMethod.POST, params = "login")
 	public String logUserIn(LoginInfo info, ModelMap model, RedirectAttributes redirects) {
-		System.out.println(info.isCompany());
 		if (poolPW.matchThisAndThat(info)) {
 			model.addAttribute("response", "Successful!");
 			model.addAttribute("username", info.getUsername());

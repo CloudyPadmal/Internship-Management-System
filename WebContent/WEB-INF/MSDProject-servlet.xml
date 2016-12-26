@@ -13,7 +13,8 @@
 
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" />
 		<property name="prefix" value="/WEB-INF/jsp/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
@@ -23,7 +24,7 @@
 	<bean id="connector"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://localhost:3306/testdbMSD" />
+		<property name="url" value="jdbc:mysql://localhost:3306/testdbMSD?useSSL=false" />
 		<property name="username" value="root" />
 		<property name="password" value="root" />
 	</bean>
@@ -34,6 +35,22 @@
 
 	<bean id="poolPW" class="com.msd.pool.PoolPasswords">
 		<property name="dbHandler" ref="dbTemplate" />
+	</bean>
+
+	<bean id="poolApplicants" class="com.msd.pool.PoolApplicants">
+		<property name="dbHandler" ref="dbTemplate" />
+	</bean>
+	
+	<bean id="poolCompanies" class="com.msd.pool.PoolCompanies">
+		<property name="dbHandler" ref="dbTemplate" />
+	</bean>
+
+	<bean id="userValidator" class="com.msd.pool.validators.PoolUserValidator" />
+	<bean id="companyValidator" class="com.msd.pool.validators.PoolCompanyValidator" />
+
+	<bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename" value="/WEB-INF/messages/messages" />
 	</bean>
 
 	<mvc:resources mapping="/resources/**" location="/resources/" />

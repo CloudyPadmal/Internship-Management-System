@@ -1,3 +1,20 @@
+a.button {
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+    padding: 10px 10px;
+    text-decoration: none;
+    color: initial;
+}
+
+input {
+    padding: 10px 10px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    background-color: white;
+    color: #3CBC8D;
+}
+
 .bigbutton {
 	background-color: #4CAF50; /* Green */
 	border: none;

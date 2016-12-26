@@ -7,8 +7,7 @@
 <body>
 
 	<h2>${principal}Login</h2>
-	<form:form method="POST" action="${action_url}">
-		<form:hidden path="company" value="${type}" />
+	<form:form method="POST" modelAttribute="command" action="${action_url}">
 		<table>
 			<tr>
 				<td><form:label path="username">${principal}</form:label></td>
@@ -16,7 +15,7 @@
 			</tr>
 			<tr>
 				<td><form:label path="password">Password</form:label></td>
-				<td><form:input path="password" /></td>
+				<td><form:input path="password" type="password" /></td>
 			</tr>
 			<tr>
 				<td colspan="2"><input type="submit" name="login" value="Login" /></td>

@@ -27,11 +27,12 @@ public class EntryController {
 	@RequestMapping(value = "/user_login", method = RequestMethod.GET)
 	public ModelAndView loadUserLogin(HttpServletRequest request) {
 		ModelAndView loginModel = new ModelAndView();
+		LoginInfo info = new LoginInfo();
+		info.setCompany(false);
 		loginModel.setViewName("logins/login");
-		loginModel.addObject("command", new LoginInfo());
-		loginModel.addObject("action_url", new String("user/log"));
+		loginModel.addObject("command", info);
+		loginModel.addObject("action_url", "user/log");
 		loginModel.addObject("principal", "User");
-		loginModel.addObject("type", false);
 		loginModel.addObject("admin", false);
 		return loginModel;
 	}
@@ -40,11 +41,12 @@ public class EntryController {
 	@RequestMapping("/company_login")
 	public ModelAndView loadCompanyLogin() {
 		ModelAndView loginModel = new ModelAndView();
+		LoginInfo info = new LoginInfo();
+		info.setCompany(true);
 		loginModel.setViewName("logins/login");
-		loginModel.addObject("command", new LoginInfo());
-		loginModel.addObject("action_url", new String("company/log"));
+		loginModel.addObject("command", info);
+		loginModel.addObject("action_url", "company/log");
 		loginModel.addObject("principal", "Company");
-		loginModel.addObject("type", true);
 		loginModel.addObject("admin", false);
 		return loginModel;
 	}

@@ -1,5 +1,45 @@
-package com.msd.pool;
+package com.msd.pool.validators;
 
-public class PoolHandler {
+import org.springframework.stereotype.Component;
+import org.springframework.validation.Errors;
+import org.springframework.validation.ValidationUtils;
+import org.springframework.validation.Validator;
 
+import com.msd.users.Applicant;
+
+@Component
+public class PoolUserValidator implements Validator {
+
+	@Override
+	public boolean supports(Class<?> c) {
+		// Validate if the classes are the same
+		return Applicant.class.equals(c);
+	}
+
+	@Override
+	public void validate(Object subject, Errors errors) {
+		// Cast subject into an Applicant
+		Applicant user = (Applicant) subject;
+
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "NotEmpty.userForm.name");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "surname", "NotEmpty.userForm.surname");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "emailAddress", "NotEmpty.userForm.emailAddress");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "indexNumber", "NotEmpty.userForm.indexNumber");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "telephone", "NotEmpty.userForm.telephone");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "gradedPoint", "NotEmpty.userForm.gradedPoint");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "gender", "NotEmpty.userForm.gender");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "aboutMe", "NotEmpty.userForm.aboutMe");
+
+		if (user.getTelephone() == null || user.getTelephone().length() <= 0) {
+			errors.rejectValue("telephone", "Valid.userForm.telephone");
+		}
+
+		if (user.getPreferences() == null || user.getPreferences().size() < 3) {
+			errors.rejectValue("preferences", "Valid.userForm.preferences");
+		}
+		
+		if (user.getIndexNumber().length() != 7) {
+			errors.rejectValue("indexNumber", "Valid.userForm.indexNumber");
+		}
+	}
 }

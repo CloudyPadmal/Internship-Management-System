@@ -2,11 +2,22 @@ package com.msd.users;
 
 public class User {
 
-	private String name;
 	private int id;
-	
+	private String name;
+	private String gender;
+	private String password;
+	private String confirmPassword;
+
 	// Default constructor
 	public User() {/**/}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public String getName() {
 		return name;
@@ -16,11 +27,27 @@ public class User {
 		this.name = name;
 	}
 
-	public int getId() {
-		return id;
+	public String getGender() {
+		return gender;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}	
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
+	}
 }
