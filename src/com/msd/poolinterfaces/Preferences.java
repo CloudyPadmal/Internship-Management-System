@@ -1,4 +1,4 @@
-package com.msd.pool;
+package com.msd.poolinterfaces;
 
 public interface Preferences {
 

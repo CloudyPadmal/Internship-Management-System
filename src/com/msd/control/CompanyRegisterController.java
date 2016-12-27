@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.msd.pool.PoolApplicants;
 import com.msd.pool.PoolCompanies;
 import com.msd.pool.PoolPasswords;
-import com.msd.pool.Preferences;
 import com.msd.pool.validators.PoolCompanyValidator;
 import com.msd.pool.validators.PoolUserValidator;
+import com.msd.poolinterfaces.Preferences;
 
 @Controller
 @RequestMapping("reg/company")

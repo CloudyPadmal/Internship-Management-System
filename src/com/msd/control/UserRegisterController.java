@@ -18,8 +18,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.msd.pool.PoolApplicants;
 import com.msd.pool.PoolPasswords;
-import com.msd.pool.Preferences;
 import com.msd.pool.validators.PoolUserValidator;
+import com.msd.poolinterfaces.Preferences;
 import com.msd.registers.LoginInfo;
 import com.msd.users.Applicant;
 

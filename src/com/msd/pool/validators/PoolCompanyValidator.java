@@ -23,26 +23,25 @@ public class PoolCompanyValidator implements Validator {
 		Company company = (Company) subject;
 		/*
 
-		ValidationUtils.rejectIfEmptyOrWhitespace(err, "name", "Name cannot be blank!");
-		ValidationUtils.rejectIfEmptyOrWhitespace(err, "email", "Email address empty!");
-		ValidationUtils.rejectIfEmptyOrWhitespace(err, "indexNumber", "Index number empty empty!");
-		ValidationUtils.rejectIfEmptyOrWhitespace(err, "telephone", "Telephone number empty!");
-		ValidationUtils.rejectIfEmptyOrWhitespace(err, "gradedPoint", "GPA empty!");
-		ValidationUtils.rejectIfEmptyOrWhitespace(err, "address", "NotEmpty.userForm.address");
-		ValidationUtils.rejectIfEmptyOrWhitespace(err, "password", "Password empty!");
-		ValidationUtils.rejectIfEmptyOrWhitespace(err, "confirmPassword", "Password empty!");
-		ValidationUtils.rejectIfEmptyOrWhitespace(err, "gender", "Seriously?");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "NotEmpty.userForm.name");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "surname", "NotEmpty.userForm.surname");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "emailAddress", "NotEmpty.userForm.emailAddress");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "indexNumber", "NotEmpty.userForm.indexNumber");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "telephone", "NotEmpty.userForm.telephone");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "gradedPoint", "NotEmpty.userForm.gradedPoint");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "gender", "NotEmpty.userForm.gender");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "aboutMe", "NotEmpty.userForm.aboutMe");
 
 		if (user.getTelephone() == null || user.getTelephone().length() <= 0) {
-			err.rejectValue("telephone", "Invalid telephone number!");
-		}
-
-		if (!user.getPassword().equals(user.getConfirmPassword())) {
-			err.rejectValue("confirmPassword", "Different passwords!");
+			errors.rejectValue("telephone", "Valid.userForm.telephone");
 		}
 
 		if (user.getPreferences() == null || user.getPreferences().size() < 3) {
-			err.rejectValue("preferences", "Check this again!");
+			errors.rejectValue("preferences", "Valid.userForm.preferences");
+		}
+		
+		if (user.getIndexNumber().length() != 7) {
+			errors.rejectValue("indexNumber", "Valid.userForm.indexNumber");
 		}
 		*/
 	}

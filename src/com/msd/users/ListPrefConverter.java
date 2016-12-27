@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.msd.pool.PoolCriteria;
-import com.msd.pool.Preferences;
+import com.msd.poolinterfaces.Preferences;
 
 public class ListPrefConverter implements Preferences {
 

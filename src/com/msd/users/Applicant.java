@@ -3,7 +3,7 @@ package com.msd.users;
 import java.util.List;
 
 import com.msd.pool.PoolCriteria;
-import com.msd.pool.Preferences;
+import com.msd.poolinterfaces.Preferences;
 
 public class Applicant extends User implements Preferences {
 
