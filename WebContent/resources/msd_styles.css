@@ -1,18 +1,24 @@
 a.button {
-    -webkit-appearance: button;
-    -moz-appearance: button;
-    appearance: button;
-    padding: 10px 10px;
-    text-decoration: none;
-    color: initial;
+	-webkit-appearance: button;
+	-moz-appearance: button;
+	appearance: button;
+	padding: 10px 10px;
+	text-decoration: none;
+	color: initial;
+}
+
+h2 {
+	text-align: center;
+	padding: 20px;
 }
 
 input {
-    padding: 10px 10px;
-    margin: 8px 0;
-    box-sizing: border-box;
-    background-color: white;
-    color: #3CBC8D;
+	padding: 10px 10px;
+	margin: 8px 0;
+	box-sizing: border-box;
+	background-color: white;
+	color: #3CBC8D;
+	outline: none;
 }
 
 .bigbutton {
@@ -26,6 +32,22 @@ input {
 	font-size: 16px;
 	width: 350px;
 	margin: 10px;
+	-webkit-transition-duration: 0.4s; /* Safari */
+	transition-duration: 0.4s;
+	cursor: pointer;
+}
+
+.midbutton {
+	background-color: #4CAF50;
+	border: none;
+	color: white;
+	padding: 10px 8px;
+	text-align: center;
+	text-decoration: none;
+	font-size: 13px;
+	width: 100%;
+	display: block;
+	margin: 0px 0px 10px 0px;
 	-webkit-transition-duration: 0.4s; /* Safari */
 	transition-duration: 0.4s;
 	cursor: pointer;
@@ -50,6 +72,49 @@ input {
 	transform: translate(-50%, -50%);
 }
 
+.form-area {
+	margin: 0;
+	position: absolute;
+	top: 50%; left : 50%;
+	padding: 10px 10px 0px 10px;
+	transform: translate(-50%, -50%);
+	width: 20%;
+	border-width: 2px;
+	border-color: black;
+	border-style: solid;
+}
+
 .homebody {
 	background-color: #4CAC81;
+}
+
+.form-area  .input-field {
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	border: 1px solid #C2C2C2;
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	padding: 7px;
+	outline: none;
+}
+
+.form-area  .input-label {
+	width: 100px;
+	float: left;
+	padding-top: 8px;
+	padding-right: 5px;
+	display: block;
+	margin: 5px 5px 15px 5px;
+}
+
+.homepage .input-field:focus {
+	border: 1px solid #000000;
+}
+
+.error {
+	color: red;
+	padding: 5px;
+	text-decoration: blink;
 }
