@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.msd.pool.PoolApplicants;
 import com.msd.pool.PoolPasswords;
 import com.msd.registers.LoginInfo;
+import com.msd.users.Applicant;
 
 @Controller
 @RequestMapping("user")
@@ -21,19 +23,20 @@ public class UserController {
 
 	@Autowired
 	PoolPasswords poolPW;
+	@Autowired
+	PoolApplicants poolApplicants;
 
 	// This view will display the correctness of the user credentials
 	@RequestMapping(value = "/log", method = RequestMethod.POST, params = "login")
 	public String logUserIn(@ModelAttribute("command") LoginInfo info, ModelMap model, RedirectAttributes redirects) {
 		if (poolPW.matchThisAndThat(info)) {
-			model.addAttribute("response", "Successful!");
-			model.addAttribute("username", info.getUsername());
-			model.addAttribute("password", info.getencodedPassword());
+			Applicant user = poolApplicants.fetchApplicant(info.getUsername());
+			model.addAttribute("user", user);
 		} else {
 			redirects.addFlashAttribute("error", "Username or Password is wrong!");
 			return "redirect:/user_login";
 		}
-		return "result";
+		return "displays/show_user";
 	}
 
 	// This view will direct to the register view

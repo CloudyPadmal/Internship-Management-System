@@ -75,7 +75,8 @@ input {
 .form-area {
 	margin: 0;
 	position: absolute;
-	top: 50%; left : 50%;
+	top: 50%;
+	left: 50%;
 	padding: 10px 10px 0px 10px;
 	transform: translate(-50%, -50%);
 	width: 20%;
@@ -117,4 +118,43 @@ input {
 	color: red;
 	padding: 5px;
 	text-decoration: blink;
+}
+
+.section-one {
+	float: left;
+	width: 25%;
+}
+
+.section-two {
+	width: 50%;
+	float: left;
+	margin: 10px;
+}
+
+.display-user {
+	border: 1px solid #2e3436;
+	border-radius: 10px;
+	margin: 10px 10px 0px 10px;
+}
+
+.display-header{
+	width: 300px;
+	margin: 10px 10px 0px 10px;
+	text-align: center;
+	border: 1px solid #2e3436;
+}
+
+.display-user .column-head {
+	padding: 10px;
+	width: 125px;
+}
+
+.display-user .column-body {
+	padding: 10px;
+	width: 125px;
+}
+
+.display-user .column-item {
+	padding: 5px;
+	width: 125px;
 }
