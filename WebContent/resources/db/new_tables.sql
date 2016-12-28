@@ -22,8 +22,14 @@ CREATE TABLE user_table (
 	indexNumber varchar(10) NOT NULL,
 	emailAddress varchar(100) NOT NULL,
 	telephone varchar(20) NOT NULL,
-	gradedPoint DECIMAL NOT NULL,
+	gradedPoint FLOAT(4, 3) NOT NULL,
 	aboutMe varchar(500) NOT NULL,
+	vacancy_A varchar(20),
+	status_A BOOL,
+	vacancy_B varchar(20),
+	status_B BOOL,
+	vacancy_C varchar(20),
+	status_C BOOL,
 	ARDUINO BOOL,
 	FPGA BOOL,
 	ROBOTICS BOOL,
@@ -42,6 +48,7 @@ CREATE TABLE user_table (
 	IOT BOOL,
 	AI BOOL,
 	SIGNALPROCESSING BOOL,
+	UNIQUE (indexNumber),
 	PRIMARY KEY(id)
 );
 

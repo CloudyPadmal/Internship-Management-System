@@ -108,7 +108,7 @@ public class UserRegisterController implements Preferences {
 		// Add details under "userForm"
 		model.addAttribute("userForm", applicant);
 		// Generate preference list
-		generatePrefList(model);
+		model = generatePrefList(model);
 		return "logins/register";
 	}
 

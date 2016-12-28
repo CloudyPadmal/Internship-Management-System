@@ -2,7 +2,6 @@
     <wb-module deploy-name="MSDProject-0.0.1-SNAPSHOT">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/test"/>
         <property name="context-root" value="MSDProject"/>
         <property name="java-output-path" value="/MSDProject/build/classes"/>
     </wb-module>

@@ -1,7 +1,7 @@
 <%@ include file="/WEB-INF/jsp/head.jsp"%>
 <html>
 <head>
-<spring:url value="/resources/msd_styles.css" var="msdCSS" />
+<spring:url value="/resources/css/msd_styles.css" var="msdCSS" />
 <link href="${msdCSS}" rel="stylesheet" />
 </head>
 
