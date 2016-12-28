@@ -66,7 +66,7 @@ CREATE TABLE company_table (
 
 CREATE TABLE positions (
 	id int(5) AUTO_INCREMENT,
-	company varchar(50) NOT NULL,
+	companyID varchar(50) NOT NULL,
 	salary DECIMAL,
 	title varchar(100) NOT NULL,
 	subTitle varchar(100) NOT NULL,
