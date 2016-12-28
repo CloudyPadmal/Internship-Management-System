@@ -13,7 +13,8 @@ public class Vacancy {
 	private String description_1;
 	private String description_2;	
 	
-
+	public Vacancy() {/**/}
+	
 	public Vacancy(int vacancyID, String vacancy, String title, String company, int salary, List<String> preferences,
 			String description_1, String description_2) {
 		super();
@@ -26,8 +27,6 @@ public class Vacancy {
 		this.description_1 = description_1;
 		this.description_2 = description_2;
 	}
-	
-	
 
 	public int getVacancyID() {
 		return vacancyID;
