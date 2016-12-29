@@ -15,6 +15,10 @@ public class Vacancy {
 	private String description_2;
 
 	public Vacancy() {/**/}
+	
+	public Vacancy(String company) {
+		this.company = company;
+	}
 
 	public Vacancy(String title, String company, int salary, List<String> preferences, String description_1,
 			String description_2) {
