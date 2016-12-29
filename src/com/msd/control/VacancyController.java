@@ -1,5 +1,8 @@
 package com.msd.control;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,21 +19,20 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.msd.pool.PoolApplicants;
 import com.msd.pool.PoolVacancies;
 import com.msd.pool.validators.PoolVacancyValidator;
-import com.msd.registers.LoginInfo;
-import com.msd.users.Company;
+import com.msd.poolinterfaces.Preferences;
 import com.msd.users.Vacancy;
 
 @Controller
 @RequestMapping("vacancy")
-public class VacancyController {
-	
+public class VacancyController implements Preferences {
+
 	@Autowired
 	PoolVacancyValidator vacancyValidator;
 	@Autowired
 	PoolApplicants poolApplicants;
 	@Autowired
 	PoolVacancies poolVacancies;
-	
+
 	@InitBinder
 	protected void initBinder(WebDataBinder binder) {
 		binder.setValidator(vacancyValidator);
@@ -40,6 +42,7 @@ public class VacancyController {
 	@RequestMapping(value = "/{company}", method = RequestMethod.GET)
 	public String registerVacancy(Model model, @PathVariable("company") String companyName) {
 		// Pass the Vacancy as "vacancyForm"
+		model = generatePrefList(model);
 		model.addAttribute("vacancyForm", new Vacancy(companyName));
 		// Display the html page
 		return "logins/new_vacancy";
@@ -63,7 +66,7 @@ public class VacancyController {
 	}
 
 	// Display Vacancy details
-	@RequestMapping(value = "/{index}", method = RequestMethod.GET)
+	@RequestMapping(value = "/show/{index}", method = RequestMethod.GET)
 	public String showVacancy(@PathVariable("index") String name, Model model) {
 		// Fetch Vacancy from database
 		Vacancy vacancy = poolVacancies.fetchVacancy(name);
@@ -78,9 +81,10 @@ public class VacancyController {
 
 	// This will be called upon clicking register button
 	@RequestMapping(value = "vacancies", method = RequestMethod.POST)
-	public String addVacancy(@ModelAttribute("vacancyForm") @Validated Vacancy vacancy, BindingResult result, Model model,
-			RedirectAttributes redirectAttributes) {
+	public String addVacancy(@ModelAttribute("vacancyForm") @Validated Vacancy vacancy, BindingResult result,
+			Model model, RedirectAttributes redirectAttributes) {
 		if (result.hasErrors()) {
+			model = generatePrefList(model);
 			return "logins/new_vacancy";
 		} else {
 			// Pass success message to redirect view
@@ -90,5 +94,31 @@ public class VacancyController {
 			// Display Vacancy details
 			return "redirect:/" + vacancy.getId();
 		}
+	}
+
+	// Generate default values for preferences
+	private Model generatePrefList(Model model) {
+		// Create a list of preferences
+		List<String> preferences = new ArrayList<>();
+		preferences.add(ANTENNAS);
+		preferences.add(BIOMECHANICS);
+		preferences.add(BIOMEDICAL);
+		preferences.add(WIFI);
+		preferences.add(ARDUINO);
+		preferences.add(AUTOMATION);
+		preferences.add(AI);
+		preferences.add(CIRCUITS);
+		preferences.add(FPGA);
+		preferences.add(IMAGEPROCESSING);
+		preferences.add(IOT);
+		preferences.add(NETWORKING);
+		preferences.add(PROCESSORDESIGN);
+		preferences.add(PROGRAMMING);
+		preferences.add(SEMICONDUCTORS);
+		preferences.add(SIGNALPROCESSING);
+		preferences.add(TELECOM);
+		// Add them under "preferences"
+		model.addAttribute("preferences", preferences);
+		return model;
 	}
 }

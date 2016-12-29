@@ -44,9 +44,14 @@
 	<bean id="poolCompanies" class="com.msd.pool.PoolCompanies">
 		<property name="dbHandler" ref="dbTemplate" />
 	</bean>
+	
+	<bean id="poolVacancies" class="com.msd.pool.PoolVacancies">
+		<property name="dbHandler" ref="dbTemplate" />
+	</bean>
 
 	<bean id="userValidator" class="com.msd.pool.validators.PoolUserValidator" />
 	<bean id="companyValidator" class="com.msd.pool.validators.PoolCompanyValidator" />
+	<bean id="vacancyValidator" class="com.msd.pool.validators.PoolVacancyValidator" />
 
 	<bean id="messageSource"
 		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
