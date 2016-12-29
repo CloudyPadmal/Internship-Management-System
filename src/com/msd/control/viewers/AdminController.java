@@ -1,7 +1,5 @@
 package com.msd.control.viewers;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +13,7 @@ import com.msd.items.LoginInfo;
 import com.msd.pool.items.PoolApplicants;
 import com.msd.pool.items.PoolCompanies;
 import com.msd.pool.items.PoolPasswords;
+import com.msd.pool.items.PoolVacancies;
 
 @Controller
 @RequestMapping("admin")
@@ -26,6 +25,8 @@ public class AdminController {
 	PoolApplicants poolApplicants;
 	@Autowired
 	PoolCompanies poolCompanies;
+	@Autowired
+	PoolVacancies poolVacancies;
 
 	@RequestMapping("/")
 	public ModelAndView loginAdmin() {
@@ -54,13 +55,20 @@ public class AdminController {
 	public String showAllUsers(Model model) {
 		// Add the user list under "users"
 		model.addAttribute("users", poolApplicants.getAllApplicants());
-		return "displays/list";
+		return "displays/full_user_list";
 	}
 	
 	@RequestMapping("/view_companies")
 	public String showAllCompanies(Model model) {
 		// Add the user list under "users"
 		model.addAttribute("companies", poolCompanies.getAllCompanies());
-		return "displays/list";
+		return "displays/full_company_list";
+	}
+	
+	@RequestMapping("/view_vacancies")
+	public String showAllVacancies(Model model) {
+		// Add the user list under "users"
+		model.addAttribute("vacancies", poolVacancies.getAllVacancies());
+		return "displays/full_vacancy_list";
 	}
 }

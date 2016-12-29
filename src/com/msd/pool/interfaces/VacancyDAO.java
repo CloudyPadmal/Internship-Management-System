@@ -13,10 +13,10 @@ public interface VacancyDAO {
 	public int addVacancy(Vacancy vacancy);
 
 	// Get Vacancy
-	public Vacancy fetchVacancy(String vacancy);
+	public Vacancy fetchVacancy(int vacancyID);
 
 	// Delete Vacancy
-	public int deleteVacancy(String vacancy);
+	public int deleteVacancy(int vacancy);
 
 	// Update Vacancy
 	public void updateVacancy(Vacancy newVacancy);

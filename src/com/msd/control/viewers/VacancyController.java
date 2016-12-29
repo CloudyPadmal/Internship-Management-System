@@ -57,19 +57,19 @@ public class VacancyController implements Preferences {
 	}
 
 	// Delete Vacancy
-	@RequestMapping(value = "/{index}/delete", method = RequestMethod.GET)
-	public String deleteVacancy(@PathVariable("index") String vacancy, final RedirectAttributes redirectAttributes) {
-		poolVacancies.deleteVacancy(vacancy);
+	@RequestMapping(value = "/{vacancyID}/delete", method = RequestMethod.GET)
+	public String deleteVacancy(@PathVariable("vacancyID") int vacancyID, final RedirectAttributes redirectAttributes) {
+		poolVacancies.deleteVacancy(vacancyID);
 		// Pass the successful message to redirect
 		redirectAttributes.addFlashAttribute("msg", "Vacancy deleted!");
 		return "redirect:/";
 	}
 
 	// Display Vacancy details
-	@RequestMapping(value = "/show/{index}", method = RequestMethod.GET)
-	public String showVacancy(@PathVariable("index") String name, Model model) {
+	@RequestMapping(value = "/show/{vacancyID}", method = RequestMethod.GET)
+	public String showVacancy(@PathVariable("vacancyID") int vacancyID, Model model) {
 		// Fetch Vacancy from database
-		Vacancy vacancy = poolVacancies.fetchVacancy(name);
+		Vacancy vacancy = poolVacancies.fetchVacancy(vacancyID);
 		if (vacancy == null) {
 			// If there is no Vacancy, return a failure message
 			model.addAttribute("msg", "Vacancy not found");

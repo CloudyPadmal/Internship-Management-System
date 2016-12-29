@@ -13,6 +13,7 @@ public class Vacancy {
 	private List<String> preferences;
 	private String description_1;
 	private String description_2;
+	private int applicantCount;
 
 	public Vacancy() {/**/}
 	
@@ -20,12 +21,11 @@ public class Vacancy {
 		this.company = company;
 	}
 
-	public Vacancy(String title, String company, int salary, List<String> preferences, String description_1,
+	public Vacancy(String title, String company, int salary, String description_1,
 			String description_2) {
 		this.title = title;
 		this.company = company;
 		this.salary = salary;
-		this.preferences = preferences;
 		this.description_1 = description_1;
 		this.description_2 = description_2;
 	}
@@ -84,6 +84,14 @@ public class Vacancy {
 
 	public void setDescription_2(String description_2) {
 		this.description_2 = description_2;
+	}
+
+	public int getApplicantCount() {
+		return applicantCount;
+	}
+
+	public void setApplicantCount(int applicantCount) {
+		this.applicantCount = applicantCount;
 	}
 
 	public PoolCriteria convertListToPref() {
