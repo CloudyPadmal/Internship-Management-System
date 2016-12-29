@@ -40,7 +40,7 @@ public class CompanyController {
 	@RequestMapping(value = "/log", method = RequestMethod.POST, params = "register")
 	public String register(LoginInfo info, ModelMap model, RedirectAttributes redirects) {
 		poolPW.addPassword(info);
-		return "redirect:company_list";
+		return "redirect:/reg/company/";
 	}
 
 	// This will display the existing company list

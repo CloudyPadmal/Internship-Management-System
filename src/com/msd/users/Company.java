@@ -10,6 +10,21 @@ public class Company extends User {
 	private String aboutUs;
 	private int positions;
 
+	
+	public Company() {/**/}
+	
+	public Company(String loginID, String company, String address, String emailAddress, String telephone,
+			String aboutUs, int positions) {
+		super();
+		this.loginID = loginID;
+		this.company = company;
+		this.address = address;
+		this.emailAddress = emailAddress;
+		this.telephone = telephone;
+		this.aboutUs = aboutUs;
+		this.positions = positions;
+	}
+
 	public String getLoginID() {
 		return loginID;
 	}

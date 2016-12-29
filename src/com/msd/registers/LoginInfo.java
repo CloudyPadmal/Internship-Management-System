@@ -14,6 +14,12 @@ public final class LoginInfo {
 		this.username = username;
 		this.password = password;
 	}
+	
+	public LoginInfo(String username, String password, boolean company) {
+		this.username = username;
+		this.password = password;
+		this.company = company;
+	}
 
 	public String getencodedPassword() {
 		// Creates a base 64 encoded password

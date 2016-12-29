@@ -85,13 +85,13 @@ public class CompanyRegisterController implements Preferences {
 			return "logins/register_company";
 		} else {
 			// Pass success message to redirect view
-			redirectAttributes.addFlashAttribute("msg", "User added successfully!");
+			redirectAttributes.addFlashAttribute("msg", "Company added successfully!");
 			// Add company to the company table
 			poolCompanies.addCompany(company);
 			// Add password of the company to the password table
-			poolPW.addPassword(new LoginInfo(company.getLoginID(), company.getPassword()));
+			poolPW.addPassword(new LoginInfo(company.getLoginID(), company.getPassword(), true));
 			// Display Company details
-			return "redirect:company/" + company.getLoginID();
+			return "redirect:company/" + company.getCompany();
 		}
 	}
 
