@@ -1,9 +1,9 @@
-package com.msd.users;
+package com.msd.items;
 
 import java.util.List;
 
-import com.msd.pool.PoolCriteria;
-import com.msd.poolinterfaces.Preferences;
+import com.msd.pool.interfaces.Preferences;
+import com.msd.pool.items.PoolCriteria;
 
 public class Applicant extends User implements Preferences {
 

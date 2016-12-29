@@ -1,4 +1,4 @@
-package com.msd.control;
+package com.msd.control.registers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.msd.pool.PoolApplicants;
-import com.msd.pool.PoolPasswords;
+import com.msd.items.Applicant;
+import com.msd.items.LoginInfo;
+import com.msd.pool.interfaces.Preferences;
+import com.msd.pool.items.PoolApplicants;
+import com.msd.pool.items.PoolPasswords;
 import com.msd.pool.validators.PoolUserValidator;
-import com.msd.poolinterfaces.Preferences;
-import com.msd.registers.LoginInfo;
-import com.msd.users.Applicant;
 
 @Controller
 @RequestMapping("reg/user")

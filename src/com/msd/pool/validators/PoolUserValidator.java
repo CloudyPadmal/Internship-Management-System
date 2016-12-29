@@ -5,7 +5,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-import com.msd.users.Applicant;
+import com.msd.items.Applicant;
 
 @Component
 public class PoolUserValidator implements Validator {

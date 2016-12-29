@@ -3,8 +3,8 @@ package com.msd.pool.validators;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import com.msd.users.Applicant;
-import com.msd.users.Vacancy;
+import com.msd.items.Applicant;
+import com.msd.items.Vacancy;
 
 public class PoolVacancyValidator implements Validator {
 

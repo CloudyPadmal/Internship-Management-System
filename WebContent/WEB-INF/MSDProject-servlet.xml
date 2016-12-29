@@ -9,7 +9,7 @@
    http://www.springframework.org/schema/context 
    http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-	<context:component-scan base-package="com.msd.control" />
+	<context:component-scan base-package="com.msd.control.*" />
 
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -33,19 +33,19 @@
 		<property name="dataSource" ref="connector" />
 	</bean>
 
-	<bean id="poolPW" class="com.msd.pool.PoolPasswords">
+	<bean id="poolPW" class="com.msd.pool.items.PoolPasswords">
 		<property name="dbHandler" ref="dbTemplate" />
 	</bean>
 
-	<bean id="poolApplicants" class="com.msd.pool.PoolApplicants">
+	<bean id="poolApplicants" class="com.msd.pool.items.PoolApplicants">
 		<property name="dbHandler" ref="dbTemplate" />
 	</bean>
 	
-	<bean id="poolCompanies" class="com.msd.pool.PoolCompanies">
+	<bean id="poolCompanies" class="com.msd.pool.items.PoolCompanies">
 		<property name="dbHandler" ref="dbTemplate" />
 	</bean>
 	
-	<bean id="poolVacancies" class="com.msd.pool.PoolVacancies">
+	<bean id="poolVacancies" class="com.msd.pool.items.PoolVacancies">
 		<property name="dbHandler" ref="dbTemplate" />
 	</bean>
 

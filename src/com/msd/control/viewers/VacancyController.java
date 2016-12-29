@@ -1,4 +1,4 @@
-package com.msd.control;
+package com.msd.control.viewers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.msd.pool.PoolApplicants;
-import com.msd.pool.PoolVacancies;
+import com.msd.items.Vacancy;
+import com.msd.pool.interfaces.Preferences;
+import com.msd.pool.items.PoolApplicants;
+import com.msd.pool.items.PoolVacancies;
 import com.msd.pool.validators.PoolVacancyValidator;
-import com.msd.poolinterfaces.Preferences;
-import com.msd.users.Vacancy;
 
 @Controller
 @RequestMapping("vacancy")

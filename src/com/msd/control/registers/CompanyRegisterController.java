@@ -1,4 +1,4 @@
-package com.msd.control;
+package com.msd.control.registers;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.msd.pool.PoolCompanies;
-import com.msd.pool.PoolPasswords;
+import com.msd.items.Company;
+import com.msd.items.LoginInfo;
+import com.msd.pool.interfaces.Preferences;
+import com.msd.pool.items.PoolCompanies;
+import com.msd.pool.items.PoolPasswords;
 import com.msd.pool.validators.PoolCompanyValidator;
-import com.msd.poolinterfaces.Preferences;
-import com.msd.registers.LoginInfo;
-import com.msd.users.Company;
 
 @Controller
 @RequestMapping("reg/company")

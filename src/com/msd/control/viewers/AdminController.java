@@ -1,4 +1,4 @@
-package com.msd.control;
+package com.msd.control.viewers;
 
 import java.util.List;
 
@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.msd.pool.PoolApplicants;
-import com.msd.pool.PoolCompanies;
-import com.msd.pool.PoolPasswords;
-import com.msd.registers.LoginInfo;
+import com.msd.items.LoginInfo;
+import com.msd.pool.items.PoolApplicants;
+import com.msd.pool.items.PoolCompanies;
+import com.msd.pool.items.PoolPasswords;
 
 @Controller
 @RequestMapping("admin")

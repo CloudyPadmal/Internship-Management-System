@@ -1,4 +1,4 @@
-package com.msd.pool;
+package com.msd.pool.items;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,8 +8,8 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
-import com.msd.poolinterfaces.PasswordDAO;
-import com.msd.registers.LoginInfo;
+import com.msd.items.LoginInfo;
+import com.msd.pool.interfaces.PasswordDAO;
 
 public class PoolPasswords implements PasswordDAO {
 

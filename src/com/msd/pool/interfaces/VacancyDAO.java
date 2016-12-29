@@ -1,9 +1,9 @@
-package com.msd.poolinterfaces;
+package com.msd.pool.interfaces;
 
 import java.util.List;
 
-import com.msd.pool.PoolCriteria;
-import com.msd.users.Vacancy;
+import com.msd.items.Vacancy;
+import com.msd.pool.items.PoolCriteria;
 
 public interface VacancyDAO {
 

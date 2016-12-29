@@ -1,4 +1,4 @@
-package com.msd.users;
+package com.msd.items;
 
 public class Company extends User {
 

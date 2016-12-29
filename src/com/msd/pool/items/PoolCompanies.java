@@ -1,4 +1,4 @@
-package com.msd.pool;
+package com.msd.pool.items;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,8 +9,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 
-import com.msd.poolinterfaces.CompanyDAO;
-import com.msd.users.Company;
+import com.msd.items.Company;
+import com.msd.pool.interfaces.CompanyDAO;
 
 public class PoolCompanies implements CompanyDAO {
 

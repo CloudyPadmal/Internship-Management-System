@@ -1,4 +1,4 @@
-package com.msd.control;
+package com.msd.control.viewers;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.msd.registers.LoginInfo;
+import com.msd.items.LoginInfo;
 
 /******************************************************************************
  * EntryController will handle the entry point. It will redirect user to the

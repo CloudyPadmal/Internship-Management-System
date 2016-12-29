@@ -1,11 +1,11 @@
-package com.msd.pool;
+package com.msd.pool.items;
 
 import java.util.List;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import com.msd.poolinterfaces.VacancyDAO;
-import com.msd.users.Vacancy;
+import com.msd.items.Vacancy;
+import com.msd.pool.interfaces.VacancyDAO;
 
 public class PoolVacancies implements VacancyDAO {
 

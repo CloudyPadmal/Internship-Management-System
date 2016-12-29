@@ -1,4 +1,4 @@
-package com.msd.pool;
+package com.msd.pool.items;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,8 +9,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 
-import com.msd.poolinterfaces.ApplicantDAO;
-import com.msd.users.Applicant;
+import com.msd.items.Applicant;
+import com.msd.pool.interfaces.ApplicantDAO;
 
 public class PoolApplicants implements ApplicantDAO {
 

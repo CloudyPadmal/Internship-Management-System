@@ -1,8 +1,8 @@
-package com.msd.users;
+package com.msd.items;
 
 import java.util.List;
 
-import com.msd.pool.PoolCriteria;
+import com.msd.pool.items.PoolCriteria;
 
 public class Vacancy {
 

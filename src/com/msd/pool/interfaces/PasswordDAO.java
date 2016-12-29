@@ -1,8 +1,8 @@
-package com.msd.poolinterfaces;
+package com.msd.pool.interfaces;
 
 import java.util.List;
 
-import com.msd.registers.LoginInfo;
+import com.msd.items.LoginInfo;
 
 /******************************************************************************
  * EntryController will handle the entry point. It will redirect user to the
