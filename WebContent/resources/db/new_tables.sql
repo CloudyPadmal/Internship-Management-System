@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS password_table (
-	id int(5) NOT NULL AUTO_INCREMENT,
+	id INT(5) NOT NULL AUTO_INCREMENT,
 	username varchar(50) NOT NULL,
 	password varchar(300) NOT NULL,
 	user_type BOOL NOT NULL,
@@ -7,15 +7,15 @@ CREATE TABLE IF NOT EXISTS password_table (
 );
 	
 CREATE TABLE IF NOT EXISTS admin_table (
-	id int(5) NOT NULL AUTO_INCREMENT,
+	id INT(5) NOT NULL AUTO_INCREMENT,
 	username varchar(50) NOT NULL,
 	password varchar(300) NOT NULL,
 	user_type BOOL NOT NULL,
 	PRIMARY KEY(id)
 );
 	
-CREATE TABLE user_table (
-	id int(5) AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS user_table (
+	id INT(5) AUTO_INCREMENT,
 	name varchar(50) NOT NULL,
 	surname varchar(50) NOT NULL,
 	gender varchar(1),
@@ -52,8 +52,8 @@ CREATE TABLE user_table (
 	PRIMARY KEY(id)
 );
 
-CREATE TABLE company_table (
-	id int(5) AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS company_table (
+	id INT(5) AUTO_INCREMENT,
 	loginID varchar(100) NOT NULL,
 	company varchar(50) NOT NULL,
 	address varchar(150) NOT NULL,
@@ -64,11 +64,30 @@ CREATE TABLE company_table (
 	PRIMARY KEY(id)
 );
 
-CREATE TABLE positions (
-	id int(5) AUTO_INCREMENT,
-	companyID varchar(50) NOT NULL,
-	salary DECIMAL,
+CREATE TABLE IF NOT EXISTS positions (
+	id INT(5) AUTO_INCREMENT,
+	company varchar(100) NOT NULL,
+	salary INT(10),
 	title varchar(100) NOT NULL,
-	subTitle varchar(100) NOT NULL,
+	description_1 varchar(250) NOT NULL,
+	description_2 varchar(250),
+	ARDUINO BOOL,
+	FPGA BOOL,
+	ROBOTICS BOOL,
+	WIFI BOOL,
+	ANTENNAS BOOL,
+	NETWORKING BOOL,
+	PROCESSORDESIGN BOOL,
+	IMAGEPROCESSING BOOL,
+	PROGRAMMING BOOL,
+	AUTOMATION BOOL,
+	BIOMEDICAL BOOL,
+	BIOMECHANICS BOOL,
+	TELECOM BOOL,
+	SEMICONDUCTORS BOOL,
+	CIRCUITS BOOL,
+	IOT BOOL,
+	AI BOOL,
+	SIGNALPROCESSING BOOL,
 	PRIMARY KEY(id)
 );

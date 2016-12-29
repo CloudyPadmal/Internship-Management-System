@@ -2,24 +2,22 @@ package com.msd.users;
 
 import java.util.List;
 
+import com.msd.pool.PoolCriteria;
+
 public class Vacancy {
 
-	private int vacancyID;
-	private String vacancy;
+	private int id;
 	private String title;
 	private String company;
 	private int salary;
 	private List<String> preferences;
 	private String description_1;
-	private String description_2;	
-	
+	private String description_2;
+
 	public Vacancy() {/**/}
-	
-	public Vacancy(int vacancyID, String vacancy, String title, String company, int salary, List<String> preferences,
-			String description_1, String description_2) {
-		super();
-		this.vacancyID = vacancyID;
-		this.vacancy = vacancy;
+
+	public Vacancy(String title, String company, int salary, List<String> preferences, String description_1,
+			String description_2) {
 		this.title = title;
 		this.company = company;
 		this.salary = salary;
@@ -28,20 +26,12 @@ public class Vacancy {
 		this.description_2 = description_2;
 	}
 
-	public int getVacancyID() {
-		return vacancyID;
+	public int getId() {
+		return id;
 	}
 
-	public void setVacancyID(int vacancyID) {
-		this.vacancyID = vacancyID;
-	}
-	
-	public String getVacancy() {
-		return vacancy;
-	}
-
-	public void setVacancy(String vacancy) {
-		this.vacancy = vacancy;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getTitle() {
@@ -71,11 +61,11 @@ public class Vacancy {
 	public List<String> getPreferences() {
 		return preferences;
 	}
-	
+
 	public void setPreferences(List<String> preferences) {
 		this.preferences = preferences;
 	}
-	
+
 	public String getDescription_1() {
 		return description_1;
 	}
@@ -92,4 +82,13 @@ public class Vacancy {
 		this.description_2 = description_2;
 	}
 
+	public PoolCriteria convertListToPref() {
+		ListPrefConverter converter = new ListPrefConverter();
+		return converter.convertListToPref(this.preferences);
+	}
+
+	public void convertPrefToList(PoolCriteria criteria) {
+		ListPrefConverter converter = new ListPrefConverter();
+		this.preferences = converter.convertPrefToList(criteria);
+	}
 }
