@@ -1,12 +1,45 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<%@ page session="false"%>
+<%@ include file="/WEB-INF/jsp/head.jsp"%>
+
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<spring:url value="/resources/css/msd_styles.css" var="msdCSS" />
+<link href="${msdCSS}" rel="stylesheet" />
 </head>
 <body>
+	<c:if test="${not empty msg}">
+		<strong>${msg}</strong>
+	</c:if>
 
+	<h1>All Users</h1>
+
+	<table>
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Surname</th>
+				<th>Email</th>
+				<th>Prefs</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+
+		<c:forEach var="user" items="${users}">
+			<tr>
+				<td>${user.name}</td>
+				<td>${user.surname}</td>
+				<td>${user.emailAddress}</td>
+				<td><c:forEach var="pref" items="${user.preferences}"
+						varStatus="loop">
+							${pref} <c:if test="${not loop.last}">,</c:if>
+					</c:forEach></td>
+				<td><a href="users/${user.indexNumber}" class="button">Show</a>
+					<a href="users/${user.indexNumber}/delete" class="button">Delete</a>
+					<a href="users/${user.indexNumber}/update" class="button">Update</a>
+				</td>
+			</tr>
+		</c:forEach>
+	</table>
 </body>
 </html>

@@ -10,9 +10,9 @@
 	<div class="homepage" align="center">
 		<a href=view_users>
 			<button class="bigbutton positivebtn">View Users</button>
-		</a> <a href=user_login>
+		</a> <a href=view_companies>
 			<button class="bigbutton positivebtn">View Companies</button>
-		</a> <a href=user_login>
+		</a> <a href=view_vacancies>
 			<button class="bigbutton positivebtn">View Vacancies</button>
 		</a> <br />
 	</div>

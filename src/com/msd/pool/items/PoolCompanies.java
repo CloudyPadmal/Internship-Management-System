@@ -72,6 +72,7 @@ public class PoolCompanies implements CompanyDAO {
 				Company info = new Company(rs.getString("loginID"), rs.getString("company"), rs.getString("address"),
 						rs.getString("emailAddress"), rs.getString("telephone"), rs.getString("aboutUS"),
 						rs.getInt("positions"));
+				info.setId(rs.getInt("id"));
 				// Fetch
 				return info;
 			}

@@ -1,12 +1,46 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<%@ page session="false"%>
+<%@ include file="/WEB-INF/jsp/head.jsp"%>
+
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<spring:url value="/resources/css/msd_styles.css" var="msdCSS" />
+<link href="${msdCSS}" rel="stylesheet" />
 </head>
 <body>
+	<c:if test="${not empty msg}">
+		<strong>${msg}</strong>
+	</c:if>
 
+	<h1>All Companies</h1>
+
+	<table>
+		<thead>
+			<tr>
+				<th>Company</th>
+				<th>Email</th>
+				<th>Address</th>
+				<th>Telephone</th>
+				<th>Vacancies</th>
+				<th>About</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+
+		<c:forEach var="company" items="${companies}">
+			<tr>
+				<td>${company.company}</td>
+				<td>${company.emailAddress}</td>
+				<td>${company.address}</td>
+				<td>${company.telephone}</td>
+				<td>${company.positions}</td>
+				<td>${company.aboutUs}</td>
+				<td><a href="company/${company.id}" class="button">Show</a>
+					<a href="company/${company.id}/delete" class="button">Delete</a>
+					<a href="company/${company.id}/update" class="button">Update</a>
+				</td>
+			</tr>
+		</c:forEach>
+	</table>
 </body>
 </html>
