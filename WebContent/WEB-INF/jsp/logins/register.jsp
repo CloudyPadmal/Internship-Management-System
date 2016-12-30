@@ -13,7 +13,7 @@
 	<br />
 
 	<form:form method="post" modelAttribute="userForm"
-		action="users">
+		action="${actionURL}">
 
 		<spring:bind path="name">
 			<label>First Name</label>
@@ -38,20 +38,22 @@
 		</spring:bind>
 		<br />
 
-		<spring:bind path="password">
-			<label>Password</label>
-			<form:password path="password" id="password" placeholder="Password" />
-			<form:errors path="password" />
-		</spring:bind>
-		<br />
+		<c:if test="${register}">
+			<spring:bind path="password">
+				<label>Password</label>
+				<form:password path="password" id="password" placeholder="Password" />
+				<form:errors path="password" />
+			</spring:bind>
+			<br />
 
-		<spring:bind path="confirmPassword">
-			<label>Confirm Password</label>
-			<form:password path="confirmPassword" id="password"
-				placeholder="Confirm" />
-			<form:errors path="confirmPassword" />
-		</spring:bind>
-		<br />
+			<spring:bind path="confirmPassword">
+				<label>Confirm Password</label>
+				<form:password path="confirmPassword" id="password"
+					placeholder="Confirm" />
+				<form:errors path="confirmPassword" />
+			</spring:bind>
+			<br />
+		</c:if>
 
 		<spring:bind path="indexNumber">
 			<label>Index</label>
@@ -98,7 +100,12 @@
 			<form:errors path="gender" />
 		</spring:bind>
 		<br />
-		<button type="submit">Register</button>
+		<c:if test="${register}">
+			<button type="submit" name="register">Register</button>
+		</c:if>
+		<c:if test="${not register}">
+			<button type="submit" name="update">Update</button>
+		</c:if>
 	</form:form>
 </body>
 </html>

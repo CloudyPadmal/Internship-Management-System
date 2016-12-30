@@ -41,13 +41,51 @@ public class UserRegisterController implements Preferences {
 
 	// Register form for a new user
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String registerUser(Model model) {
+	public String registrationForm(Model model) {
 		// Create a new applicant and add it to model
 		model = generatePrefList(model);
 		// Pass the Applicant as "userForm"
 		model.addAttribute("userForm", new Applicant());
-		// Display the html page
+		// Add form notations
+		model.addAttribute("register", true);
+		model.addAttribute("actionURL", "users");
+		// Display the login page
 		return "logins/register";
+	}
+
+	// This will be called upon clicking register button
+	@RequestMapping(value = "users", method = RequestMethod.POST, params = "register")
+	public String addNewUser(@ModelAttribute("userForm") @Validated Applicant user, BindingResult result, Model model,
+			RedirectAttributes redirectAttributes) {
+		if (result.hasErrors()) {
+			model = generatePrefList(model);
+			return "logins/register";
+		} else {
+			// Pass success message to redirect view
+			redirectAttributes.addFlashAttribute("msg", user.getName() + " added successfully!");
+			// Add applicant to the user table
+			poolApplicants.addApplicant(user);
+			// Add password of the applicant to the password table
+			poolPW.addPassword(new LoginInfo(user.getIndexNumber(), user.getPassword()));
+			// Display user details
+			return "redirect:users/" + user.getIndexNumber(); // TODO : Replace this index number with ID
+		}
+	}
+
+	@RequestMapping(value = "users", method = RequestMethod.POST, params = "update")
+	public String updateUser(@ModelAttribute("userForm") @Validated Applicant user, BindingResult result, Model model,
+			RedirectAttributes redirectAttributes) {
+		if (result.hasErrors()) {
+			model = generatePrefList(model);
+			return "logins/register";
+		} else {
+			// Pass success message to redirect view
+			redirectAttributes.addFlashAttribute("msg", "Updated!");
+			// Add applicant to the user table
+			poolApplicants.updateApplicant(user);
+			// Display user details
+			return "redirect:" + user.getIndexNumber();
+		}
 	}
 
 	// All users in the table
@@ -56,15 +94,6 @@ public class UserRegisterController implements Preferences {
 		// Add the user list under "users"
 		model.addAttribute("users", poolApplicants.getAllApplicants());
 		return "displays/list";
-	}
-
-	// Delete User account
-	@RequestMapping(value = "/users/{index}/delete", method = RequestMethod.GET)
-	public String deleteUser(@PathVariable("index") String index, final RedirectAttributes redirectAttributes) {
-		poolApplicants.deleteApplicant(index);
-		// Pass the successful message to redirect
-		redirectAttributes.addFlashAttribute("msg", "User is deleted!");
-		return "redirect:/reg/user/users";
 	}
 
 	// Display User details
@@ -81,34 +110,29 @@ public class UserRegisterController implements Preferences {
 		return "displays/show_user";
 	}
 
-	// This will be called upon clicking register button
-	@RequestMapping(value = "users", method = RequestMethod.POST)
-	public String addUser(@ModelAttribute("userForm") @Validated Applicant user, BindingResult result,
-			Model model, RedirectAttributes redirectAttributes) {
-		if (result.hasErrors()) {
-			model = generatePrefList(model);
-			return "logins/register";
-		} else {
-			// Pass success message to redirect view
-			redirectAttributes.addFlashAttribute("msg", "User added successfully!");
-			// Add applicant to the user table
-			poolApplicants.addApplicant(user);
-			// Add password of the applicant to the password table
-			poolPW.addPassword(new LoginInfo(user.getIndexNumber(), user.getPassword()));
-			// Display user details
-			return "redirect:users/" + user.getIndexNumber();
-		}
+	// Delete User account
+	@RequestMapping(value = "/users/{index}/delete", method = RequestMethod.GET)
+	public String deleteUser(@PathVariable("index") String index, final RedirectAttributes redirectAttributes) {
+		poolApplicants.deleteApplicant(index);
+		// Pass the successful message to redirect
+		redirectAttributes.addFlashAttribute("msg", "User is deleted!");
+		return "redirect:/reg/user/users";
 	}
 
 	// Display Update Form
-	@RequestMapping(value = "/users/{id}/update", method = RequestMethod.GET)
-	public String showUpdateUserForm(@PathVariable("id") String id, Model model) {
+	@RequestMapping(value = "users/{index}/update", method = RequestMethod.GET)
+	public String showUpdateUserForm(@PathVariable("index") String index, Model model) {
 		// Fetch the applicant from database
-		Applicant applicant = poolApplicants.fetchApplicant(id);
+		Applicant applicant = poolApplicants.fetchApplicant(index);
+		applicant.setPassword("null");
+		applicant.setConfirmPassword("null");
 		// Add details under "userForm"
 		model.addAttribute("userForm", applicant);
 		// Generate preference list
 		model = generatePrefList(model);
+		// Add update notations
+		model.addAttribute("register", false);
+		model.addAttribute("actionURL", "/MSDProject/reg/user/users/");
 		return "logins/register";
 	}
 

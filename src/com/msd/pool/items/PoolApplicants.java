@@ -81,8 +81,7 @@ public class PoolApplicants implements ApplicantDAO {
 
 	@Override
 	public void updateApplicant(Applicant newApplicant) {
-		// TODO Auto-generated method stub
-
+		System.out.println(newApplicant.getConfirmPassword());
 	}
 
 	@Override
