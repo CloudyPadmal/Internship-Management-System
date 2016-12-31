@@ -39,7 +39,7 @@ public class VacancyController implements Preferences {
 	}
 
 	// Creation form for a new vacancy
-	@RequestMapping(value = "/{company}", method = RequestMethod.GET)
+	@RequestMapping(value = "add/{company}", method = RequestMethod.GET)
 	public String registerVacancy(Model model, @PathVariable("company") String companyName) {
 		// Pass the Vacancy as "vacancyForm"
 		model = generatePrefList(model);

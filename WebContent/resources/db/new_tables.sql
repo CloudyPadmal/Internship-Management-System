@@ -71,6 +71,7 @@ CREATE TABLE IF NOT EXISTS positions (
 	title varchar(100) NOT NULL,
 	description_1 varchar(250) NOT NULL,
 	description_2 varchar(250),
+	applicantCount INT(5),
 	ARDUINO BOOL,
 	FPGA BOOL,
 	ROBOTICS BOOL,

@@ -61,6 +61,7 @@ public class PoolVacancies implements VacancyDAO {
 							rs.getBoolean("AI"), rs.getBoolean("SIGNALPROCESSING"));
 					// Fetch
 					info.setId(vacancyID);
+					info.setApplicantCount(rs.getInt("applicantCount"));
 					info.convertPrefToList(criteria);
 					return info;
 				}
@@ -77,8 +78,20 @@ public class PoolVacancies implements VacancyDAO {
 
 	@Override
 	public void updateVacancy(Vacancy newVacancy) {
-		// TODO Auto-generated method stub
-
+		PoolCriteria criteria = newVacancy.convertListToPref();
+		/*String sql = "UPDATE " + VacancyDAO.TABLE
+				+ " (company, salary, title, description_1, description_2, ARDUINO, "
+				+ "FPGA, ROBOTICS, WIFI, ANTENNAS, NETWORKING, PROCESSORDESIGN, IMAGEPROCESSING, PROGRAMMING, AUTOMATION, "
+				+ "BIOMEDICAL, BIOMECHANICS, TELECOM, SEMICONDUCTORS, CIRCUITS, IOT, AI, SIGNALPROCESSING) "
+				+ "VALUES ('" + vacancy.getCompany() + "', '" + vacancy.getSalary() + "', '" + vacancy.getTitle()
+				+ "', '" + vacancy.getDescription_1() + "', '" + vacancy.getDescription_2() + "',"
+				+ criteria.isARDUINO() + "," + criteria.isFPGA() + "," + criteria.isROBOTICS() + "," + criteria.isWIFI()
+				+ "," + criteria.isANTENNAS() + "," + criteria.isNETWORKING() + "," + criteria.isPROCESSORDESIGN() + ","
+				+ criteria.isIMAGEPROCESSING() + "," + criteria.isPROGRAMMING() + "," + criteria.isAUTOMATION() + ","
+				+ criteria.isBIOMEDICAL() + "," + criteria.isBIOMECHANICS() + "," + criteria.isTELECOM() + ","
+				+ criteria.isSEMICONDUCTORS() + "," + criteria.isCIRCUITS() + "," + criteria.isIOT() + ","
+				+ criteria.isAI() + "," + criteria.isSIGNALPROCESSING() + ")";*/
+		// return dbHandler.update(sql);
 	}
 
 	@Override
@@ -97,6 +110,7 @@ public class PoolVacancies implements VacancyDAO {
 						rs.getBoolean("AI"), rs.getBoolean("SIGNALPROCESSING"));
 				// Fetch
 				info.setId(rs.getInt("id"));
+				info.setApplicantCount(rs.getInt("applicantCount"));
 				info.convertPrefToList(criteria);
 				return info;
 			}
@@ -109,4 +123,6 @@ public class PoolVacancies implements VacancyDAO {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	
 }
