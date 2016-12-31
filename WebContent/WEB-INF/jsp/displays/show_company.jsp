@@ -53,7 +53,8 @@
 				<tr>
 					<td><div class="column-head">Title</div></td>
 					<td><div class="column-body">
-							${vacancy.id}.&nbsp;<b>${vacancy.title}</b> <i>${vacancy.applicantCount}</i>
+							${vacancy.id}.&nbsp;<b>${vacancy.title} (Rs.
+								${vacancy.salary})</b>
 						</div></td>
 				</tr>
 				<tr>
@@ -66,7 +67,10 @@
 				</tr>
 				<tr>
 					<td />
-					<td><a href="vacancy/${vacancy.id}/delete" class="button" type="submit">Delete ${vacancy.title}</a><a href="vacancy/${vacancy.id}/update" class="button" type="submit">Edit ${vacancy.title}</a></td>
+					<td>
+					<a href="vacancy/${vacancy.id}/delete" class="button" type="submit">Delete ${vacancy.title}</a>
+					<a href="vacancy/${vacancy.id}/update" class="button" type="submit">Edit ${vacancy.title}</a>
+					<i><b>[${vacancy.applicant}]</b></i></td>
 				</tr>
 			</table>
 		</c:forEach>

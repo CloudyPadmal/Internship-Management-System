@@ -30,7 +30,7 @@ public class EntryController {
 		LoginInfo info = new LoginInfo();
 		info.setCompany(false);
 		loginModel.setViewName("logins/login");
-		loginModel.addObject("command", info);
+		loginModel.addObject("info", info);
 		loginModel.addObject("action_url", "user/log");
 		loginModel.addObject("principal", "User");
 		loginModel.addObject("admin", false);
@@ -44,7 +44,7 @@ public class EntryController {
 		LoginInfo info = new LoginInfo();
 		info.setCompany(true);
 		loginModel.setViewName("logins/login");
-		loginModel.addObject("command", info);
+		loginModel.addObject("info", info);
 		loginModel.addObject("action_url", "company/log");
 		loginModel.addObject("principal", "Company");
 		loginModel.addObject("admin", false);

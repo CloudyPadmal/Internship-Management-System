@@ -9,9 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 
-import com.msd.items.Applicant;
 import com.msd.items.Vacancy;
-import com.msd.pool.interfaces.ApplicantDAO;
 import com.msd.pool.interfaces.VacancyDAO;
 
 public class PoolVacancies implements VacancyDAO {
@@ -61,7 +59,8 @@ public class PoolVacancies implements VacancyDAO {
 							rs.getBoolean("AI"), rs.getBoolean("SIGNALPROCESSING"));
 					// Fetch
 					info.setId(vacancyID);
-					info.setApplicantCount(rs.getInt("applicantCount"));
+					info.setApplicant(rs.getString("applicant"));
+					info.setOpen(rs.getBoolean("open"));
 					info.convertPrefToList(criteria);
 					return info;
 				}
@@ -110,7 +109,8 @@ public class PoolVacancies implements VacancyDAO {
 						rs.getBoolean("SIGNALPROCESSING"));
 				// Fetch
 				info.setId(rs.getInt("id"));
-				info.setApplicantCount(rs.getInt("applicantCount"));
+				info.setApplicant(rs.getString("applicant"));
+				info.setOpen(rs.getBoolean("open"));
 				info.convertPrefToList(criteria);
 				return info;
 			}
@@ -135,7 +135,8 @@ public class PoolVacancies implements VacancyDAO {
 								rs.getBoolean("IOT"), rs.getBoolean("AI"), rs.getBoolean("SIGNALPROCESSING"));
 						// Fetch
 						info.setId(rs.getInt("id"));
-						info.setApplicantCount(rs.getInt("applicantCount"));
+						info.setApplicant(rs.getString("applicant"));
+						info.setOpen(rs.getBoolean("open"));
 						info.convertPrefToList(criteria);
 						return info;
 					}
@@ -160,7 +161,8 @@ public class PoolVacancies implements VacancyDAO {
 								rs.getBoolean("IOT"), rs.getBoolean("AI"), rs.getBoolean("SIGNALPROCESSING"));
 						// Fetch
 						info.setId(rs.getInt("id"));
-						info.setApplicantCount(rs.getInt("applicantCount"));
+						info.setApplicant(rs.getString("applicant"));
+						info.setOpen(rs.getBoolean("open"));
 						info.convertPrefToList(criteria);
 						return info;
 					}
@@ -180,5 +182,27 @@ public class PoolVacancies implements VacancyDAO {
 				return null;
 			}
 		});
+	}
+
+	@Override
+	public boolean isOpen(int vacancyID) {
+		String sql = "SELECT open FROM " + VacancyDAO.TABLE + " WHERE id = '" + vacancyID + "'";
+		return dbHandler.query(sql, new ResultSetExtractor<Boolean>() {
+			@Override
+			public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
+				if (rs.next()) {
+					return rs.getBoolean("company");
+				}
+				return null;
+			}
+		});
+	}
+
+	@Override
+	public int closeVacancy(int vacancyID, String indexNumber) {
+		System.out.println(indexNumber);
+		String sql = "UPDATE " + VacancyDAO.TABLE + " SET open = TRUE, applicant = '" + indexNumber + "' WHERE id = "
+				+ vacancyID;
+		return dbHandler.update(sql);
 	}
 }

@@ -55,12 +55,9 @@
 		<c:forEach var="vacancy" items="${vacancies}">
 			<table class="display-vacancies">
 				<tr>
-					<td><div class="column-head">ID</div></td>
-					<td><div class="column-body">${vacancy.id}</div></td>
-				</tr>
-				<tr>
 					<td><div class="column-head">Title</div></td>
-					<td><div class="column-body">${vacancy.title}</div></td>
+					<td><div class="column-body">${vacancy.title}&nbsp;-&nbsp;(Rs.
+							${vacancy.salary})&nbsp;${vacancy.company}</div></td>
 				</tr>
 				<tr>
 					<td><div class="column-head">Description</div></td>
@@ -70,9 +67,20 @@
 					<td><div class="column-head">Preferences</div></td>
 					<td><div class="column-body">${vacancy.preferences}</div></td>
 				</tr>
+				<tr>
+					<c:choose>
+						<c:when test="${not vacancy.open}">
+							<td />
+							<td><a href="apply/${vacancy.id}/${user.indexNumber}" class="button"
+								type="submit">Apply for ${vacancy.title}!</a></td>
+						</c:when>
+						<c:otherwise>
+							<td />
+							<td><i>Someone applied for it!</i></td>
+						</c:otherwise>
+					</c:choose>
+				</tr>
 			</table>
-			
-			<a href="">Apply!</a>
 		</c:forEach>
 	</div>
 </body>

@@ -9,7 +9,7 @@
 <body class="homebody">
 
 	<h2>${principal}&nbsp;Login</h2>
-	<form:form method="POST" modelAttribute="command"
+	<form:form method="POST" modelAttribute="info"
 		action="${action_url}">
 		<table class="form-area">
 			<tr>

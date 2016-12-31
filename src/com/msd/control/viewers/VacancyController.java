@@ -46,7 +46,9 @@ public class VacancyController implements Preferences {
 	public String registerVacancy(Model model, @PathVariable("company") String companyName) {
 		// Pass the Vacancy as "vacancyForm"
 		model = generatePrefList(model);
-		model.addAttribute("vacancyForm", new Vacancy(companyName));
+		// Create a vacancy with a company attached to it with status open
+		model.addAttribute("vacancyForm", new Vacancy(companyName, null, true));
+		// Notify that this is a new vacancy
 		model.addAttribute("status", true);
 		// Display the html page
 		return "logins/new_vacancy";

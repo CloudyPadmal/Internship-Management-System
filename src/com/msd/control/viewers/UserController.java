@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.msd.items.Applicant;
+import com.msd.items.Company;
 import com.msd.items.LoginInfo;
 import com.msd.items.Vacancy;
 import com.msd.pool.items.PoolApplicants;
@@ -32,7 +34,7 @@ public class UserController {
 
 	// This view will display the correctness of the user credentials
 	@RequestMapping(value = "/log", method = RequestMethod.POST, params = "login")
-	public String logUserIn(@ModelAttribute("command") LoginInfo info, ModelMap model, RedirectAttributes redirects) {
+	public String logUserIn(@ModelAttribute("info") LoginInfo info, ModelMap model, RedirectAttributes redirects) {
 		if (poolPW.matchThisAndThat(info)) {
 			Applicant user = poolApplicants.fetchApplicant(info.getUsername());
 			model.addAttribute("user", user);
@@ -42,6 +44,17 @@ public class UserController {
 			redirects.addFlashAttribute("error", "Username or Password is wrong!");
 			return "redirect:/user_login";
 		}
+		return "displays/show_user";
+	}
+
+	// Display User details
+	@RequestMapping(value = "/{indexNumber}", method = RequestMethod.GET)
+	public String showCompany(@PathVariable("indexNumber") String indexNumber, Model model) {
+		// Fetch applicant from database
+		Applicant user = poolApplicants.fetchApplicant(indexNumber);
+		model.addAttribute("user", user);
+		List<Vacancy> vacancies = poolVacancies.getVacancies(user.convertListToPref());
+		model.addAttribute("vacancies", vacancies);
 		return "displays/show_user";
 	}
 
@@ -64,5 +77,14 @@ public class UserController {
 	public String delete(@PathVariable String name) {
 		poolPW.deletePassword(name);
 		return ("redirect:/user/user_list");
+	}
+
+	@RequestMapping(value = "/apply/{vacancyID}/{indexNumber}", method = RequestMethod.GET)
+	public String applyForVacancy(@PathVariable("vacancyID") int vacancyID,
+			@PathVariable("indexNumber") String indexNumber, final RedirectAttributes redirectAttributes) {
+		poolVacancies.closeVacancy(vacancyID, indexNumber);
+		// Pass the successful message to redirect
+		redirectAttributes.addFlashAttribute("msg", "Application submitted succesfully!");
+		return "redirect:/user/" + indexNumber;
 	}
 }

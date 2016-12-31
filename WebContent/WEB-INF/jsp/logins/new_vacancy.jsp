@@ -22,7 +22,9 @@
 	<form:form method="post" modelAttribute="vacancyForm"
 		action="/MSDProject/vacancy/vacancies">
 
-		<form:hidden path="id" />.
+		<form:hidden path="id" />
+		<form:hidden path="open" />
+		<form:hidden path="applicant" />		
 		
 		<spring:bind path="title">
 			<label>Title</label>

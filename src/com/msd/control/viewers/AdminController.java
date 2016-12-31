@@ -32,7 +32,7 @@ public class AdminController {
 	public ModelAndView loginAdmin() {
 		ModelAndView loginModel = new ModelAndView();
 		loginModel.setViewName("logins/login");
-		loginModel.addObject("command", new LoginInfo());
+		loginModel.addObject("info", new LoginInfo());
 		loginModel.addObject("action_url", new String("log_user"));
 		loginModel.addObject("principal", "Admin");
 		loginModel.addObject("type", true);
@@ -71,4 +71,6 @@ public class AdminController {
 		model.addAttribute("vacancies", poolVacancies.getAllVacancies());
 		return "displays/full_vacancy_list";
 	}
+	
+	
 }
