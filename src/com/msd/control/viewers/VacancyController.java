@@ -19,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.msd.items.Vacancy;
 import com.msd.pool.interfaces.Preferences;
 import com.msd.pool.items.PoolApplicants;
+import com.msd.pool.items.PoolCompanies;
 import com.msd.pool.items.PoolVacancies;
 import com.msd.pool.validators.PoolVacancyValidator;
 
@@ -32,6 +33,8 @@ public class VacancyController implements Preferences {
 	PoolApplicants poolApplicants;
 	@Autowired
 	PoolVacancies poolVacancies;
+	@Autowired
+	PoolCompanies poolCompanies;
 
 	@InitBinder
 	protected void initBinder(WebDataBinder binder) {
@@ -39,7 +42,7 @@ public class VacancyController implements Preferences {
 	}
 
 	// Creation form for a new vacancy
-	@RequestMapping(value = "add/{company}", method = RequestMethod.GET)
+	@RequestMapping(value = "/add/{company}", method = RequestMethod.GET)
 	public String registerVacancy(Model model, @PathVariable("company") String companyName) {
 		// Pass the Vacancy as "vacancyForm"
 		model = generatePrefList(model);
@@ -91,8 +94,9 @@ public class VacancyController implements Preferences {
 			redirectAttributes.addFlashAttribute("msg", "Vacancy created successfully!");
 			// Add Vacancy to the Vacancy table
 			poolVacancies.addVacancy(vacancy);
+			poolCompanies.incrementVacancyCount(vacancy.getCompany());
 			// Display Vacancy details
-			return "redirect:/" + vacancy.getId();
+			return "redirect:show/" + vacancy.getId();
 		}
 	}
 

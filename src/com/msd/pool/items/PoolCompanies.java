@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.RowMapper;
 
 import com.msd.items.Company;
 import com.msd.pool.interfaces.CompanyDAO;
+import com.msd.pool.interfaces.VacancyDAO;
 
 public class PoolCompanies implements CompanyDAO {
 
@@ -84,5 +85,11 @@ public class PoolCompanies implements CompanyDAO {
 	public List<Company> getTypeOfCompanies(PoolCriteria criteria) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public int incrementVacancyCount(String company) {
+		String sql = "UPDATE " + CompanyDAO.TABLE + " SET positions = positions + 1 WHERE company = '" + company + "'";
+		return dbHandler.update(sql);
 	}
 }

@@ -18,6 +18,9 @@ public interface CompanyDAO {
 
 	// Delete applicant
 	public int deleteCompany(String companyName);
+	
+	// Increment vacancy count
+	public int incrementVacancyCount(String company);
 
 	// Update applicant <Username is assumed to be the same>
 	public void updateCompany(Company newCompany);

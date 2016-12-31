@@ -13,7 +13,7 @@
 	<br />
 
 	<form:form method="post" modelAttribute="vacancyForm"
-		action="vacancies">
+		action="/MSDProject/vacancy/vacancies">
 		
 		<spring:bind path="title">
 			<label>Title</label>

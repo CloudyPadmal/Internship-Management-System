@@ -202,24 +202,24 @@ public class PoolCriteria implements Preferences {
 	public String getWhereQuery() {
 		String set = " = TRUE AND ";
 		StringBuilder sBuilder = new StringBuilder();
-		sBuilder.append(isAI() ? Preferences.AI + set : "");
-		sBuilder.append(isANTENNAS() ? Preferences.ANTENNAS + set : "");
-		sBuilder.append(isARDUINO() ? Preferences.ARDUINO + set : "");
-		sBuilder.append(isAUTOMATION() ? Preferences.AUTOMATION + set : "");
-		sBuilder.append(isBIOMECHANICS() ? Preferences.BIOMECHANICS + set : "");
-		sBuilder.append(isBIOMEDICAL() ? Preferences.BIOMEDICAL + set : "");
-		sBuilder.append(isCIRCUITS() ? Preferences.CIRCUITS + set : "");
-		sBuilder.append(isFPGA() ? Preferences.FPGA + set : "");
-		sBuilder.append(isIMAGEPROCESSING() ? Preferences.IMAGEPROCESSING + set : "");
-		sBuilder.append(isIOT() ? Preferences.IOT + set : "");
-		sBuilder.append(isNETWORKING() ? Preferences.NETWORKING + set : "");
-		sBuilder.append(isPROCESSORDESIGN() ? Preferences.PROCESSORDESIGN + set : "");
-		sBuilder.append(isPROGRAMMING() ? Preferences.PROGRAMMING + set : "");
-		sBuilder.append(isROBOTICS() ? Preferences.ROBOTICS + set : "");
-		sBuilder.append(isSEMICONDUCTORS() ? Preferences.SEMICONDUCTORS + set : "");
-		sBuilder.append(isSIGNALPROCESSING() ? Preferences.SIGNALPROCESSING + set : "");
-		sBuilder.append(isTELECOM() ? Preferences.TELECOM + set : "");
-		sBuilder.append(isWIFI() ? Preferences.WIFI + set : "");
+		sBuilder.append(isAI() ? "AI" + set : "");
+		sBuilder.append(isANTENNAS() ? "ANTENNAS" + set : "");
+		sBuilder.append(isARDUINO() ? "ARDUINO" + set : "");
+		sBuilder.append(isAUTOMATION() ? "AUTOMATION" + set : "");
+		sBuilder.append(isBIOMECHANICS() ? "BIOMECHANICS" + set : "");
+		sBuilder.append(isBIOMEDICAL() ? "BIOMEDICAL" + set : "");
+		sBuilder.append(isCIRCUITS() ? "CIRCUITS" + set : "");
+		sBuilder.append(isFPGA() ? "FPGA" + set : "");
+		sBuilder.append(isIMAGEPROCESSING() ? "IMAGEPROCESSING" + set : "");
+		sBuilder.append(isIOT() ? "IOT" + set : "");
+		sBuilder.append(isNETWORKING() ? "NETWORKING" + set : "");
+		sBuilder.append(isPROCESSORDESIGN() ? "PROCESSORDESIGN" + set : "");
+		sBuilder.append(isPROGRAMMING() ? "PROGRAMMING" + set : "");
+		sBuilder.append(isROBOTICS() ? "ROBOTICS" + set : "");
+		sBuilder.append(isSEMICONDUCTORS() ? "SEMICONDUCTORS" + set : "");
+		sBuilder.append(isSIGNALPROCESSING() ? "SIGNALPROCESSING" + set : "");
+		sBuilder.append(isTELECOM() ? "TELECOM" + set : "");
+		sBuilder.append(isWIFI() ? "WIFI" + set : "");
 		// Prepare the return statement
 		String rawQuery = sBuilder.toString();
 		if (rawQuery.contains(set)) {
