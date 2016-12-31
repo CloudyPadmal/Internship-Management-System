@@ -22,7 +22,7 @@ input {
 }
 
 .bigbutton {
-	background-color: #4CAF50; /* Green */
+	background-color: #4CAF50;
 	border: none;
 	color: white;
 	padding: 16px 10px;
@@ -32,7 +32,7 @@ input {
 	font-size: 16px;
 	width: 350px;
 	margin: 10px;
-	-webkit-transition-duration: 0.4s; /* Safari */
+	-webkit-transition-duration: 0.4s;
 	transition-duration: 0.4s;
 	cursor: pointer;
 }
@@ -48,7 +48,7 @@ input {
 	width: 100%;
 	display: block;
 	margin: 0px 0px 10px 0px;
-	-webkit-transition-duration: 0.4s; /* Safari */
+	-webkit-transition-duration: 0.4s;
 	transition-duration: 0.4s;
 	cursor: pointer;
 }
@@ -120,15 +120,24 @@ input {
 	text-decoration: blink;
 }
 
+.add-vacancy {
+	
+}
+
 .section-one {
 	float: left;
-	width: 25%;
+	width: 35%;
 }
 
 .section-two {
 	width: 50%;
 	float: left;
 	margin: 10px;
+}
+
+.section-three {
+	float: right;
+	width: 65%;
 }
 
 .display-user {
@@ -141,6 +150,12 @@ input {
 	width: 300px;
 	margin: 10px 10px 0px 10px;
 	text-align: center;
+	border: 1px solid #2e3436;
+}
+
+.display-vacancies {
+	margin: 10px 10px 0px 10px;
+	text-align: left;
 	border: 1px solid #2e3436;
 }
 

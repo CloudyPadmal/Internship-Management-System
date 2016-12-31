@@ -44,26 +44,29 @@
 		</table>
 	</div>
 	<div>
-		<a href="/MSDProject/vacancy/add/${company.company}">Add Vacancy</a>
+		<a href="/MSDProject/vacancy/add/${company.company}" class="button">Add
+			Vacancy</a>
 	</div>
-	<div>
+	<div class="section-three">
 		<c:forEach var="vacancy" items="${vacancies}">
 			<table class="display-vacancies">
 				<tr>
-					<td><div class="column-head">ID</div></td>
-					<td><div class="column-body">${vacancy.id}</div></td>
-				</tr>
-				<tr>
 					<td><div class="column-head">Title</div></td>
-					<td><div class="column-body">${vacancy.title}</div></td>
+					<td><div class="column-body">
+							${vacancy.id}.&nbsp;<b>${vacancy.title}</b> <i>${vacancy.applicantCount}</i>
+						</div></td>
 				</tr>
 				<tr>
 					<td><div class="column-head">Description</div></td>
-					<td><div class="column-body">${vacancy.description_1}</div></td>
+					<td><div class="column-body">${vacancy.description_1}&nbsp;${vacancy.description_2}</div></td>
 				</tr>
 				<tr>
 					<td><div class="column-head">Preferences</div></td>
 					<td><div class="column-body">${vacancy.preferences}</div></td>
+				</tr>
+				<tr>
+					<td />
+					<td><a href="vacancy/${vacancy.id}/delete" class="button" type="submit">Delete ${vacancy.title}</a><a href="vacancy/${vacancy.id}/update" class="button" type="submit">Edit ${vacancy.title}</a></td>
 				</tr>
 			</table>
 		</c:forEach>

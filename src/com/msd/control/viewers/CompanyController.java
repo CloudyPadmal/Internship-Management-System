@@ -1,5 +1,6 @@
 package com.msd.control.viewers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,16 +14,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.msd.items.Applicant;
 import com.msd.items.Company;
 import com.msd.items.LoginInfo;
 import com.msd.items.Vacancy;
+import com.msd.pool.interfaces.Preferences;
 import com.msd.pool.items.PoolCompanies;
 import com.msd.pool.items.PoolPasswords;
 import com.msd.pool.items.PoolVacancies;
 
 @Controller
 @RequestMapping("company")
-public class CompanyController {
+public class CompanyController implements Preferences {
 
 	@Autowired
 	PoolPasswords poolPW;
@@ -78,4 +81,57 @@ public class CompanyController {
 		model.addAttribute("vacancies", listOfVacancies);
 		return "displays/show_company";
 	}
+
+	// Delete Vacancy
+	@RequestMapping(value = "/vacancy/{vacancyID}/delete", method = RequestMethod.GET)
+	public String deleteVacancy(@PathVariable("vacancyID") int vacancyID, final RedirectAttributes redirectAttributes) {
+		String companyName = poolVacancies.getCompanyName(vacancyID);
+		// Delete vacancy
+		poolVacancies.deleteVacancy(vacancyID);
+		poolCompanies.decrementVacancyCount(companyName);
+		// Pass the successful message to redirect
+		redirectAttributes.addFlashAttribute("msg", "Vacancy deleted!");
+		return "redirect:/company/" + companyName;
+	}
+
+	// Delete Vacancy
+	@RequestMapping(value = "/vacancy/{vacancyID}/update", method = RequestMethod.GET)
+	public String showUpdateUserForm(@PathVariable("vacancyID") int vacancyID, Model model) {
+		// Fetch the Vacancy details from database
+		Vacancy vacancy = poolVacancies.fetchVacancy(vacancyID);
+		// Add details under "userForm"
+		model.addAttribute("vacancyForm", vacancy);
+		// Generate preference list
+		model = generatePrefList(model);
+		// Add update notations
+		model.addAttribute("status", false);
+		return "logins/new_vacancy";
+	}
+
+	// Generate default values for preferences
+	private Model generatePrefList(Model model) {
+		// Create a list of preferences
+		List<String> preferences = new ArrayList<>();
+		preferences.add(ANTENNAS);
+		preferences.add(BIOMECHANICS);
+		preferences.add(BIOMEDICAL);
+		preferences.add(WIFI);
+		preferences.add(ARDUINO);
+		preferences.add(AUTOMATION);
+		preferences.add(AI);
+		preferences.add(CIRCUITS);
+		preferences.add(FPGA);
+		preferences.add(IMAGEPROCESSING);
+		preferences.add(IOT);
+		preferences.add(NETWORKING);
+		preferences.add(PROCESSORDESIGN);
+		preferences.add(PROGRAMMING);
+		preferences.add(SEMICONDUCTORS);
+		preferences.add(SIGNALPROCESSING);
+		preferences.add(TELECOM);
+		// Add them under "preferences"
+		model.addAttribute("preferences", preferences);
+		return model;
+	}
+
 }

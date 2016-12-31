@@ -9,11 +9,20 @@
 </head>
 <body class="homebody">
 
-	<h1>New Vacancy</h1>
+	<c:choose>
+		<c:when test="${status}">
+			<h1>New Vacancy</h1>
+		</c:when>
+		<c:otherwise>
+			<h1>Update</h1>
+		</c:otherwise>
+	</c:choose>
 	<br />
 
 	<form:form method="post" modelAttribute="vacancyForm"
 		action="/MSDProject/vacancy/vacancies">
+
+		<form:hidden path="id" />.
 		
 		<spring:bind path="title">
 			<label>Title</label>
@@ -61,7 +70,14 @@
 		</spring:bind>
 		<br />
 
-		<button type="submit">Create</button>
+		<c:choose>
+			<c:when test="${status}">
+				<button type="submit" name="create">Create</button>
+			</c:when>
+			<c:otherwise>
+				<button type="submit" name="update">Update</button>
+			</c:otherwise>
+		</c:choose>		
 	</form:form>
 </body>
 </html>

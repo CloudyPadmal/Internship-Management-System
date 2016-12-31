@@ -47,6 +47,7 @@ public class VacancyController implements Preferences {
 		// Pass the Vacancy as "vacancyForm"
 		model = generatePrefList(model);
 		model.addAttribute("vacancyForm", new Vacancy(companyName));
+		model.addAttribute("status", true);
 		// Display the html page
 		return "logins/new_vacancy";
 	}
@@ -83,7 +84,7 @@ public class VacancyController implements Preferences {
 	}
 
 	// This will be called upon clicking register button
-	@RequestMapping(value = "vacancies", method = RequestMethod.POST)
+	@RequestMapping(value = "vacancies", method = RequestMethod.POST, params = "create")
 	public String addVacancy(@ModelAttribute("vacancyForm") @Validated Vacancy vacancy, BindingResult result,
 			Model model, RedirectAttributes redirectAttributes) {
 		if (result.hasErrors()) {
@@ -96,7 +97,24 @@ public class VacancyController implements Preferences {
 			poolVacancies.addVacancy(vacancy);
 			poolCompanies.incrementVacancyCount(vacancy.getCompany());
 			// Display Vacancy details
-			return "redirect:show/" + vacancy.getId();
+			return "redirect:/company/" + vacancy.getCompany();
+		}
+	}
+
+	// This will be called upon clicking register button
+	@RequestMapping(value = "vacancies", method = RequestMethod.POST, params = "update")
+	public String updateVacancy(@ModelAttribute("vacancyForm") @Validated Vacancy vacancy, BindingResult result,
+			Model model, RedirectAttributes redirectAttributes) {
+		if (result.hasErrors()) {
+			model = generatePrefList(model);
+			return "logins/new_vacancy";
+		} else {
+			// Pass success message to redirect view
+			redirectAttributes.addFlashAttribute("msg", "Vacancy updated successfully!");
+			// Add Vacancy to the Vacancy table
+			poolVacancies.updateVacancy(vacancy);
+			// Display Vacancy details
+			return "redirect:/company/" + vacancy.getCompany();
 		}
 	}
 

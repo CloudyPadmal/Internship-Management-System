@@ -88,8 +88,14 @@ public class PoolCompanies implements CompanyDAO {
 	}
 
 	@Override
-	public int incrementVacancyCount(String company) {
-		String sql = "UPDATE " + CompanyDAO.TABLE + " SET positions = positions + 1 WHERE company = '" + company + "'";
+	public int incrementVacancyCount(String companyName) {
+		String sql = "UPDATE " + CompanyDAO.TABLE + " SET positions = positions + 1 WHERE company = '" + companyName + "'";
+		return dbHandler.update(sql);
+	}
+	
+	@Override
+	public int decrementVacancyCount(String companyName) {
+		String sql = "UPDATE " + CompanyDAO.TABLE + " SET positions = positions - 1 WHERE company = '" + companyName + "'";
 		return dbHandler.update(sql);
 	}
 }

@@ -19,7 +19,7 @@ public interface VacancyDAO {
 	public int deleteVacancy(int vacancy);
 
 	// Update Vacancy
-	public void updateVacancy(Vacancy newVacancy);
+	public int updateVacancy(Vacancy newVacancy);
 
 	// Get a list of vacancies
 	public List<Vacancy> getAllVacancies();
@@ -29,4 +29,7 @@ public interface VacancyDAO {
 	
 	// Get a list of vacancies in a company
 	public List<Vacancy> getCompanyVacancies(String company);
+
+	// Get the company name of a vacancy
+	public String getCompanyName(int vacancyID);
 }

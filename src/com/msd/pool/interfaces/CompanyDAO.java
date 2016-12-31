@@ -7,7 +7,7 @@ import com.msd.items.Company;
 import com.msd.pool.items.PoolCriteria;
 
 public interface CompanyDAO {
-	
+
 	public final String TABLE = "company_table";
 
 	// New applicant
@@ -18,9 +18,12 @@ public interface CompanyDAO {
 
 	// Delete applicant
 	public int deleteCompany(String companyName);
-	
+
 	// Increment vacancy count
 	public int incrementVacancyCount(String company);
+
+	// Decrement vacancy count
+	public int decrementVacancyCount(String companyName);
 
 	// Update applicant <Username is assumed to be the same>
 	public void updateCompany(Company newCompany);

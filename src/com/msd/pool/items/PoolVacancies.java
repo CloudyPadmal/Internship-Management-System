@@ -77,28 +77,21 @@ public class PoolVacancies implements VacancyDAO {
 	}
 
 	@Override
-	public void updateVacancy(Vacancy newVacancy) {
-		PoolCriteria criteria = newVacancy.convertListToPref();
-		/*
-		 * String sql = "UPDATE " + VacancyDAO.TABLE +
-		 * " (company, salary, title, description_1, description_2, ARDUINO, " +
-		 * "FPGA, ROBOTICS, WIFI, ANTENNAS, NETWORKING, PROCESSORDESIGN, IMAGEPROCESSING, PROGRAMMING, AUTOMATION, "
-		 * +
-		 * "BIOMEDICAL, BIOMECHANICS, TELECOM, SEMICONDUCTORS, CIRCUITS, IOT, AI, SIGNALPROCESSING) "
-		 * + "VALUES ('" + vacancy.getCompany() + "', '" + vacancy.getSalary() +
-		 * "', '" + vacancy.getTitle() + "', '" + vacancy.getDescription_1() +
-		 * "', '" + vacancy.getDescription_2() + "'," + criteria.isARDUINO() +
-		 * "," + criteria.isFPGA() + "," + criteria.isROBOTICS() + "," +
-		 * criteria.isWIFI() + "," + criteria.isANTENNAS() + "," +
-		 * criteria.isNETWORKING() + "," + criteria.isPROCESSORDESIGN() + "," +
-		 * criteria.isIMAGEPROCESSING() + "," + criteria.isPROGRAMMING() + "," +
-		 * criteria.isAUTOMATION() + "," + criteria.isBIOMEDICAL() + "," +
-		 * criteria.isBIOMECHANICS() + "," + criteria.isTELECOM() + "," +
-		 * criteria.isSEMICONDUCTORS() + "," + criteria.isCIRCUITS() + "," +
-		 * criteria.isIOT() + "," + criteria.isAI() + "," +
-		 * criteria.isSIGNALPROCESSING() + ")";
-		 */
-		// return dbHandler.update(sql);
+	public int updateVacancy(Vacancy vacancy) {
+		PoolCriteria criteria = vacancy.convertListToPref();
+
+		String sql = "UPDATE " + VacancyDAO.TABLE + " SET salary = " + vacancy.getSalary() + ", title = '"
+				+ vacancy.getTitle() + "', description_1 = '" + vacancy.getDescription_1() + "', description_2 = '"
+				+ vacancy.getDescription_2() + "', ARDUINO = " + criteria.isARDUINO() + ", FPGA = " + criteria.isFPGA()
+				+ ", ROBOTICS = " + criteria.isROBOTICS() + ", WIFI = " + criteria.isWIFI() + ", ANTENNAS = "
+				+ criteria.isANTENNAS() + ", NETWORKING = " + criteria.isNETWORKING() + ", PROCESSORDESIGN = "
+				+ criteria.isPROCESSORDESIGN() + ", IMAGEPROCESSING = " + criteria.isIMAGEPROCESSING()
+				+ ", PROGRAMMING = " + criteria.isPROGRAMMING() + ", AUTOMATION = " + criteria.isAUTOMATION()
+				+ ", BIOMEDICAL = " + criteria.isBIOMEDICAL() + ", BIOMECHANICS = " + criteria.isBIOMECHANICS()
+				+ ", TELECOM = " + criteria.isTELECOM() + ", SEMICONDUCTORS = " + criteria.isSEMICONDUCTORS()
+				+ ", CIRCUITS = " + criteria.isCIRCUITS() + ", IOT = " + criteria.isIOT() + ", AI = " + criteria.isAI()
+				+ ", SIGNALPROCESSING = " + criteria.isSIGNALPROCESSING() + " WHERE id = " + vacancy.getId();
+		return dbHandler.update(sql);
 	}
 
 	@Override
@@ -173,5 +166,19 @@ public class PoolVacancies implements VacancyDAO {
 					}
 				});
 		return list;
+	}
+
+	@Override
+	public String getCompanyName(int vacancyID) {
+		String sql = "SELECT company FROM " + VacancyDAO.TABLE + " WHERE id = '" + vacancyID + "'";
+		return dbHandler.query(sql, new ResultSetExtractor<String>() {
+			@Override
+			public String extractData(ResultSet rs) throws SQLException, DataAccessException {
+				if (rs.next()) {
+					return rs.getString("company");
+				}
+				return null;
+			}
+		});
 	}
 }
