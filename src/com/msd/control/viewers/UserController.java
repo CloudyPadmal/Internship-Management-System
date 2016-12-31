@@ -14,8 +14,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.msd.items.Applicant;
 import com.msd.items.LoginInfo;
+import com.msd.items.Vacancy;
 import com.msd.pool.items.PoolApplicants;
 import com.msd.pool.items.PoolPasswords;
+import com.msd.pool.items.PoolVacancies;
 
 @Controller
 @RequestMapping("user")
@@ -25,6 +27,8 @@ public class UserController {
 	PoolPasswords poolPW;
 	@Autowired
 	PoolApplicants poolApplicants;
+	@Autowired
+	PoolVacancies poolVacancies;
 
 	// This view will display the correctness of the user credentials
 	@RequestMapping(value = "/log", method = RequestMethod.POST, params = "login")
@@ -32,6 +36,8 @@ public class UserController {
 		if (poolPW.matchThisAndThat(info)) {
 			Applicant user = poolApplicants.fetchApplicant(info.getUsername());
 			model.addAttribute("user", user);
+			List<Vacancy> vacancies = poolVacancies.getVacancies(user.convertListToPref());
+			model.addAttribute("vacancies", vacancies);
 		} else {
 			redirects.addFlashAttribute("error", "Username or Password is wrong!");
 			return "redirect:/user_login";
