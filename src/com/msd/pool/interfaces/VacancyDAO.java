@@ -21,9 +21,12 @@ public interface VacancyDAO {
 	// Update Vacancy
 	public void updateVacancy(Vacancy newVacancy);
 
-	// Get a list of Vacancy
+	// Get a list of vacancies
 	public List<Vacancy> getAllVacancies();
 	
-	// Get a list of Vacancy matching given preferences
+	// Get a list of vacancies matching given preferences
 	public List<Vacancy> getVacancies(PoolCriteria criteria);
+	
+	// Get a list of vacancies in a company
+	public List<Vacancy> getCompanyVacancies(String company);
 }

@@ -1,6 +1,8 @@
 package com.msd.pool.items;
 
-public class PoolCriteria {
+import com.msd.pool.interfaces.Preferences;
+
+public class PoolCriteria implements Preferences {
 
 	boolean ARDUINO;
 	boolean FPGA;
@@ -189,5 +191,42 @@ public class PoolCriteria {
 
 	public void setSIGNALPROCESSING(boolean sIGNALPROCESSING) {
 		SIGNALPROCESSING = sIGNALPROCESSING;
+	}
+	
+	/**
+	 * Filters out invalid preferences and create a string full of selected
+	 * preferences
+	 * 
+	 * @return WHERE clause for a database fetch
+	 */
+	public String getWhereQuery() {
+		String set = " = TRUE AND ";
+		StringBuilder sBuilder = new StringBuilder();
+		sBuilder.append(isAI() ? Preferences.AI + set : "");
+		sBuilder.append(isANTENNAS() ? Preferences.ANTENNAS + set : "");
+		sBuilder.append(isARDUINO() ? Preferences.ARDUINO + set : "");
+		sBuilder.append(isAUTOMATION() ? Preferences.AUTOMATION + set : "");
+		sBuilder.append(isBIOMECHANICS() ? Preferences.BIOMECHANICS + set : "");
+		sBuilder.append(isBIOMEDICAL() ? Preferences.BIOMEDICAL + set : "");
+		sBuilder.append(isCIRCUITS() ? Preferences.CIRCUITS + set : "");
+		sBuilder.append(isFPGA() ? Preferences.FPGA + set : "");
+		sBuilder.append(isIMAGEPROCESSING() ? Preferences.IMAGEPROCESSING + set : "");
+		sBuilder.append(isIOT() ? Preferences.IOT + set : "");
+		sBuilder.append(isNETWORKING() ? Preferences.NETWORKING + set : "");
+		sBuilder.append(isPROCESSORDESIGN() ? Preferences.PROCESSORDESIGN + set : "");
+		sBuilder.append(isPROGRAMMING() ? Preferences.PROGRAMMING + set : "");
+		sBuilder.append(isROBOTICS() ? Preferences.ROBOTICS + set : "");
+		sBuilder.append(isSEMICONDUCTORS() ? Preferences.SEMICONDUCTORS + set : "");
+		sBuilder.append(isSIGNALPROCESSING() ? Preferences.SIGNALPROCESSING + set : "");
+		sBuilder.append(isTELECOM() ? Preferences.TELECOM + set : "");
+		sBuilder.append(isWIFI() ? Preferences.WIFI + set : "");
+		// Prepare the return statement
+		String rawQuery = sBuilder.toString();
+		if (rawQuery.contains(set)) {
+			rawQuery = " WHERE " + rawQuery.substring(0, rawQuery.length() - 5);
+			return rawQuery;
+		} else {
+			return null;
+		}
 	}
 }
