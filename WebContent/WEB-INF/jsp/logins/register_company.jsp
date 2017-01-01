@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<spring:url value="/resources/css/msd_styles.css" var="msdCSS" />
+<spring:url value="/resources/css/bootstrap.min.css" var="msdCSS" />
 <link href="${msdCSS}" rel="stylesheet" />
 </head>
 <body class="homebody">
@@ -12,20 +12,24 @@
 	<h1>Register</h1>
 	<br />
 
-	<form:form method="post" modelAttribute="companyForm" action="companies">
+	<form:form method="post" modelAttribute="companyForm"
+		action="companies">
 
 		<spring:bind path="company">
-			<label>Company Name</label>
-			<form:input path="company" type="text" id="company"
-				placeholder="Company Name" />
-			<form:errors path="company" />
+			<div class="form-group ${status.error ? 'has-error' : ''}">
+				<label class="col-sm-2 control-label">Company Name</label>
+				<div class="col-sm-10">
+					<form:input path="company" type="text" class="form-control" id="company"
+						placeholder="Company Name" />
+					<form:errors path="company" class="control-label" />
+				</div>
+			</div>
 		</spring:bind>
 		<br />
-		
+
 		<spring:bind path="loginID">
 			<label>Login ID</label>
-			<form:input path="loginID" id="loginID"
-				placeholder="Login ID" />
+			<form:input path="loginID" id="loginID" placeholder="Login ID" />
 			<form:errors path="loginID" />
 		</spring:bind>
 		<br />
