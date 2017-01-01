@@ -36,7 +36,7 @@ public class PoolCompanies implements CompanyDAO {
 
 	@Override
 	public Company fetchCompany(String companyName) {
-		String sql = "SELECT * FROM " + CompanyDAO.TABLE + " WHERE company = '" + companyName + "'";
+		String sql = "SELECT * FROM " + CompanyDAO.TABLE + " WHERE loginID = '" + companyName + "'";
 		return dbHandler.query(sql, new ResultSetExtractor<Company>() {
 			@Override
 			public Company extractData(ResultSet rs) throws SQLException, DataAccessException {

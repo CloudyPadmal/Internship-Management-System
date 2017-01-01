@@ -7,6 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +26,7 @@ import com.msd.pool.interfaces.Preferences;
 import com.msd.pool.items.PoolCompanies;
 import com.msd.pool.items.PoolPasswords;
 import com.msd.pool.items.PoolVacancies;
+import com.msd.pool.validators.PoolCompanyValidator;
 
 @Controller
 @RequestMapping("company")
@@ -37,6 +42,7 @@ public class CompanyController implements Preferences {
 	// This view will display the correctness of the user credentials
 	@RequestMapping(value = "/log", method = RequestMethod.POST, params = "login")
 	public String logUserIn(LoginInfo info, ModelMap model, RedirectAttributes redirects) {
+		System.out.println(info.getPassword() + " " + info.getUsername() + " " + info.getencodedPassword());
 		if (poolPW.matchThisAndThat(info)) {
 			return "redirect:" + info.getUsername();
 		} else {
@@ -48,7 +54,6 @@ public class CompanyController implements Preferences {
 	// This view will direct to the register view
 	@RequestMapping(value = "/log", method = RequestMethod.POST, params = "register")
 	public String register(LoginInfo info, ModelMap model, RedirectAttributes redirects) {
-		poolPW.addPassword(info);
 		return "redirect:/reg/company/";
 	}
 

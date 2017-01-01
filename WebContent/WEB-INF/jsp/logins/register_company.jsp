@@ -8,19 +8,34 @@
 <link href="${msdCSS}" rel="stylesheet" />
 </head>
 <body class="homebody">
-
-	<h1>Register</h1>
+	<c:choose>
+		<c:when test="${new_company}">
+			<h1>Register</h1>
+		</c:when>
+		<c:otherwise>
+			<h1>Update</h1>
+		</c:otherwise>
+	</c:choose>
 	<br />
 
+<c:choose>
+		<c:when test="${new_company}">
+			<spring:url value="companies" var="actionURL" />
+		</c:when>
+		<c:otherwise>
+			<spring:url value="/reg/company/companies" var="actionURL" />
+		</c:otherwise>
+	</c:choose>
+
 	<form:form method="post" modelAttribute="companyForm"
-		action="companies">
+		action="${actionURL}">
 
 		<spring:bind path="company">
 			<div class="form-group ${status.error ? 'has-error' : ''}">
 				<label class="col-sm-2 control-label">Company Name</label>
 				<div class="col-sm-10">
-					<form:input path="company" type="text" class="form-control" id="company"
-						placeholder="Company Name" />
+					<form:input path="company" type="text" class="form-control"
+						id="company" placeholder="Company Name" />
 					<form:errors path="company" class="control-label" />
 				</div>
 			</div>
@@ -49,21 +64,22 @@
 		</spring:bind>
 		<br />
 
-		<spring:bind path="password">
-			<label>Password</label>
-			<form:password path="password" id="password" placeholder="Password" />
-			<form:errors path="password" />
-		</spring:bind>
-		<br />
+		<c:if test="${new_company}">
+			<spring:bind path="password">
+				<label>Password</label>
+				<form:password path="password" id="password" placeholder="Password" />
+				<form:errors path="password" />
+			</spring:bind>
+			<br />
 
-		<spring:bind path="confirmPassword">
-			<label>Confirm Password</label>
-			<form:password path="confirmPassword" id="password"
-				placeholder="Confirm" />
-			<form:errors path="confirmPassword" />
-		</spring:bind>
-		<br />
-
+			<spring:bind path="confirmPassword">
+				<label>Confirm Password</label>
+				<form:password path="confirmPassword" id="password"
+					placeholder="Confirm" />
+				<form:errors path="confirmPassword" />
+			</spring:bind>
+			<br />
+		</c:if>
 		<spring:bind path="telephone">
 			<label>Telephone</label>
 			<form:input path="telephone" id="telephone" placeholder="Telephone" />
@@ -77,7 +93,15 @@
 			<form:errors path="aboutUs" />
 		</spring:bind>
 		<br />
-		<button type="submit">Register</button>
+		<c:choose>
+		<c:when test="${new_company}">
+			<button type="submit" name="create">Register</button>
+		</c:when>
+		<c:otherwise>
+			<button type="submit" name="update">Update</button>
+		</c:otherwise>
+	</c:choose>
+		
 	</form:form>
 </body>
 </html>

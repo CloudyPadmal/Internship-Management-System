@@ -1,6 +1,5 @@
 package com.msd.control.registers;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,6 +41,8 @@ public class CompanyRegisterController implements Preferences {
 	public String registerCompany(Model model) {
 		// Pass the Applicant as "userForm"
 		model.addAttribute("companyForm", new Company());
+		// Notify this is an update
+		model.addAttribute("new_company", true);
 		// Display the html page
 		return "logins/register_company";
 	}
@@ -56,7 +57,8 @@ public class CompanyRegisterController implements Preferences {
 
 	// Delete Company
 	@RequestMapping(value = "/company/{index}/delete", method = RequestMethod.GET)
-	public String deleteCompany(@PathVariable("index") String companyName, final RedirectAttributes redirectAttributes) {
+	public String deleteCompany(@PathVariable("index") String companyName,
+			final RedirectAttributes redirectAttributes) {
 		poolCompanies.deleteCompany(companyName);
 		// Pass the successful message to redirect
 		redirectAttributes.addFlashAttribute("msg", "Company deleted!");
@@ -78,10 +80,10 @@ public class CompanyRegisterController implements Preferences {
 	}
 
 	// This will be called upon clicking register button
-	@RequestMapping(value = "companies", method = RequestMethod.POST)
-	public String addCompany(@ModelAttribute("companyForm") @Validated Company company, BindingResult result, Model model,
-			RedirectAttributes redirectAttributes) {
-		if (result.hasErrors()) {
+	@RequestMapping(value = "companies", method = RequestMethod.POST, params = "create")
+	public String addCompany(@ModelAttribute("companyForm") @Validated Company company, BindingResult result,
+			Model model, RedirectAttributes redirectAttributes) {
+		if (result.hasErrors() || company.isNotOK()) {
 			return "logins/register_company";
 		} else {
 			// Pass success message to redirect view
@@ -91,17 +93,36 @@ public class CompanyRegisterController implements Preferences {
 			// Add password of the company to the password table
 			poolPW.addPassword(new LoginInfo(company.getLoginID(), company.getPassword(), true));
 			// Display Company details
-			return "redirect:company/" + company.getCompany();
+			return "redirect:company/" + company.getLoginID();
+		}
+	}
+
+	// This will be called upon clicking register button
+	@RequestMapping(value = "companies", method = RequestMethod.POST, params = "update")
+	public String updateCompany(@ModelAttribute("companyForm") @Validated Company company, BindingResult result,
+			Model model, RedirectAttributes redirectAttributes) {
+		if (result.hasErrors() || company.isNotOK()) {
+			return "logins/register_company";
+		} else {
+			// Pass success message to redirect view
+			redirectAttributes.addFlashAttribute("msg", "Company updated successfully!");
+			// Add company to the company table
+			poolCompanies.updateCompany(company);
+			// Display Company details
+			return "redirect:company/" + company.getLoginID();
 		}
 	}
 
 	// Display Update Form
 	@RequestMapping(value = "/company/{id}/update", method = RequestMethod.GET)
 	public String showUpdateCompanyForm(@PathVariable("id") String id, Model model) {
+		System.out.println("Came here to company update!");
 		// Fetch the company details from database
 		Company company = poolCompanies.fetchCompany(id);
 		// Add details under "companyForm"
 		model.addAttribute("companyForm", company);
+		// Notify this is an update
+		model.addAttribute("new_company", false);
 		return "logins/register_company";
 	}
 }

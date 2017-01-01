@@ -45,7 +45,7 @@
 	</div>
 	<div>
 		<a href="/MSDProject/vacancy/add/${company.company}" class="button">Add	Vacancy</a>
-		<a href="${company.company}" class="button">Edit</a>
+		<a href="/MSDProject/reg/company/company/${company.loginID}/update" class="button">Edit</a>
 		<a href="/MSDProject/" class="button">Log Out</a>
 	</div>
 	<div class="section-three">

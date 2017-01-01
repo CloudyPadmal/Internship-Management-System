@@ -80,4 +80,9 @@ public class Company extends User {
 	public void setPositions(int positions) {
 		this.positions = positions;
 	}
+	
+	// TODO : Handle through validation
+	public boolean isNotOK() {
+		return this.loginID.isEmpty() || this.company.isEmpty();
+	}
 }
