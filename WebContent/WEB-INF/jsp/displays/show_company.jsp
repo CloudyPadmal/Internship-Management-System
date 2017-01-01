@@ -44,8 +44,9 @@
 		</table>
 	</div>
 	<div>
-		<a href="/MSDProject/vacancy/add/${company.company}" class="button">Add
-			Vacancy</a>
+		<a href="/MSDProject/vacancy/add/${company.company}" class="button">Add	Vacancy</a>
+		<a href="${company.company}" class="button">Edit</a>
+		<a href="/MSDProject/" class="button">Log Out</a>
 	</div>
 	<div class="section-three">
 		<c:forEach var="vacancy" items="${vacancies}">
@@ -67,10 +68,10 @@
 				</tr>
 				<tr>
 					<td />
-					<td>
-					<a href="vacancy/${vacancy.id}/delete" class="button" type="submit">Delete ${vacancy.title}</a>
-					<a href="vacancy/${vacancy.id}/update" class="button" type="submit">Edit ${vacancy.title}</a>
-					<i><b>[${vacancy.applicant}]</b></i></td>
+					<td><a href="vacancy/${vacancy.id}/delete" class="button"
+						type="submit">Delete ${vacancy.title}</a> <a
+						href="vacancy/${vacancy.id}/update" class="button" type="submit">Edit
+							${vacancy.title}</a> <i><b>[${vacancy.applicant}]</b></i></td>
 				</tr>
 			</table>
 		</c:forEach>
