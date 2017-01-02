@@ -7,6 +7,7 @@
 <spring:url value="/resources/css/bootstrap.min.css" var="msdCSS" />
 <link href="${msdCSS}" rel="stylesheet" />
 </head>
+
 <body class="homebody">
 	<c:choose>
 		<c:when test="${new_company}">
@@ -18,7 +19,7 @@
 	</c:choose>
 	<br />
 
-<c:choose>
+	<c:choose>
 		<c:when test="${new_company}">
 			<spring:url value="companies" var="actionURL" />
 		</c:when>
@@ -94,14 +95,14 @@
 		</spring:bind>
 		<br />
 		<c:choose>
-		<c:when test="${new_company}">
-			<button type="submit" name="create">Register</button>
-		</c:when>
-		<c:otherwise>
-			<button type="submit" name="update">Update</button>
-		</c:otherwise>
-	</c:choose>
-		
+			<c:when test="${new_company}">
+				<button type="submit" name="create">Register</button>
+			</c:when>
+			<c:otherwise>
+				<button type="submit" name="update">Update</button>
+			</c:otherwise>
+		</c:choose>
+
 	</form:form>
 </body>
 </html>
