@@ -10,7 +10,99 @@ html {
 }
 
 body {
-	margin: 0
+  padding-top: 50px;
+}
+
+.sub-header {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+/*
+ * Top navigation
+ * Hide default border to remove 1px line.
+ */
+.navbar-fixed-top {
+  border: 0;
+}
+
+/*
+ * Sidebar
+ */
+
+/* Hide for mobile, show later */
+.sidebar {
+  display: none;
+}
+@media (min-width: 768px) {
+  .sidebar {
+    position: fixed;
+    top: 51px;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    display: block;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+    background-color: #f5f5f5;
+    border-right: 1px solid #eee;
+  }
+}
+
+/* Sidebar navigation */
+.nav-sidebar {
+  margin-right: -21px; /* 20px padding + 1px border */
+  margin-bottom: 20px;
+  margin-left: -20px;
+}
+.nav-sidebar > li > a {
+  padding-right: 20px;
+  padding-left: 20px;
+}
+.nav-sidebar > .active > a,
+.nav-sidebar > .active > a:hover,
+.nav-sidebar > .active > a:focus {
+  color: #fff;
+  background-color: #428bca;
+}
+
+
+/*
+ * Main content
+ */
+
+.main {
+  padding: 20px;
+}
+@media (min-width: 768px) {
+  .main {
+    padding-right: 40px;
+    padding-left: 40px;
+  }
+}
+.main .page-header {
+  margin-top: 0;
+}
+
+
+/*
+ * Placeholder dashboard ideas
+ */
+
+.placeholders {
+  margin-bottom: 30px;
+  text-align: center;
+}
+.placeholders h4 {
+  margin-bottom: 0;
+}
+.placeholder {
+  margin-bottom: 20px;
+}
+.placeholder img {
+  display: inline-block;
+  border-radius: 50%;
 }
 
 article, aside, details, figcaption, figure, footer, header, hgroup,
@@ -23,11 +115,27 @@ audio, canvas, progress, video {
 	vertical-align: baseline
 }
 
-audio:not ([controls] ){
-	display: none;
-	height: 0
-}
+audio
+:not
+ 
+(
+[
+controls
+]
+ 
+){
+display
+:
+ 
+none
+;
 
+	
+height
+:
+ 
+0
+}
 [hidden], template {
 	display: none
 }
@@ -85,10 +193,20 @@ img {
 	border: 0
 }
 
-svg:not (:root ){
-	overflow: hidden
-}
+svg
+:not
+ 
+(
+:root
+ 
+){
+overflow
+:
+ 
+hidden
 
+
+}
 figure {
 	margin: 1em 40px
 }
@@ -192,7 +310,7 @@ table {
 td, th {
 	padding: 0
 }
-	/*! Source: https://github.com/h5bp/html5-boilerplate/blob/master/src/css/main.css */
+/*! Source: https://github.com/h5bp/html5-boilerplate/blob/master/src/css/main.css */
 @media print {
 	*, :after, :before {
 		color: #000 !important;
@@ -3874,26 +3992,91 @@ tbody.collapse.in {
 	margin-left: 5px
 }
 
-.btn-group>.btn:not (:first-child ):not (:last-child ):not (.dropdown-toggle
-	){
-	border-radius: 0
-}
+.btn-group
+>
+.btn
+:not
+ 
+(
+:first-child
+ 
+)
+:not
+ 
+(
+:last-child
+ 
+)
+:not
+ 
+(
+.dropdown-toggle
 
+	
+){
+border-radius
+:
+ 
+0
+}
 .btn-group>.btn:first-child {
 	margin-left: 0
 }
 
-.btn-group>.btn:first-child:not (:last-child ):not (.dropdown-toggle ){
-	border-top-right-radius: 0;
-	border-bottom-right-radius: 0
+.btn-group
+>
+.btn
+:first-child
+:not
+ 
+(
+:last-child
+ 
+)
+:not
+ 
+(
+.dropdown-toggle
+ 
+){
+border-top-right-radius
+:
+ 
+0;
+border-bottom-right-radius
+:
+ 
+0
 }
+.btn-group
+>
+.btn
+:last-child
+:not
+ 
+(
+:first-child
+ 
+),
+.btn-group
+>
+.dropdown-toggle
+:not
 
-.btn-group>.btn:last-child:not (:first-child ), .btn-group>.dropdown-toggle:not
-	(:first-child ){
-	border-top-left-radius: 0;
-	border-bottom-left-radius: 0
+	
+(
+:first-child
+ 
+){
+border-top-left-radius
+:
+ 
+0;
+border-bottom-left-radius
+:
+ 
+0
 }
-
 .btn-group>.btn-group {
 	float: left
 }
@@ -3969,22 +4152,79 @@ tbody.collapse.in {
 	margin-left: 0
 }
 
-.btn-group-vertical>.btn:not (:first-child ):not (:last-child ){
-	border-radius: 0
+.btn-group-vertical
+>
+.btn
+:not
+ 
+(
+:first-child
+ 
+)
+:not
+ 
+(
+:last-child
+ 
+){
+border-radius
+:
+ 
+0
 }
+.btn-group-vertical
+>
+.btn
+:first-child
+:not
+ 
+(
+:last-child
+ 
+){
+border-top-right-radius
+:
+ 
+4
+px
+;
 
-.btn-group-vertical>.btn:first-child:not (:last-child ){
-	border-top-right-radius: 4px;
-	border-bottom-right-radius: 0;
-	border-bottom-left-radius: 0
+	
+border-bottom-right-radius
+:
+ 
+0;
+border-bottom-left-radius
+:
+ 
+0
 }
+.btn-group-vertical
+>
+.btn
+:last-child
+:not
+ 
+(
+:first-child
+ 
+){
+border-top-left-radius
+:
+ 
+0;
+border-top-right-radius
+:
+ 
+0;
+border-bottom-left-radius
+:
+ 
+4
+px
 
-.btn-group-vertical>.btn:last-child:not (:first-child ){
-	border-top-left-radius: 0;
-	border-top-right-radius: 0;
-	border-bottom-left-radius: 4px
+
 }
-
 .btn-group-vertical>.btn-group:not (:first-child ):not (:last-child )>.btn
 	{
 	border-radius: 0
@@ -4100,12 +4340,52 @@ select[multiple].input-group-sm>.form-control, select[multiple].input-group-sm>.
 	display: table-cell
 }
 
-.input-group .form-control:not (:first-child ):not (:last-child ),
-	.input-group-addon:not (:first-child ):not (:last-child ),
-	.input-group-btn:not (:first-child ):not (:last-child ){
-	border-radius: 0
+.input-group
+ 
+.form-control
+:not
+ 
+(
+:first-child
+ 
+)
+:not
+ 
+(
+:last-child
+ 
+),
+.input-group-addon
+:not
+ 
+(
+:first-child
+ 
+)
+:not
+ 
+(
+:last-child
+ 
+),
+.input-group-btn
+:not
+ 
+(
+:first-child
+ 
+)
+:not
+ 
+(
+:last-child
+ 
+){
+border-radius
+:
+ 
+0
 }
-
 .input-group-addon, .input-group-btn {
 	width: 1%;
 	white-space: nowrap;
@@ -4141,15 +4421,70 @@ select[multiple].input-group-sm>.form-control, select[multiple].input-group-sm>.
 	margin-top: 0
 }
 
-.input-group .form-control:first-child, .input-group-addon:first-child,
-	.input-group-btn:first-child>.btn, .input-group-btn:first-child>.btn-group>.btn,
-	.input-group-btn:first-child>.dropdown-toggle, .input-group-btn:last-child>.btn-group:not
-	(:last-child )>.btn, .input-group-btn:last-child>.btn:not (:last-child
-	):not (.dropdown-toggle ){
-	border-top-right-radius: 0;
-	border-bottom-right-radius: 0
-}
+.input-group
+ 
+.form-control
+:first-child
+,
+.input-group-addon
+:first-child
+,
+.input-group-btn
+:first-child
+>
+.btn
+,
+.input-group-btn
+:first-child
+>
+.btn-group
+>
+.btn
+,
+.input-group-btn
+:first-child
+>
+.dropdown-toggle
+,
+.input-group-btn
+:last-child
+>
+.btn-group
+:not
 
+	
+(
+:last-child
+ 
+)>
+.btn
+,
+.input-group-btn
+:last-child
+>
+.btn
+:not
+ 
+(
+:last-child
+
+	
+)
+:not
+ 
+(
+.dropdown-toggle
+ 
+){
+border-top-right-radius
+:
+ 
+0;
+border-bottom-right-radius
+:
+ 
+0
+}
 .input-group-addon:first-child {
 	border-right: 0
 }

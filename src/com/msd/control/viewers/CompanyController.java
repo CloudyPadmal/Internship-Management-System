@@ -99,12 +99,12 @@ public class CompanyController implements Preferences {
 		return "redirect:/company/" + companyName;
 	}
 
-	// Delete Vacancy
+	// Update Vacancy
 	@RequestMapping(value = "/vacancy/{vacancyID}/update", method = RequestMethod.GET)
-	public String showUpdateUserForm(@PathVariable("vacancyID") int vacancyID, Model model) {
+	public String showUpdateVacancy(@PathVariable("vacancyID") int vacancyID, Model model) {
 		// Fetch the Vacancy details from database
 		Vacancy vacancy = poolVacancies.fetchVacancy(vacancyID);
-		// Add details under "userForm"
+		// Add details under "vacancyForm"
 		model.addAttribute("vacancyForm", vacancy);
 		// Generate preference list
 		model = generatePrefList(model);

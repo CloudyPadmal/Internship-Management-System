@@ -26,7 +26,7 @@ public interface CompanyDAO {
 	public int decrementVacancyCount(String companyName);
 
 	// Update applicant <Username is assumed to be the same>
-	public void updateCompany(Company newCompany);
+	public int updateCompany(Company newCompany);
 
 	// Get a list of applicants
 	public List<Company> getAllCompanies();

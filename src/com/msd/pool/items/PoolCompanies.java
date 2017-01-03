@@ -55,14 +55,16 @@ public class PoolCompanies implements CompanyDAO {
 
 	@Override
 	public int deleteCompany(String companyName) {
-		String sql = "DELETE FROM " + CompanyDAO.TABLE + " WHERE company = ?";
+		String sql = "DELETE FROM " + CompanyDAO.TABLE + " WHERE loginID = ?";
 		return dbHandler.update(sql, companyName);
 	}
-
+	
 	@Override
-	public void updateCompany(Company newCompany) {
-		// TODO Auto-generated method stub
-
+	public int updateCompany(Company newCompany) {
+		String sql = "UPDATE " + CompanyDAO.TABLE + " SET company = '" + newCompany.getCompany() + "', address = '"
+				+ newCompany.getAddress() + "', emailAddress = '" + newCompany.getEmailAddress() + "', telephone = '"
+				+ newCompany.getTelephone() + "', aboutUs = '" + newCompany.getAboutUs() + "' WHERE loginID = '" + newCompany.getLoginID() + "'";
+		return dbHandler.update(sql);
 	}
 
 	@Override

@@ -87,7 +87,8 @@ public class CompanyRegisterController implements Preferences {
 			return "logins/register_company";
 		} else {
 			// Pass success message to redirect view
-			redirectAttributes.addFlashAttribute("msg", "Company added successfully!");
+			redirectAttributes.addFlashAttribute("css", "success");
+			redirectAttributes.addFlashAttribute("msg", "Welcome " + company.getCompany());
 			// Add company to the company table
 			poolCompanies.addCompany(company);
 			// Add password of the company to the password table
@@ -105,6 +106,7 @@ public class CompanyRegisterController implements Preferences {
 			return "logins/register_company";
 		} else {
 			// Pass success message to redirect view
+			redirectAttributes.addFlashAttribute("css", "success");
 			redirectAttributes.addFlashAttribute("msg", "Company updated successfully!");
 			// Add company to the company table
 			poolCompanies.updateCompany(company);
