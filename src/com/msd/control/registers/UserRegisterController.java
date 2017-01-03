@@ -111,12 +111,13 @@ public class UserRegisterController implements Preferences {
 	}
 
 	// Delete User account
-	@RequestMapping(value = "/users/{index}/delete", method = RequestMethod.GET)
+	@RequestMapping(value = "/users/{index}/delete", method = RequestMethod.POST)
 	public String deleteUser(@PathVariable("index") String index, final RedirectAttributes redirectAttributes) {
 		poolApplicants.deleteApplicant(index);
 		// Pass the successful message to redirect
-		redirectAttributes.addFlashAttribute("msg", "User is deleted!");
-		return "redirect:/reg/user/users";
+		redirectAttributes.addFlashAttribute("css", "success");
+		redirectAttributes.addFlashAttribute("msg", "User deleted!");
+		return "redirect:/admin/view_users";
 	}
 
 	// Display Update Form

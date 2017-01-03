@@ -76,7 +76,6 @@ public class PoolApplicants implements ApplicantDAO {
 	public int deleteApplicant(String indexNumber) {
 		String sql = "DELETE FROM " + ApplicantDAO.TABLE + " WHERE indexNumber = ?";
 		return dbHandler.update(sql, indexNumber);
-
 	}
 
 	@Override
