@@ -61,7 +61,6 @@ public class UserController {
 	// This view will direct to the register view
 	@RequestMapping(value = "/log", method = RequestMethod.POST, params = "register")
 	public String register(LoginInfo info, ModelMap model, RedirectAttributes redirects) {
-		poolPW.addPassword(info);
 		return "redirect:/reg/user/";
 	}
 

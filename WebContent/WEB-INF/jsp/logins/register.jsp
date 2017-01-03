@@ -7,10 +7,28 @@
 <spring:url value="/resources/css/bootstrap.min.css" var="msdCSS" />
 <link href="${msdCSS}" rel="stylesheet" />
 </head>
-<body class="homebody">
-
-	<h1>Register</h1>
-	<br />
+<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<c:if test="${register}">
+					<a class="navbar-brand">Register</a>
+				</c:if>
+				<c:if test="${not register}">
+					<a class="navbar-brand">Update</a>
+				</c:if>
+			</div>
+		</div>
+	</nav>
+	<c:if test="${not empty msg}">
+		<div class="alert alert-${css} alert-dismissible" role="alert">
+			<button type="button" class="close" data-dismiss="alert"
+				aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<strong>${msg}</strong>
+		</div>
+	</c:if>
 
 	<form:form method="post" modelAttribute="userForm"
 		action="${actionURL}">
@@ -126,7 +144,8 @@
 		<br />
 
 		<spring:bind path="preferences">
-			<div class="form-group ${status.error ? 'has-error' : ''} check-box-block">
+			<div
+				class="form-group ${status.error ? 'has-error' : ''} check-box-block">
 				<label class="col-sm-2 control-label">Preferences</label>
 				<div class="col-sm-10">
 					<form:checkboxes path="preferences" items="${preferences}"
@@ -139,7 +158,8 @@
 		<br />
 
 		<spring:bind path="gender">
-			<div class="form-group ${status.error ? 'has-error' : ''} check-box-block">
+			<div
+				class="form-group ${status.error ? 'has-error' : ''} check-box-block">
 				<label class="col-sm-2 control-label">Gender</label>
 				<div class="col-sm-10">
 					<label class="radio-inline"><form:radiobutton path="gender"
@@ -151,14 +171,14 @@
 		</spring:bind>
 		<br />
 		<div class="col-sm-offset-2 col-sm-10">
-		<c:if test="${register}">
-			<button type="submit" name="register"
-				class="btn-lg btn-primary pull-right">Register</button>
-		</c:if>
-		<c:if test="${not register}">
-			<button type="submit" name="update"
-				class="btn-lg btn-primary pull-right">Update</button>
-		</c:if>
+			<c:if test="${register}">
+				<button type="submit" name="register"
+					class="btn-lg btn-primary pull-right">Register</button>
+			</c:if>
+			<c:if test="${not register}">
+				<button type="submit" name="update"
+					class="btn-lg btn-primary pull-right">Update</button>
+			</c:if>
 		</div>
 	</form:form>
 </body>

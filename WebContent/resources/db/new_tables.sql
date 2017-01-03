@@ -5,6 +5,8 @@ CREATE TABLE IF NOT EXISTS password_table (
 	user_type BOOL NOT NULL,
 	PRIMARY KEY(id)
 );
+
+ALTER TABLE password_table ADD UNIQUE username;
 	
 CREATE TABLE IF NOT EXISTS admin_table (
 	id INT(5) NOT NULL AUTO_INCREMENT,

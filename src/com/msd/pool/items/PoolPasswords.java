@@ -24,7 +24,11 @@ public class PoolPasswords implements PasswordDAO {
 	@Override
 	public int addPassword(LoginInfo info) {
 		String sql = "INSERT INTO " + PasswordDAO.TABLE + " (username, password, user_type) " + "VALUES (?, ?, ?)";
-		return dbHandler.update(sql, info.getUsername(), info.getencodedPassword(), info.isCompany());
+		try {
+			return dbHandler.update(sql, info.getUsername(), info.getencodedPassword(), info.isCompany());
+		} catch (org.springframework.dao.DuplicateKeyException e) {
+			return 0;
+		}
 	}
 
 	@Override
@@ -40,7 +44,7 @@ public class PoolPasswords implements PasswordDAO {
 			return null;
 		}
 	}
-	
+
 	@Override
 	public LoginInfo fetchAdmin(String username) {
 		String sql = "SELECT * FROM " + PasswordDAO.ADMIN + " WHERE username = ?";

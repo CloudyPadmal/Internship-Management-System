@@ -58,17 +58,31 @@ public class UserRegisterController implements Preferences {
 	public String addNewUser(@ModelAttribute("userForm") @Validated Applicant user, BindingResult result, Model model,
 			RedirectAttributes redirectAttributes) {
 		if (result.hasErrors()) {
+			redirectAttributes.addFlashAttribute("msg", "Invalid registration data");
+			redirectAttributes.addFlashAttribute("css", "danger");
+			model.addAttribute("register", true);
 			model = generatePrefList(model);
 			return "logins/register";
 		} else {
-			// Pass success message to redirect view
-			redirectAttributes.addFlashAttribute("msg", user.getName() + " added successfully!");
-			// Add applicant to the user table
-			poolApplicants.addApplicant(user);
-			// Add password of the applicant to the password table
-			poolPW.addPassword(new LoginInfo(user.getIndexNumber(), user.getPassword()));
-			// Display user details
-			return "redirect:users/" + user.getIndexNumber(); // TODO : Replace this index number with ID
+			// Try adding password to the password_table
+			int response = poolPW.addPassword(new LoginInfo(user.getIndexNumber(), user.getPassword()));
+			// Response should be 1 if the process is successful
+			if (response == 1) {
+				// Pass success message to redirect view
+				redirectAttributes.addFlashAttribute("msg", user.getName() + " added successfully!");
+				redirectAttributes.addFlashAttribute("css", "success");
+				// Add applicant to the user table
+				poolApplicants.addApplicant(user);
+				// Display user details
+				return "redirect:users/" + user.getIndexNumber();
+			} else {
+				// Pass success message to redirect view
+				model.addAttribute("msg", "A user with the same index number exist!");
+				model.addAttribute("css", "danger");
+				model = generatePrefList(model);
+				model.addAttribute("register", true);
+				return "logins/register";
+			}
 		}
 	}
 
