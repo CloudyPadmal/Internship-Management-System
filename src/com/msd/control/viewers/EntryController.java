@@ -24,7 +24,7 @@ public class EntryController {
 	}
 
 	// ##/MSDProject/user_login
-	@RequestMapping(value = "/user_login", method = RequestMethod.GET)
+	@RequestMapping(value = "/user_login")
 	public ModelAndView loadUserLogin(HttpServletRequest request) {
 		ModelAndView loginModel = new ModelAndView();
 		LoginInfo info = new LoginInfo();
@@ -38,7 +38,7 @@ public class EntryController {
 	}
 
 	// ##/MSDProject/company_login
-	@RequestMapping("/company_login")
+	@RequestMapping(value = "/company_login")
 	public ModelAndView loadCompanyLogin() {
 		ModelAndView loginModel = new ModelAndView();
 		LoginInfo info = new LoginInfo();

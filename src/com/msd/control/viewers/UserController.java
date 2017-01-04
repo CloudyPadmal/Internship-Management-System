@@ -36,6 +36,7 @@ public class UserController {
 	@RequestMapping(value = "/log", method = RequestMethod.POST, params = "login")
 	public String logUserIn(@ModelAttribute("info") LoginInfo info, ModelMap model, RedirectAttributes redirects) {
 		if (poolPW.matchThisAndThat(info)) {
+			System.out.println("Passwords match");
 			Applicant user = poolApplicants.fetchApplicant(info.getUsername());
 			model.addAttribute("user", user);
 			List<Vacancy> vacancies = poolVacancies.getVacancies(user.convertListToPref());
@@ -47,6 +48,12 @@ public class UserController {
 		return "displays/show_user";
 	}
 
+	// This view will direct to the register view
+	@RequestMapping(value = "/log", method = RequestMethod.POST, params = "register")
+	public String register(LoginInfo info, ModelMap model, RedirectAttributes redirects) {
+		return "redirect:/reg/user/";
+	}
+
 	// Display User details
 	@RequestMapping(value = "/{indexNumber}", method = RequestMethod.GET)
 	public String showCompany(@PathVariable("indexNumber") String indexNumber, Model model) {
@@ -56,12 +63,6 @@ public class UserController {
 		List<Vacancy> vacancies = poolVacancies.getVacancies(user.convertListToPref());
 		model.addAttribute("vacancies", vacancies);
 		return "displays/show_user";
-	}
-
-	// This view will direct to the register view
-	@RequestMapping(value = "/log", method = RequestMethod.POST, params = "register")
-	public String register(LoginInfo info, ModelMap model, RedirectAttributes redirects) {
-		return "redirect:/reg/user/";
 	}
 
 	// This will display all the users and their passwords <REMOVE>

@@ -1,13 +1,6 @@
 <%@ include file="/WEB-INF/jsp/head.jsp"%>
-
 <html>
-<head>
-<spring:url value="/resources/css/msd_styles.css" var="msdCSS" />
-<link href="${msdCSS}" rel="stylesheet" />
-<title>MSD Project</title>
-</head>
-<body class="homebody">
-
+<body>
 	<h2>${principal}&nbsp;Login</h2>
 	<form:form method="POST" modelAttribute="info"
 		action="${action_url}">

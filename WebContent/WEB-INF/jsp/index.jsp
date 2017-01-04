@@ -1,18 +1,21 @@
 <%@ include file="/WEB-INF/jsp/head.jsp"%>
-
 <html>
-<head>
-<spring:url value="/resources/css/msd_styles.css" var="msdCSS" />
-<link href="${msdCSS}" rel="stylesheet" />
-</head>
-
-<body class="homebody">
-	<div class="homepage" align="center">
-		<a href=user_login>
-			<button class="bigbutton positivebtn">User Login</button>
-		</a><br /> <a href="company_login">
-			<button class="bigbutton positivebtn">Company Login</button>
-		</a><br />
-	</div>
-</body>
+	<body>
+		<div class="container">
+		
+			<div class="jumbotron">
+				<h1>Project MSD</h1>
+				<p class="lead">Where companies meet students!!!</p>
+				<p>				
+					<form:form action="user_login"><button class="bigbutton positivebtn">User Login</button></form:form>
+					<form:form action="company_login"><button class="bigbutton positivebtn">Company Login</button></form:form>
+				</p>
+			</div>
+	
+			<footer class="footer">
+				<p>© 2016 MSDProject, Inc.</p>
+			</footer>
+	
+		</div>
+	</body>
 </html>

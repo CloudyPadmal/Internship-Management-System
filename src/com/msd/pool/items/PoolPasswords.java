@@ -90,10 +90,8 @@ public class PoolPasswords implements PasswordDAO {
 		// If there are no matching password or no account, data will be passed
 		// null
 		if (originalData == null) {
-			System.out.println("Null data");
 			return false;
 		}
-		System.out.println(typedData.isCompany() + " & " + originalData.isCompany());
 		// Decode both passwords
 		String decodedPW = originalData.decodePassword(originalData.getPassword());
 		String typedPW = typedData.getPassword();
