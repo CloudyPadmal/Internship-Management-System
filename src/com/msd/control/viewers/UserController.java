@@ -36,13 +36,13 @@ public class UserController {
 	@RequestMapping(value = "/log", method = RequestMethod.POST, params = "login")
 	public String logUserIn(@ModelAttribute("info") LoginInfo info, ModelMap model, RedirectAttributes redirects) {
 		if (poolPW.matchThisAndThat(info)) {
-			System.out.println("Passwords match");
 			Applicant user = poolApplicants.fetchApplicant(info.getUsername());
 			model.addAttribute("user", user);
 			List<Vacancy> vacancies = poolVacancies.getVacancies(user.convertListToPref());
 			model.addAttribute("vacancies", vacancies);
 		} else {
-			redirects.addFlashAttribute("error", "Username or Password is wrong!");
+			redirects.addFlashAttribute("msg", "Username or Password is wrong!");
+			redirects.addFlashAttribute("css", "danger");
 			return "redirect:/user_login";
 		}
 		return "displays/show_user";

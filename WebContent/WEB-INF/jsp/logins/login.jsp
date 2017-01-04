@@ -1,36 +1,43 @@
 <%@ include file="/WEB-INF/jsp/head.jsp"%>
 <html>
-<body>
-	<h2>${principal}&nbsp;Login</h2>
-	<form:form method="POST" modelAttribute="info"
-		action="${action_url}">
-		<table class="form-area">
-			<tr>
-				<td><form:label path="username" class="input-label">${principal}</form:label></td>
-				<td><form:input path="username" class="input-field" /></td>
-			</tr>
-			<tr>
-				<td><form:label path="password" class="input-label">Password</form:label></td>
-				<td><form:input path="password" type="password"
-						class="input-field" /></td>
-			</tr>
-			<tr>
-				<td colspan="2"><input type="submit" name="login" value="Login"
-					class="midbutton positivebtn"/></td>
-			</tr>
-			<c:if test="${not admin}">
-				<tr>
-					<td colspan="2"><input type="submit" name="register"
-						value="Register" class="midbutton positivebtn" /></td>
-				</tr>
-			</c:if>
-		</table>
-	</form:form>
 
-	<p class="error">
-		<c:if test="${not empty error}">
-			<c:out value="${error}" />
+	<body>
+	
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand">${principal}&nbsp;Login</a>
+				</div>
+				<c:if test="${not admin}">
+					<div id="navbar" class="navbar-collapse collapse">
+						<ul class="nav navbar-nav navbar-right">
+							<li><a href="${register_url}">Register</a></li>
+						</ul>
+					</div>
+				</c:if>
+			</div>
+		</nav>
+	
+		<c:if test="${not empty msg}">
+			<div class="alert alert-${css} alert-dismissible" role="alert">
+				<button type="button" class="close" data-dismiss="alert"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<strong>${msg}</strong>
+			</div>
 		</c:if>
-	</p>
-</body>
+	
+		<div class="login-page">
+			<div class="form">
+				<form:form method="POST" modelAttribute="info" action="${action_url}">
+					<form:input type="text" placeholder="${principal}" path="username" />
+					<form:input type="password" placeholder="Password" path="password"/>
+					<button type="submit" class="midbutton positivebtn" name="login">Login</button>
+				</form:form>
+			</div>
+		</div>
+		
+	</body>
+
 </html>

@@ -46,7 +46,8 @@ public class CompanyController implements Preferences {
 		if (poolPW.matchThisAndThat(info)) {
 			return "redirect:" + info.getUsername();
 		} else {
-			redirects.addFlashAttribute("error", "Company or Password is wrong!");
+			redirects.addFlashAttribute("msg", "Company or Password is wrong!");
+			redirects.addFlashAttribute("css", "danger");
 			return "redirect:/company_login";
 		}
 	}
