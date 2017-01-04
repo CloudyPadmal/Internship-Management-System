@@ -33,6 +33,7 @@
 				<form:form method="POST" modelAttribute="info" action="${action_url}">
 					<form:input type="text" placeholder="${principal}" path="username" />
 					<form:input type="password" placeholder="Password" path="password"/>
+					<form:hidden path="company"/>
 					<button type="submit" class="midbutton positivebtn" name="login">Login</button>
 				</form:form>
 			</div>

@@ -39,10 +39,22 @@ public class CompanyController implements Preferences {
 	@Autowired
 	PoolVacancies poolVacancies;
 
-	// This view will display the correctness of the user credentials
+	/**
+	 * This method will be called when the user clicks Login button in user
+	 * login page.
+	 * 
+	 * @param info
+	 *            Login information : User name and password along with user
+	 *            type
+	 * @param model
+	 *            MVC Model
+	 * @param redirects
+	 *            MVC Redirect
+	 * @return Directs to the login page if the user name and password are
+	 *         mismatches. If they are valid, directs to the user page
+	 */
 	@RequestMapping(value = "/log", method = RequestMethod.POST, params = "login")
 	public String logUserIn(LoginInfo info, ModelMap model, RedirectAttributes redirects) {
-		System.out.println(info.getPassword() + " " + info.getUsername() + " " + info.getencodedPassword());
 		if (poolPW.matchThisAndThat(info)) {
 			return "redirect:" + info.getUsername();
 		} else {

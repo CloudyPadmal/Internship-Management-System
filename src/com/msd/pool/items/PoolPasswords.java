@@ -4,10 +4,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 
+import com.msd.items.Applicant;
 import com.msd.items.LoginInfo;
 import com.msd.pool.interfaces.PasswordDAO;
 
@@ -33,11 +36,20 @@ public class PoolPasswords implements PasswordDAO {
 
 	@Override
 	public LoginInfo fetchUser(String username) {
-		String sql = "SELECT * FROM " + PasswordDAO.TABLE + " WHERE username = ?";
 		try {
-			LoginInfo info = dbHandler.queryForObject(sql, new Object[] { username },
-					new BeanPropertyRowMapper<LoginInfo>(LoginInfo.class));
-			return info;
+			String sql = "SELECT * FROM " + PasswordDAO.TABLE + " WHERE username = '" + username + "'";
+			return dbHandler.query(sql, new ResultSetExtractor<LoginInfo>() {
+				@Override
+				public LoginInfo extractData(ResultSet rs) throws SQLException, DataAccessException {
+					if (rs.next()) {
+						// Create a new applicant and a criteria
+						LoginInfo info = new LoginInfo(rs.getString("username"), rs.getString("password"),
+								rs.getBoolean("user_type"));
+						return info;
+					}
+					return null;
+				}
+			});
 		} catch (org.springframework.dao.EmptyResultDataAccessException e) {
 			return null;
 		} catch (org.springframework.dao.IncorrectResultSizeDataAccessException n) {
@@ -73,10 +85,8 @@ public class PoolPasswords implements PasswordDAO {
 	public List<LoginInfo> listOutPWs() {
 		List<LoginInfo> list = dbHandler.query("SELECT * FROM " + PasswordDAO.TABLE, new RowMapper<LoginInfo>() {
 			public LoginInfo mapRow(ResultSet rs, int row) throws SQLException {
-				LoginInfo info = new LoginInfo();
-				info.setUsername(rs.getString(2));
-				info.setPassword(rs.getString(3));
-				info.setCompany(rs.getBoolean(4));
+				LoginInfo info = new LoginInfo(rs.getString("username"), rs.getString("password"),
+						rs.getBoolean("user_type"));
 				return info;
 			}
 		});
@@ -120,10 +130,8 @@ public class PoolPasswords implements PasswordDAO {
 		List<LoginInfo> list = dbHandler.query("SELECT * FROM " + PasswordDAO.TABLE + " WHERE user_type = " + type,
 				new RowMapper<LoginInfo>() {
 					public LoginInfo mapRow(ResultSet rs, int row) throws SQLException {
-						LoginInfo info = new LoginInfo();
-						info.setUsername(rs.getString(2));
-						info.setPassword(rs.getString(3));
-						info.setCompany(rs.getBoolean(4));
+						LoginInfo info = new LoginInfo(rs.getString("username"), rs.getString("password"),
+								rs.getBoolean("user_type"));
 						return info;
 					}
 				});
