@@ -1,16 +1,34 @@
 <%@ include file="/WEB-INF/jsp/head.jsp"%>
 <html>
-<head>
-<spring:url value="/resources/css/msd_styles.css" var="msdCSS" />
-<link href="${msdCSS}" rel="stylesheet" />
-</head>
-
 <body>
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand">${user.indexNumber}</a>
+			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav navbar-right">
+					<li><form:form
+							action="/MSDProject/reg/user/users/${user.indexNumber}/update"
+							method="POST">
+							<button type="submit" name="edit" value="edit" class="edit">Edit</button>
+						</form:form></li>
+					<li><a href="/MSDProject/">Logout</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
 	<c:if test="${not empty msg}">
-		<strong>${msg}</strong>
+		<div class="alert alert-${css} alert-dismissible" role="alert">
+			<button type="button" class="close" data-dismiss="alert"
+				aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<strong>${msg}</strong>
+		</div>
 	</c:if>
 
-	<h1 class="display-header">${user.indexNumber}</h1>
 	<div class="section-one">
 		<table class="display-user">
 			<tr>
@@ -53,35 +71,39 @@
 	</div>
 	<div>
 		<c:forEach var="vacancy" items="${vacancies}">
-			<table class="display-vacancies">
-				<tr>
-					<td><div class="column-head">Title</div></td>
-					<td><div class="column-body">${vacancy.title}&nbsp;-&nbsp;(Rs.
-							${vacancy.salary})&nbsp;${vacancy.company}</div></td>
-				</tr>
-				<tr>
-					<td><div class="column-head">Description</div></td>
-					<td><div class="column-body">${vacancy.description_1}</div></td>
-				</tr>
-				<tr>
-					<td><div class="column-head">Preferences</div></td>
-					<td><div class="column-body">${vacancy.preferences}</div></td>
-				</tr>
-				<tr>
-					<c:choose>
-						<c:when test="${not vacancy.open}">
-							<td />
-							<td><a href="apply/${vacancy.id}/${user.indexNumber}" class="button"
-								type="submit">Apply for ${vacancy.title}!</a></td>
-						</c:when>
-						<c:otherwise>
-							<td />
-							<td><i>Someone applied for it!</i></td>
-						</c:otherwise>
-					</c:choose>
-				</tr>
-			</table>
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">${vacancy.company}&nbsp;-&nbsp;
+						${vacancy.title}&nbsp;(Rs.${vacancy.salary})</h3>
+				</div>
+				<div class="panel-body">
+					<table class="table table-striped">
+						<tr>
+							<td>${vacancy.description_1}&nbsp;${vacancy.description_2}
+								adasdasda sdandad ghadghaf dahgsd adf aghdf ahgdf aghdf adf
+								aghdfa ghdfa ghdf ahgdf ahgsdfad ghadghaf dahgsd adf aghdf ahgdf
+								aghdf adf aghdfa ghdfa ga ghdf ahgdf ahgsdfad ghadghaf dahgsd
+								adf aghdf ahgdf aghdf adf aghdfa ghdfa ghdf ahgdf ahgsdf</td>
+							<td><c:choose>
+									<c:when test="${not vacancy.open}">
+										<a href="apply/${vacancy.id}/${user.indexNumber}"
+											class="button" type="submit">Apply for ${vacancy.title}!</a>
+									</c:when>
+									<c:otherwise>
+										<i>Someone applied for it!</i>
+									</c:otherwise>
+								</c:choose></td>
+						</tr>
+						<tr>
+							<td>${vacancy.preferences}</td>
+						</tr>
+					</table>
+				</div>
+
+			</div>
+
 		</c:forEach>
 	</div>
+
 </body>
 </html>

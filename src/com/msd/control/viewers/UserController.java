@@ -33,7 +33,7 @@ public class UserController {
 	PoolVacancies poolVacancies;
 
 	// This view will display the correctness of the user credentials
-	@RequestMapping(value = "/log", method = RequestMethod.POST, params = "login")
+	@RequestMapping(value = "/log", method = RequestMethod.POST)
 	public String logUserIn(@ModelAttribute("info") LoginInfo info, ModelMap model, RedirectAttributes redirects) {
 		if (poolPW.matchThisAndThat(info)) {
 			Applicant user = poolApplicants.fetchApplicant(info.getUsername());
@@ -48,14 +48,8 @@ public class UserController {
 		return "displays/show_user";
 	}
 
-	// This view will direct to the register view
-	@RequestMapping(value = "/log", method = RequestMethod.POST, params = "register")
-	public String register(LoginInfo info, ModelMap model, RedirectAttributes redirects) {
-		return "redirect:/reg/user/";
-	}
-
 	// Display User details
-	@RequestMapping(value = "/{indexNumber}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{indexNumber}", method = RequestMethod.POST)
 	public String showCompany(@PathVariable("indexNumber") String indexNumber, Model model) {
 		// Fetch applicant from database
 		Applicant user = poolApplicants.fetchApplicant(indexNumber);

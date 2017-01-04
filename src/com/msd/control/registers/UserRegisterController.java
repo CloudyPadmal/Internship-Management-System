@@ -18,9 +18,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.msd.items.Applicant;
 import com.msd.items.LoginInfo;
+import com.msd.items.Vacancy;
 import com.msd.pool.interfaces.Preferences;
 import com.msd.pool.items.PoolApplicants;
 import com.msd.pool.items.PoolPasswords;
+import com.msd.pool.items.PoolVacancies;
 import com.msd.pool.validators.PoolUserValidator;
 
 @Controller
@@ -33,6 +35,8 @@ public class UserRegisterController implements Preferences {
 	PoolApplicants poolApplicants;
 	@Autowired
 	PoolPasswords poolPW;
+	@Autowired
+	PoolVacancies poolVacancies;
 
 	@InitBinder
 	protected void initBinder(WebDataBinder binder) {
@@ -97,8 +101,11 @@ public class UserRegisterController implements Preferences {
 			redirectAttributes.addFlashAttribute("msg", "Updated!");
 			// Add applicant to the user table
 			poolApplicants.updateApplicant(user);
+			List<Vacancy> vacancies = poolVacancies.getVacancies(user.convertListToPref());
+			model.addAttribute("vacancies", vacancies);
+			model.addAttribute("user", user);
 			// Display user details
-			return "redirect:" + user.getIndexNumber();
+			return "displays/show_user";
 		}
 	}
 
@@ -111,7 +118,7 @@ public class UserRegisterController implements Preferences {
 	}
 
 	// Display User details
-	@RequestMapping(value = "/users/{index}", method = RequestMethod.GET)
+	@RequestMapping(value = "/users/{index}", method = RequestMethod.POST)
 	public String showUser(@PathVariable("index") String index, Model model) {
 		// Fetch applicant from database
 		Applicant user = poolApplicants.fetchApplicant(index);
@@ -135,7 +142,7 @@ public class UserRegisterController implements Preferences {
 	}
 
 	// Display Update Form
-	@RequestMapping(value = "users/{index}/update", method = RequestMethod.GET)
+	@RequestMapping(value = "/users/{index}/update", method = RequestMethod.POST)
 	public String showUpdateUserForm(@PathVariable("index") String index, Model model) {
 		// Fetch the applicant from database
 		Applicant applicant = poolApplicants.fetchApplicant(index);
