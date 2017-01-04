@@ -1,41 +1,60 @@
 <%@ include file="/WEB-INF/jsp/head.jsp"%>
 <html>
-<head>
-<spring:url value="/resources/css/msd_styles.css" var="msdCSS" />
-<link href="${msdCSS}" rel="stylesheet" />
-</head>
-
 <body>
-	<c:if test="${not empty msg}">
-		<strong>${msg}</strong>
-	</c:if>
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand">All Vacancies</a>
+			</div>
+		</div>
+	</nav>
+	<div class="vacancy-list">
+		<c:if test="${not empty msg}">
+			<div class="alert alert-${css} alert-dismissible" role="alert">
+				<button type="button" class="close" data-dismiss="alert"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<strong>${msg}</strong>
+			</div>
+		</c:if>
 
-	<div class="section-three">
-		<c:forEach var="vacancy" items="${vacancies}">
-			<table class="display-vacancies">
+		<table class="table table-striped">
+			<thead>
 				<tr>
-					<td><div class="column-head">Title</div></td>
-					<td><div class="column-body">
-							${vacancy.id}.&nbsp;<b>${vacancy.title} (Rs.
-								${vacancy.salary})</b>
-						</div></td>
+					<th>#</th>
+					<th>Title</th>
+					<th>Salary</th>
+					<th>Description</th>
+					<th>Applicant</th>
+					<th>Preferences</th>					
+					<th>Action</th>
 				</tr>
+			</thead>
+
+			<c:forEach var="vacancy" items="${vacancies}">
 				<tr>
-					<td><div class="column-head">Description</div></td>
-					<td><div class="column-body">${vacancy.description_1}&nbsp;${vacancy.description_2}</div></td>
+					<td>${vacancy.id}</td>
+					<td>${vacancy.title}</td>
+					<td>${vacancy.salary}</td>
+					<td id="description">${vacancy.description_1}&nbsp;${vacancy.description_2} asdasdgaj sdhjkah djkah djkahgsdkj askjd khagd hagd agdg asdg asg dag sdjagsdh asdg hj</td>
+					<td>${vacancy.applicant}</td>
+					<td><c:forEach var="preference" items="${vacancy.preferences}">
+							<li>${preference}</li>
+						</c:forEach></td>
+					<td id="buttons"><spring:url value="/usesr/${user.indexNumber}ss"
+							var="userUrl" /> <spring:url
+							value="/reg/user/users/${user.indexNumber}/update"
+							var="updateUrl" />
+						<button class="btn btn-primary"
+							onclick="location.href='${updateUrl}'">Disqualify</button> <br />
+						<form type="submit" action="vacancy/${vacancy.id}/deletee"
+							method="POST">
+							<button class="btn btn-danger">Delete</button>
+						</form></td>
 				</tr>
-				<tr>
-					<td><div class="column-head">Preferences</div></td>
-					<td><div class="column-body">${vacancy.preferences}</div></td>
-				</tr>
-				<tr>
-					<td />
-					<td><a href="" class="button" type="submit">Disqualify
-							${vacancy.applicant}!</a><a href="" class="button" type="submit">Delete
-							${vacancy.title}</a></td>
-				</tr>
-			</table>
-		</c:forEach>
+			</c:forEach>
+		</table>
 	</div>
 </body>
 </html>

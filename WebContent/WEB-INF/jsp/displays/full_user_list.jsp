@@ -14,7 +14,7 @@
 				</div>
 			</div>
 		</nav>
-		<div class="container">	
+		<div class="user-list">
 			<c:if test="${not empty msg}">
 				<div class="alert alert-${css} alert-dismissible" role="alert">
 					<button type="button" class="close" data-dismiss="alert"
@@ -29,10 +29,10 @@
 				<thead>
 					<tr>
 						<th>Index</th>
-						<th>Name</th>
+						<th>Name & GPA</th>
 						<th>Email</th>
-						<th>GPA</th>
 						<th>Telephone</th>
+						<th>About</th>
 						<th>Preferences</th>
 						<th>Action</th>
 					</tr>
@@ -41,10 +41,10 @@
 				<c:forEach var="user" items="${users}">
 					<tr>
 						<td>${user.indexNumber}</td>
-						<td>${user.name}&nbsp;${user.surname}</td>
+						<td>${user.name}&nbsp;${user.surname}<br />${user.gradedPoint}</td>
 						<td>${user.emailAddress}</td>
-						<td>${user.gradedPoint}</td>
 						<td>${user.telephone}</td>
+						<td id="description">${user.aboutMe}</td>
 						<td><c:forEach var="preference" items="${user.preferences}">
 								<li>${preference}</li>
 							</c:forEach>
