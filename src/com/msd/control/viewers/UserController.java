@@ -73,12 +73,17 @@ public class UserController {
 		return ("redirect:/user/user_list");
 	}
 
-	@RequestMapping(value = "/apply/{vacancyID}/{indexNumber}", method = RequestMethod.GET)
-	public String applyForVacancy(@PathVariable("vacancyID") int vacancyID,
-			@PathVariable("indexNumber") String indexNumber, final RedirectAttributes redirectAttributes) {
+	@RequestMapping(value = "/apply/{vacancyID}/{indexNumber}", method = RequestMethod.POST)
+	public String applyForVacancy(@PathVariable("vacancyID") int vacancyID, Model model,
+			@PathVariable("indexNumber") String indexNumber) {
 		poolVacancies.closeVacancy(vacancyID, indexNumber);
 		// Pass the successful message to redirect
-		redirectAttributes.addFlashAttribute("msg", "Application submitted succesfully!");
-		return "redirect:/user/" + indexNumber;
+		model.addAttribute("msg", "Application submitted succesfully!");
+		model.addAttribute("css", "success");
+		Applicant user = poolApplicants.fetchApplicant(indexNumber);
+		model.addAttribute("user", user);
+		List<Vacancy> vacancies = poolVacancies.getVacancies(user.convertListToPref());
+		model.addAttribute("vacancies", vacancies);
+		return "displays/show_user";
 	}
 }

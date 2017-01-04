@@ -201,12 +201,24 @@ audio
 
 
 
+
+
+
+
+
+
 :not
 
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -219,7 +231,13 @@ controls
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -234,7 +252,16 @@ display
 
 
 
+
+
+
+
+
+
 :
+
+
+
 
 
 
@@ -244,7 +271,16 @@ display
 
 
 
+
+
+
 none
+
+
+
+
+
+
 
 
 
@@ -263,12 +299,24 @@ height
 
 
 
+
+
+
+
+
+
 :
 
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -341,12 +389,24 @@ svg
 
 
 
+
+
+
+
+
+
 :not
 
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -357,7 +417,13 @@ svg
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -372,7 +438,16 @@ overflow
 
 
 
+
+
+
+
+
+
 :
+
+
+
 
 
 
@@ -382,7 +457,16 @@ overflow
 
 
 
+
+
+
 hidden
+
+
+
+
+
+
 
 
 
@@ -4179,12 +4263,24 @@ tbody.collapse.in {
 
 
 
+
+
+
+
+
+
 :not
 
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -4195,7 +4291,13 @@ tbody.collapse.in {
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -4206,7 +4308,13 @@ tbody.collapse.in {
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -4217,7 +4325,13 @@ tbody.collapse.in {
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -4228,7 +4342,13 @@ tbody.collapse.in {
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -4240,7 +4360,13 @@ tbody.collapse.in {
 
 
 
+
+
+
 	
+
+
+
 
 
 
@@ -4255,12 +4381,24 @@ border-radius
 
 
 
+
+
+
+
+
+
 :
 
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -4282,7 +4420,19 @@ border-radius
 
 
 
+
+
+
+
+
+
 :first-child
+
+
+
+
+
+
 
 
 
@@ -4296,7 +4446,13 @@ border-radius
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -4307,7 +4463,13 @@ border-radius
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -4318,7 +4480,13 @@ border-radius
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -4329,7 +4497,13 @@ border-radius
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -4344,12 +4518,24 @@ border-top-right-radius
 
 
 
+
+
+
+
+
+
 :
 
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -4364,12 +4550,24 @@ border-bottom-right-radius
 
 
 
+
+
+
+
+
+
 :
 
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -4387,7 +4585,19 @@ border-bottom-right-radius
 
 
 
+
+
+
+
+
+
 :last-child
+
+
+
+
+
+
 
 
 
@@ -4401,7 +4611,13 @@ border-bottom-right-radius
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -4412,7 +4628,13 @@ border-bottom-right-radius
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -4429,7 +4651,16 @@ border-bottom-right-radius
 
 
 
+
+
+
+
+
+
 :not
+
+
+
 
 
 
@@ -4440,13 +4671,22 @@ border-bottom-right-radius
 
 
 
+
+
+
 (
 :first-child
 
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -4461,12 +4701,24 @@ border-top-left-radius
 
 
 
+
+
+
+
+
+
 :
 
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -4481,12 +4733,24 @@ border-bottom-left-radius
 
 
 
+
+
+
+
+
+
 :
 
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -4579,12 +4843,24 @@ border-bottom-left-radius
 
 
 
+
+
+
+
+
+
 :not
 
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -4595,7 +4871,13 @@ border-bottom-left-radius
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -4606,7 +4888,13 @@ border-bottom-left-radius
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -4617,7 +4905,13 @@ border-bottom-left-radius
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -4632,12 +4926,24 @@ border-radius
 
 
 
+
+
+
+
+
+
 :
 
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -4655,7 +4961,19 @@ border-radius
 
 
 
+
+
+
+
+
+
 :first-child
+
+
+
+
+
+
 
 
 
@@ -4669,7 +4987,13 @@ border-radius
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -4680,7 +5004,13 @@ border-radius
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -4695,7 +5025,16 @@ border-top-right-radius
 
 
 
+
+
+
+
+
+
 :
+
+
+
 
 
 
@@ -4705,8 +5044,17 @@ border-top-right-radius
 
 
 
+
+
+
 4
 px
+
+
+
+
+
+
 
 
 
@@ -4725,12 +5073,24 @@ border-bottom-right-radius
 
 
 
+
+
+
+
+
+
 :
 
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -4745,12 +5105,24 @@ border-bottom-left-radius
 
 
 
+
+
+
+
+
+
 :
 
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -4768,7 +5140,19 @@ border-bottom-left-radius
 
 
 
+
+
+
+
+
+
 :last-child
+
+
+
+
+
+
 
 
 
@@ -4782,7 +5166,13 @@ border-bottom-left-radius
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -4793,7 +5183,13 @@ border-bottom-left-radius
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -4808,12 +5204,24 @@ border-top-left-radius
 
 
 
+
+
+
+
+
+
 :
 
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -4828,12 +5236,24 @@ border-top-right-radius
 
 
 
+
+
+
+
+
+
 :
 
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -4848,7 +5268,16 @@ border-bottom-left-radius
 
 
 
+
+
+
+
+
+
 :
+
+
+
 
 
 
@@ -4858,8 +5287,17 @@ border-bottom-left-radius
 
 
 
+
+
+
 4
 px
+
+
+
+
+
+
 
 
 
@@ -4991,7 +5429,13 @@ select[multiple].input-group-sm>.form-control, select[multiple].input-group-sm>.
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -5005,12 +5449,24 @@ select[multiple].input-group-sm>.form-control, select[multiple].input-group-sm>.
 
 
 
+
+
+
+
+
+
 :not
 
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -5021,7 +5477,13 @@ select[multiple].input-group-sm>.form-control, select[multiple].input-group-sm>.
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -5032,7 +5494,13 @@ select[multiple].input-group-sm>.form-control, select[multiple].input-group-sm>.
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -5043,7 +5511,13 @@ select[multiple].input-group-sm>.form-control, select[multiple].input-group-sm>.
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -5058,12 +5532,24 @@ select[multiple].input-group-sm>.form-control, select[multiple].input-group-sm>.
 
 
 
+
+
+
+
+
+
 :not
 
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -5074,7 +5560,13 @@ select[multiple].input-group-sm>.form-control, select[multiple].input-group-sm>.
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -5085,7 +5577,13 @@ select[multiple].input-group-sm>.form-control, select[multiple].input-group-sm>.
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -5096,7 +5594,13 @@ select[multiple].input-group-sm>.form-control, select[multiple].input-group-sm>.
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -5111,12 +5615,24 @@ select[multiple].input-group-sm>.form-control, select[multiple].input-group-sm>.
 
 
 
+
+
+
+
+
+
 :not
 
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -5127,7 +5643,13 @@ select[multiple].input-group-sm>.form-control, select[multiple].input-group-sm>.
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -5138,7 +5660,13 @@ select[multiple].input-group-sm>.form-control, select[multiple].input-group-sm>.
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -5149,7 +5677,13 @@ select[multiple].input-group-sm>.form-control, select[multiple].input-group-sm>.
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -5164,12 +5698,24 @@ border-radius
 
 
 
+
+
+
+
+
+
 :
 
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -5216,12 +5762,24 @@ border-radius
 
 
 
+
+
+
  
 
 
 
 
+
+
+
 .form-control
+
+
+
+
+
+
 
 
 
@@ -5241,9 +5799,21 @@ border-radius
 
 
 
+
+
+
+
+
+
 :first-child
 ,
 .input-group-btn
+
+
+
+
+
+
 
 
 
@@ -5257,6 +5827,12 @@ border-radius
 .btn
 ,
 .input-group-btn
+
+
+
+
+
+
 
 
 
@@ -5272,6 +5848,12 @@ border-radius
 .btn
 ,
 .input-group-btn
+
+
+
+
+
+
 
 
 
@@ -5293,9 +5875,21 @@ border-radius
 
 
 
+
+
+
+
+
+
 :last-child
 >
 .btn-group
+
+
+
+
+
+
 
 
 
@@ -5310,7 +5904,13 @@ border-radius
 
 
 
+
+
+
 	
+
+
+
 
 
 
@@ -5321,7 +5921,13 @@ border-radius
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -5338,6 +5944,12 @@ border-radius
 
 
 
+
+
+
+
+
+
 :last-child
 >
 .btn
@@ -5349,12 +5961,24 @@ border-radius
 
 
 
+
+
+
+
+
+
 :not
 
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -5366,7 +5990,13 @@ border-radius
 
 
 
+
+
+
 	
+
+
+
 
 
 
@@ -5377,7 +6007,13 @@ border-radius
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -5388,7 +6024,13 @@ border-radius
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -5403,12 +6045,24 @@ border-top-right-radius
 
 
 
+
+
+
+
+
+
 :
 
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -5423,12 +6077,24 @@ border-bottom-right-radius
 
 
 
+
+
+
+
+
+
 :
 
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -8669,10 +9335,70 @@ button.close {
 	border: none;
 	outline: none;
 	margin-top: 13px;
+	margin-right: 13px;
 	background: none;
 	display: block;
+	background: none;
 }
 
 .navbar-nav .edit:HOVER {
 	color: #fff
+}
+
+.panel li {
+	list-style: none;
+	padding: 2px;
+}
+
+.panel .vacancy {
+	vertical-align: middle;
+	margin: auto;
+}
+
+.user-container {
+	margin-top: 20px;
+	padding-right: 5px;
+	padding-left: 5px;
+	margin-right: auto;
+	margin-left: auto;
+	background-color: black;
+}
+
+.vacancy-header {
+	text-align: center;
+}
+
+.vacancy-container {
+	margin: 20px;
+}
+
+.panel-heading #button{
+	float: right;
+}
+
+.vacancy-container {
+	margin: 20px;
+}
+
+.panel-display {
+	border-color: #2e3436
+}
+
+.panel-display>.panel-heading {
+	color: #fff;
+	background-color: #2e3436;
+	border-color: #888a85
+}
+
+.panel-display>.panel-heading+.panel-collapse>.panel-body {
+	border-top-color: #2e3436
+}
+
+.panel-display>.panel-heading .badge {
+	color: #2e3436;
+	background-color: #fff
+}
+
+.panel-display>.panel-footer+.panel-collapse>.panel-body {
+	border-bottom-color: #888a85
 }

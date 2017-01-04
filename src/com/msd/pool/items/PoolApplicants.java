@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.RowMapper;
 
 import com.msd.items.Applicant;
 import com.msd.pool.interfaces.ApplicantDAO;
+import com.msd.pool.interfaces.VacancyDAO;
 
 public class PoolApplicants implements ApplicantDAO {
 
@@ -79,8 +80,24 @@ public class PoolApplicants implements ApplicantDAO {
 	}
 
 	@Override
-	public void updateApplicant(Applicant newApplicant) {
-		System.out.println(newApplicant.getConfirmPassword());
+	public int updateApplicant(Applicant newApplicant) {
+
+		PoolCriteria criteria = newApplicant.convertListToPref();
+		String sql = "UPDATE " + ApplicantDAO.TABLE + " SET name = '" + newApplicant.getName() + "', surname = '"
+				+ newApplicant.getSurname() + "', gender = '" + newApplicant.getGender() + "', emailAddress = '"
+				+ newApplicant.getEmailAddress() + "', telephone = '" + newApplicant.getTelephone()
+				+ "', gradedPoint = " + newApplicant.getGradedPoint() + ", aboutMe = '" + newApplicant.getAboutMe()
+				+ "', emailAddress = '" + newApplicant.getEmailAddress() + "', ARDUINO = " + criteria.isARDUINO()
+				+ ", FPGA = " + criteria.isFPGA() + ", ROBOTICS = " + criteria.isROBOTICS() + ", WIFI = "
+				+ criteria.isWIFI() + ", ANTENNAS = " + criteria.isANTENNAS() + ", NETWORKING = "
+				+ criteria.isNETWORKING() + ", PROCESSORDESIGN = " + criteria.isPROCESSORDESIGN()
+				+ ", IMAGEPROCESSING = " + criteria.isIMAGEPROCESSING() + ", PROGRAMMING = " + criteria.isPROGRAMMING()
+				+ ", AUTOMATION = " + criteria.isAUTOMATION() + ", BIOMEDICAL = " + criteria.isBIOMEDICAL()
+				+ ", BIOMECHANICS = " + criteria.isBIOMECHANICS() + ", TELECOM = " + criteria.isTELECOM()
+				+ ", SEMICONDUCTORS = " + criteria.isSEMICONDUCTORS() + ", CIRCUITS = " + criteria.isCIRCUITS()
+				+ ", IOT = " + criteria.isIOT() + ", AI = " + criteria.isAI() + ", SIGNALPROCESSING = "
+				+ criteria.isSIGNALPROCESSING() + " WHERE indexNumber = '" + newApplicant.getIndexNumber() + "'";
+		return dbHandler.update(sql);
 	}
 
 	@Override

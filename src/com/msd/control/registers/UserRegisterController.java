@@ -97,13 +97,14 @@ public class UserRegisterController implements Preferences {
 			model = generatePrefList(model);
 			return "logins/register";
 		} else {
-			// Pass success message to redirect view
-			redirectAttributes.addFlashAttribute("msg", "Updated!");
 			// Add applicant to the user table
 			poolApplicants.updateApplicant(user);
+			Applicant rUser = poolApplicants.fetchApplicant(user.getIndexNumber());
 			List<Vacancy> vacancies = poolVacancies.getVacancies(user.convertListToPref());
+			model.addAttribute("msg", "Updated successfully!");
+			model.addAttribute("css", "success");
 			model.addAttribute("vacancies", vacancies);
-			model.addAttribute("user", user);
+			model.addAttribute("user", rUser);
 			// Display user details
 			return "displays/show_user";
 		}
