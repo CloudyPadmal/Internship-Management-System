@@ -97,21 +97,56 @@
 						</c:forEach>
 					</div>
 					<div class="button col-md-2">
+						<br />
 						<c:choose>
 							<c:when test="${not vacancy.open}">
 								<form:form action="apply/${vacancy.id}/${user.indexNumber}"
 									method="POST">
-									<button type="submit" name="edit" value="edit" class="edit">Apply
-										for ${vacancy.title}!</button>
+									<button type="submit" name="1st" value="edit"
+										class="btn btn-primary btn-lg">1st Choice</button>
+								</form:form>
+								<form:form action="apply/${vacancy.id}/${user.indexNumber}"
+									method="POST">
+									<button type="submit" name="2nd" value="edit"
+										class="btn btn-success btn-lg">2nd Choice</button>
+								</form:form>
+								<form:form action="apply/${vacancy.id}/${user.indexNumber}"
+									method="POST">
+									<button type="submit" name="3rd" value="edit"
+										class="btn btn-info btn-lg">3rd Choice</button>
 								</form:form>
 							</c:when>
 							<c:otherwise>
 								<c:choose>
+
 									<c:when test="${vacancy.applicant == user.indexNumber}">
-										<i>You applied for it!</i>
+										<c:if test="${user.applied1}">
+											<form:form action="cancel/${vacancy.id}/${user.indexNumber}"
+												method="POST">
+												<button type="submit" name="edit" value="edit"
+													class="btn btn-danger btn-lg">Cancel 1st Choice</button>
+											</form:form>
+										</c:if>
+										<c:if test="${user.applied2}">
+											<form:form action="cancel/${vacancy.id}/${user.indexNumber}"
+												method="POST">
+												<button type="submit" name="edit" value="edit"
+													class="btn btn-danger btn-lg">Cancel 2nd Choice</button>
+											</form:form>
+										</c:if>
+										<c:if test="${user.applied3}">
+											<form:form action="cancel/${vacancy.id}/${user.indexNumber}"
+												method="POST">
+												<button type="submit" name="edit" value="edit"
+													class="btn btn-danger btn-lg">Cancel 3rd Choice</button>
+											</form:form>
+										</c:if>
 									</c:when>
+
 									<c:otherwise>
-										<i>Someone applied for it!</i>
+										<button type="submit" name="edit" value="edit"
+											class="btn btn-warning btn-lg">Someone applied for
+											it!</button>
 									</c:otherwise>
 								</c:choose>
 							</c:otherwise>

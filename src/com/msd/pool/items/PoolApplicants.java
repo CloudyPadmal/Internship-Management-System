@@ -118,6 +118,12 @@ public class PoolApplicants implements ApplicantDAO {
 				// Fetch
 				info.setName(rs.getString("name"));
 				info.setGender(rs.getString("gender"));
+				info.setVacancy1(rs.getString("vacancy_A"));
+				info.setVacancy2(rs.getString("vacancy_B"));
+				info.setVacancy3(rs.getString("vacancy_C"));
+				info.setApplied1(rs.getBoolean("status_A"));
+				info.setApplied2(rs.getBoolean("status_B"));
+				info.setApplied3(rs.getBoolean("status_C"));
 				info.convertPrefToList(criteria);
 				return info;
 			}
@@ -129,6 +135,24 @@ public class PoolApplicants implements ApplicantDAO {
 	public List<Applicant> getTypeOfApplicants(PoolCriteria criteria) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public int setChoice(String indexNumber, int choice, int vacancy) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int removeChoice(String indexNumber, int choice, int vacancy) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int updateChoice(String indexNumber, int newchoice, int vacancy) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

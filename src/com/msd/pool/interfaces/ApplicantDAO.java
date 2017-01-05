@@ -27,4 +27,13 @@ public interface ApplicantDAO {
 
 	// Get a list of applicants in a given criteria
 	public List<Applicant> getTypeOfApplicants(PoolCriteria criteria);
+	
+	// Add a choice of vacancies
+	public int setChoice(String indexNumber, int choice, int vacancy);
+	
+	// Remove choice of vacancy
+	public int removeChoice(String indexNumber, int choice, int vacancy);
+	
+	// Update the choice of vacancy
+	public int updateChoice(String indexNumber, int newchoice, int vacancy);
 }

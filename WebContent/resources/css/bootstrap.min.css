@@ -9402,3 +9402,21 @@ button.close {
 .panel-display>.panel-footer+.panel-collapse>.panel-body {
 	border-bottom-color: #888a85
 }
+
+.vacancy-container .button .btn-lg {
+	text-align: center;
+	width: 125px;
+	max-width: 125px;
+}
+
+.vacancy-container .button .btn-warning {
+	width: 125px;
+	max-width: 125px;
+	white-space: normal;
+	pointer-events: none;
+	cursor: not-allowed;
+	filter: alpha(opacity = 65);
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	opacity: .65
+}
