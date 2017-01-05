@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS password_table (
 	id INT(5) NOT NULL AUTO_INCREMENT,
-	username varchar(50) NOT NULL,
-	password varchar(300) NOT NULL,
+	username VARCHAR(50) NOT NULL,
+	password VARCHAR(300) NOT NULL,
 	user_type BOOL NOT NULL,
 	PRIMARY KEY(id)
 );
@@ -10,27 +10,27 @@ ALTER TABLE password_table ADD UNIQUE username;
 	
 CREATE TABLE IF NOT EXISTS admin_table (
 	id INT(5) NOT NULL AUTO_INCREMENT,
-	username varchar(50) NOT NULL,
-	password varchar(300) NOT NULL,
+	username VARCHAR(50) NOT NULL,
+	password VARCHAR(300) NOT NULL,
 	user_type BOOL NOT NULL,
 	PRIMARY KEY(id)
 );
 	
 CREATE TABLE IF NOT EXISTS user_table (
 	id INT(5) AUTO_INCREMENT,
-	name varchar(50) NOT NULL,
-	surname varchar(50) NOT NULL,
-	gender varchar(1),
-	indexNumber varchar(10) NOT NULL,
-	emailAddress varchar(100) NOT NULL,
-	telephone varchar(20) NOT NULL,
+	name VARCHAR(50) NOT NULL,
+	surname VARCHAR(50) NOT NULL,
+	gender VARCHAR(1),
+	indexNumber VARCHAR(10) NOT NULL,
+	emailAddress VARCHAR(100) NOT NULL,
+	telephone VARCHAR(20) NOT NULL,
 	gradedPoint DECIMAL(5, 4) NOT NULL,
-	aboutMe varchar(500) NOT NULL,
-	vacancy_A varchar(20),
+	aboutMe VARCHAR(500) NOT NULL,
+	vacancy_A VARCHAR(20),
 	status_A BOOL,
-	vacancy_B varchar(20),
+	vacancy_B VARCHAR(20),
 	status_B BOOL,
-	vacancy_C varchar(20),
+	vacancy_C VARCHAR(20),
 	status_C BOOL,
 	ARDUINO BOOL,
 	FPGA BOOL,
@@ -56,24 +56,24 @@ CREATE TABLE IF NOT EXISTS user_table (
 
 CREATE TABLE IF NOT EXISTS company_table (
 	id INT(5) AUTO_INCREMENT,
-	loginID varchar(100) NOT NULL,
-	company varchar(50) NOT NULL,
-	address varchar(150) NOT NULL,
-	emailAddress varchar(100) NOT NULL,
-	telephone varchar(20) NOT NULL,
-	aboutUs varchar(500) NOT NULL,
+	loginID VARCHAR(100) NOT NULL,
+	company VARCHAR(50) NOT NULL,
+	address VARCHAR(150) NOT NULL,
+	emailAddress VARCHAR(100) NOT NULL,
+	telephone VARCHAR(20) NOT NULL,
+	aboutUs VARCHAR(500) NOT NULL,
 	positions INT(5),
 	PRIMARY KEY(id)
 );
 
-CREATE TABLE IF NOT EXISTS positions (
+CREATE TABLE IF NOT EXISTS vacancy_table (
 	id INT(5) AUTO_INCREMENT,
-	company varchar(100) NOT NULL,
+	company VARCHAR(100) NOT NULL,
 	salary INT(10),
-	title varchar(100) NOT NULL,
-	description_1 varchar(250) NOT NULL,
-	description_2 varchar(250),
-	applicant varchar(10),
+	title VARCHAR(100) NOT NULL,
+	description_1 VARCHAR(250) NOT NULL,
+	description_2 VARCHAR(250),
+	applicant VARCHAR(10),
 	open BOOL,
 	ARDUINO BOOL,
 	FPGA BOOL,
@@ -94,4 +94,12 @@ CREATE TABLE IF NOT EXISTS positions (
 	AI BOOL,
 	SIGNALPROCESSING BOOL,
 	PRIMARY KEY(id)
+);
+
+CREATE TABLE IF NOT EXISTS request_table (
+	request_id INT(5) AUTO_INCREMENT,
+	applicant VARCHAR(10) NOT NULL,
+	vacancy INT(5) NOT NULL,
+	attended BOOL,
+	PRIMARY KEY(request_id)
 );

@@ -6,6 +6,15 @@
 			<div class="navbar-header">
 				<a class="navbar-brand">All Vacancies</a>
 			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav navbar-right">
+					<li><form:form
+							action="view_requests"
+							method="POST">
+							<button type="submit" name="edit" value="edit" class="edit">Requests</button>
+						</form:form></li>
+				</ul>
+			</div>
 		</div>
 	</nav>
 	<div class="vacancy-list">

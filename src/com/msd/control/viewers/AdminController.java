@@ -18,7 +18,7 @@ import com.msd.pool.items.PoolVacancies;
 @Controller
 @RequestMapping("admin")
 public class AdminController {
-	
+
 	@Autowired
 	PoolPasswords poolPW;
 	@Autowired
@@ -28,49 +28,81 @@ public class AdminController {
 	@Autowired
 	PoolVacancies poolVacancies;
 
+	/*****************************************************************************************
+	 * This method will generate the view for an administrative login
+	 ****************************************************************************************/
 	@RequestMapping("/")
 	public ModelAndView loginAdmin() {
 		ModelAndView loginModel = new ModelAndView();
-		loginModel.setViewName("logins/login");
-		loginModel.addObject("info", new LoginInfo());
-		loginModel.addObject("action_url", new String("log_user"));
+		LoginInfo info = new LoginInfo();
+		info.setCompany(true);
+		loginModel.setViewName("logins/main_login");
+		loginModel.addObject("info", info);
+		loginModel.addObject("action_url", "login");
 		loginModel.addObject("principal", "Admin");
-		loginModel.addObject("type", true);
 		loginModel.addObject("admin", true);
 		return loginModel;
 	}
 
-	@RequestMapping(value = "/log_user", method = RequestMethod.POST)
-	public String logUserIn(LoginInfo info, ModelMap model, RedirectAttributes redirects) {
+	/*****************************************************************************************
+	 * When the Administrator tries to log in, credentials will be checked and
+	 * if they are matching, he will be redirected to a view containing users,
+	 * companies, and vacancies lists
+	 ****************************************************************************************/
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public String adminLogin(LoginInfo info, ModelMap model, RedirectAttributes redirects) {
 		if (poolPW.matchThisAndAdmin(info)) {
-			model.addAttribute("response", "Successful!");
+			return "logins/admin_home";
 		} else {
-			redirects.addFlashAttribute("error", "Login Failed!");
+			redirects.addFlashAttribute("msg", "Login Failed!");
+			redirects.addFlashAttribute("css", "danger");
 			return "redirect:/admin/";
 		}
-		return "logins/admin_home";
 	}
-	
-	@RequestMapping("/view_users")
+
+	/*****************************************************************************************
+	 * This method will generate a list of all the users and their details and
+	 * passed down to display the complete list of them.
+	 ****************************************************************************************/
+	@RequestMapping(value = "/view_users", method = RequestMethod.POST)
 	public String showAllUsers(Model model) {
 		// Add the user list under "users"
 		model.addAttribute("users", poolApplicants.getAllApplicants());
 		return "displays/full_user_list";
 	}
-	
-	@RequestMapping("/view_companies")
+
+	/*****************************************************************************************
+	 * This method will generate a list of all the companies and their details
+	 * and passed down to display the complete list of them.
+	 ****************************************************************************************/
+	@RequestMapping(value = "/view_companies", method = RequestMethod.POST)
 	public String showAllCompanies(Model model) {
 		// Add the user list under "users"
 		model.addAttribute("companies", poolCompanies.getAllCompanies());
 		return "displays/full_company_list";
 	}
-	
-	@RequestMapping("/view_vacancies")
+
+	/*****************************************************************************************
+	 * This method will generate a list of all the vacancies post by all the
+	 * companies and their details and passed down to display the complete list
+	 * of them.
+	 ****************************************************************************************/
+	@RequestMapping(value = "/view_vacancies", method = RequestMethod.POST)
 	public String showAllVacancies(Model model) {
 		// Add the user list under "users"
 		model.addAttribute("vacancies", poolVacancies.getAllVacancies());
 		return "displays/full_vacancy_list";
 	}
-	
-	
+
+	/*****************************************************************************************
+	 * This method will generate a list of all the requests by applicants who
+	 * haven't got to select the vacancies they like. Administrator will look
+	 * for ward to their requests and either accept or decline them.
+	 ****************************************************************************************/
+	@RequestMapping(value = "/view_requests", method = RequestMethod.POST)
+	public String showAllRequests(Model model) {
+		// Add the user list under "users"
+		model.addAttribute("requests", poolVacancies.getAllVacancies());
+		return "displays/full_request_list";
+	}
 }

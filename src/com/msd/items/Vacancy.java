@@ -8,7 +8,8 @@ public class Vacancy {
 
 	private int id;
 	private String title;
-	private String company;
+	private String companyName;
+	private String companyID;
 	private int salary;
 	private List<String> preferences;
 	private String description_1;
@@ -18,20 +19,16 @@ public class Vacancy {
 
 	public Vacancy() {/**/}
 	
-	public Vacancy(String company) {
-		this.company = company;
-	}
-	
-	public Vacancy(String company, String applicant, boolean open) {
-		this.company = company;
+	public Vacancy(String companyID, String applicant, boolean open) {
+		this.companyID = companyID;
 		this.applicant = applicant;
 		this.open = open;
 	}
 
-	public Vacancy(String title, String company, int salary, String description_1,
+	public Vacancy(String title, String companyID, int salary, String description_1,
 			String description_2) {
 		this.title = title;
-		this.company = company;
+		this.companyID = companyID;
 		this.salary = salary;
 		this.description_1 = description_1;
 		this.description_2 = description_2;
@@ -53,12 +50,20 @@ public class Vacancy {
 		this.title = title;
 	}
 
-	public String getCompany() {
-		return company;
+	public String getCompanyName() {
+		return companyName;
 	}
 
-	public void setCompany(String company) {
-		this.company = company;
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
+
+	public String getCompanyID() {
+		return companyID;
+	}
+
+	public void setCompanyID(String companyID) {
+		this.companyID = companyID;
 	}
 
 	public int getSalary() {

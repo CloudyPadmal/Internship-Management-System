@@ -100,4 +100,18 @@ public class PoolCompanies implements CompanyDAO {
 		String sql = "UPDATE " + CompanyDAO.TABLE + " SET positions = positions - 1 WHERE company = '" + companyName + "'";
 		return dbHandler.update(sql);
 	}
+	
+	@Override
+	public String getCompanyName(String loginID) {
+		String sql = "SELECT company FROM " + CompanyDAO.TABLE + " WHERE loginID = '" + loginID + "'";
+		return dbHandler.query(sql, new ResultSetExtractor<String>() {
+			@Override
+			public String extractData(ResultSet rs) throws SQLException, DataAccessException {
+				if (rs.next()) {
+					return rs.getString("company");
+				}
+				return null;
+			}
+		});
+	}
 }

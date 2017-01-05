@@ -2,7 +2,6 @@
 <html>
 	<body>
 		<div class="container">
-		
 			<div class="jumbotron">
 				<h1>Project MSD</h1>
 				<p class="lead">Where companies meet students!!!</p>
@@ -15,7 +14,7 @@
 			<footer class="footer">
 				<p>© 2016 MSDProject, Inc.</p>
 			</footer>
-	
 		</div>
 	</body>
 </html>
+<!-- © Padmal -->

@@ -42,12 +42,14 @@ public class VacancyController implements Preferences {
 	}
 
 	// Creation form for a new vacancy
-	@RequestMapping(value = "/add/{company}", method = RequestMethod.GET)
+	@RequestMapping(value = "/add/{company}", method = RequestMethod.POST)
 	public String registerVacancy(Model model, @PathVariable("company") String companyName) {
 		// Pass the Vacancy as "vacancyForm"
 		model = generatePrefList(model);
 		// Create a vacancy with a company attached to it with status open
-		model.addAttribute("vacancyForm", new Vacancy(companyName, null, true));
+		model.addAttribute("vacancyForm",
+				new Vacancy(companyName, null, true));
+		model.addAttribute("company", poolCompanies.getCompanyName(companyName));
 		// Notify that this is a new vacancy
 		model.addAttribute("status", true);
 		// Display the html page
@@ -97,9 +99,9 @@ public class VacancyController implements Preferences {
 			redirectAttributes.addFlashAttribute("msg", "Vacancy created successfully!");
 			// Add Vacancy to the Vacancy table
 			poolVacancies.addVacancy(vacancy);
-			poolCompanies.incrementVacancyCount(vacancy.getCompany());
+			poolCompanies.incrementVacancyCount(vacancy.getCompanyID());
 			// Display Vacancy details
-			return "redirect:/company/" + vacancy.getCompany();
+			return "redirect:/company/" + vacancy.getCompanyID();
 		}
 	}
 
@@ -116,7 +118,7 @@ public class VacancyController implements Preferences {
 			// Add Vacancy to the Vacancy table
 			poolVacancies.updateVacancy(vacancy);
 			// Display Vacancy details
-			return "redirect:/company/" + vacancy.getCompany();
+			return "redirect:/company/" + vacancy.getCompanyID();
 		}
 	}
 

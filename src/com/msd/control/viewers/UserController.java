@@ -18,6 +18,7 @@ import com.msd.items.Company;
 import com.msd.items.LoginInfo;
 import com.msd.items.Vacancy;
 import com.msd.pool.items.PoolApplicants;
+import com.msd.pool.items.PoolCompanies;
 import com.msd.pool.items.PoolPasswords;
 import com.msd.pool.items.PoolVacancies;
 
@@ -31,14 +32,19 @@ public class UserController {
 	PoolApplicants poolApplicants;
 	@Autowired
 	PoolVacancies poolVacancies;
+	@Autowired
+	PoolCompanies poolCompanies;
 
 	// This view will display the correctness of the user credentials
-	@RequestMapping(value = "/log", method = RequestMethod.POST)
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String logUserIn(@ModelAttribute("info") LoginInfo info, ModelMap model, RedirectAttributes redirects) {
 		if (poolPW.matchThisAndThat(info)) {
 			Applicant user = poolApplicants.fetchApplicant(info.getUsername());
 			model.addAttribute("user", user);
 			List<Vacancy> vacancies = poolVacancies.getVacancies(user.convertListToPref());
+			for (Vacancy vacancy : vacancies) {
+				vacancy.setCompany(poolCompanies.getCompanyName(vacancy.getCompany()));
+			}
 			model.addAttribute("vacancies", vacancies);
 		} else {
 			redirects.addFlashAttribute("msg", "Username or Password is wrong!");
@@ -55,22 +61,11 @@ public class UserController {
 		Applicant user = poolApplicants.fetchApplicant(indexNumber);
 		model.addAttribute("user", user);
 		List<Vacancy> vacancies = poolVacancies.getVacancies(user.convertListToPref());
+		for (Vacancy vacancy : vacancies) {
+			vacancy.setCompany(poolCompanies.getCompanyName(vacancy.getCompany()));
+		}
 		model.addAttribute("vacancies", vacancies);
 		return "displays/show_user";
-	}
-
-	// This will display all the users and their passwords <REMOVE>
-	@RequestMapping("/user_list")
-	public ModelAndView loadUsersList() {
-		List<LoginInfo> list = poolPW.listTypeOfPWs(false);
-		return new ModelAndView("displays/user_list", "list", list);
-	}
-
-	// This will delete the current password
-	@RequestMapping(value = "/deletepw/{name}", method = RequestMethod.GET)
-	public String delete(@PathVariable String name) {
-		poolPW.deletePassword(name);
-		return ("redirect:/user/user_list");
 	}
 
 	@RequestMapping(value = "/apply/{vacancyID}/{indexNumber}", method = RequestMethod.POST)
@@ -83,6 +78,9 @@ public class UserController {
 		Applicant user = poolApplicants.fetchApplicant(indexNumber);
 		model.addAttribute("user", user);
 		List<Vacancy> vacancies = poolVacancies.getVacancies(user.convertListToPref());
+		for (Vacancy vacancy : vacancies) {
+			vacancy.setCompany(poolCompanies.getCompanyName(vacancy.getCompany()));
+		}
 		model.addAttribute("vacancies", vacancies);
 		return "displays/show_user";
 	}

@@ -7,18 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.msd.items.Applicant;
 import com.msd.items.Company;
 import com.msd.items.LoginInfo;
 import com.msd.items.Vacancy;
@@ -26,7 +19,6 @@ import com.msd.pool.interfaces.Preferences;
 import com.msd.pool.items.PoolCompanies;
 import com.msd.pool.items.PoolPasswords;
 import com.msd.pool.items.PoolVacancies;
-import com.msd.pool.validators.PoolCompanyValidator;
 
 @Controller
 @RequestMapping("company")
@@ -39,86 +31,70 @@ public class CompanyController implements Preferences {
 	@Autowired
 	PoolVacancies poolVacancies;
 
-	/**
-	 * This method will be called when the user clicks Login button in user
-	 * login page.
-	 * 
-	 * @param info
-	 *            Login information : User name and password along with user
-	 *            type
-	 * @param model
-	 *            MVC Model
-	 * @param redirects
-	 *            MVC Redirect
-	 * @return Directs to the login page if the user name and password are
-	 *         mismatches. If they are valid, directs to the user page
-	 */
-	@RequestMapping(value = "/log", method = RequestMethod.POST, params = "login")
-	public String logUserIn(LoginInfo info, ModelMap model, RedirectAttributes redirects) {
+	/*****************************************************************************************
+	 * This method will be called when a company clicks LOG IN with company
+	 * login ID and password. The passed down values (user name, password) then
+	 * will be checked for validity with poolPW. If the credentials are invalid,
+	 * view will be redirected to the login page with a warning message. If they
+	 * are valid, it will be redirected to the company home page.
+	 ****************************************************************************************/
+	@RequestMapping(value = "/login", method = RequestMethod.POST, params = "login")
+	private String companyLogin(LoginInfo info, ModelMap model, RedirectAttributes redirects) {
 		if (poolPW.matchThisAndThat(info)) {
-			return "redirect:" + info.getUsername();
+			// Password and the credentials are matching. Load company details
+			Company company = poolCompanies.fetchCompany(info.getUsername());
+			if (company == null) {
+				// Password and credentials don't match. Redirect to login page.
+				redirects.addFlashAttribute("msg", "Company not found!");
+				redirects.addFlashAttribute("css", "warning");
+				// This will not happen. But has handled it anyways
+				return "redirect:/company_login";
+			}
+			// Load a list of vacancies posted by the company
+			List<Vacancy> listOfVacancies = poolVacancies.getCompanyVacancies(company.getLoginID());
+			for (Vacancy vacancy : listOfVacancies) {
+				vacancy.setCompanyName(poolCompanies.getCompanyName(vacancy.getCompanyID()));
+			}
+			// Add the company under "company"
+			model.addAttribute("company", company);
+			model.addAttribute("vacancies", listOfVacancies);
+			return "displays/show_company";
 		} else {
+			// Password and credentials don't match. Redirect to login page.
 			redirects.addFlashAttribute("msg", "Company or Password is wrong!");
 			redirects.addFlashAttribute("css", "danger");
 			return "redirect:/company_login";
 		}
 	}
 
-	// This view will direct to the register view
-	@RequestMapping(value = "/log", method = RequestMethod.POST, params = "register")
-	public String register(LoginInfo info, ModelMap model, RedirectAttributes redirects) {
-		return "redirect:/reg/company/";
-	}
-
-	// This will display the existing company list
-	@RequestMapping("/company_list")
-	public ModelAndView loadCompanyList() {
-		List<LoginInfo> list = poolPW.listTypeOfPWs(true);
-		return new ModelAndView("displays/user_list", "list", list);
-	}
-
-	// This will delete the current password
-	@RequestMapping(value = "/deletepw/{name}", method = RequestMethod.GET)
-	public String delete(@PathVariable String name) {
-		poolPW.deletePassword(name);
-		return ("redirect:/company/company_list");
-	}
-
-	// Display Company details
-	@RequestMapping(value = "/{index}", method = RequestMethod.GET)
-	public String showCompany(@PathVariable("index") String companyName, Model model) {
-		// Fetch applicant from database
-		Company company = poolCompanies.fetchCompany(companyName);
-		List<Vacancy> listOfVacancies = poolVacancies.getCompanyVacancies(companyName);
-		if (company == null) {
-			// If there is no user, return a failure message
-			model.addAttribute("msg", "Company not found");
-		}
-		// Add the company under "company"
-		model.addAttribute("company", company);
-		model.addAttribute("vacancies", listOfVacancies);
-		return "displays/show_company";
-	}
-
-	// Delete Vacancy
-	@RequestMapping(value = "/vacancy/{vacancyID}/delete", method = RequestMethod.GET)
-	public String deleteVacancy(@PathVariable("vacancyID") int vacancyID, final RedirectAttributes redirectAttributes) {
+	/*****************************************************************************************
+	 * This method will be called when a company wants to delete a vacancy they
+	 * have created. When deleting a vacancy,
+	 * 1. Vacancy should be deleted from vacancy table
+	 * 2. Decrement the # of positions in the company table
+	 * 3. Delete choice from the applicant table
+	 ****************************************************************************************/
+	@RequestMapping(value = "/vacancy/{vacancyID}/delete", method = RequestMethod.POST)
+	private String deleteVacancy(@PathVariable("vacancyID") int vacancyID,
+			final RedirectAttributes redirectAttributes) {
 		String companyName = poolVacancies.getCompanyName(vacancyID);
 		// Delete vacancy
 		poolVacancies.deleteVacancy(vacancyID);
 		poolCompanies.decrementVacancyCount(companyName);
 		// Pass the successful message to redirect
 		redirectAttributes.addFlashAttribute("msg", "Vacancy deleted!");
+		redirectAttributes.addFlashAttribute("css", "success");
 		return "redirect:/company/" + companyName;
 	}
 
 	// Update Vacancy
-	@RequestMapping(value = "/vacancy/{vacancyID}/update", method = RequestMethod.GET)
-	public String showUpdateVacancy(@PathVariable("vacancyID") int vacancyID, Model model) {
+	@RequestMapping(value = "/vacancy/{vacancyID}/update", method = RequestMethod.POST)
+	private String showUpdateVacancy(@PathVariable("vacancyID") int vacancyID, Model model) {
 		// Fetch the Vacancy details from database
 		Vacancy vacancy = poolVacancies.fetchVacancy(vacancyID);
 		// Add details under "vacancyForm"
 		model.addAttribute("vacancyForm", vacancy);
+		model.addAttribute("company", poolCompanies.getCompanyName(vacancy.getCompanyID()));
 		// Generate preference list
 		model = generatePrefList(model);
 		// Add update notations
@@ -126,7 +102,11 @@ public class CompanyController implements Preferences {
 		return "logins/new_vacancy";
 	}
 
-	// Generate default values for preferences
+	/*****************************************************************************************
+	 * This method will generate the preferences in to a list which will be used
+	 * in generating the web form. It will be passed down to the page with the
+	 * key "preferences"
+	 ****************************************************************************************/
 	private Model generatePrefList(Model model) {
 		// Create a list of preferences
 		List<String> preferences = new ArrayList<>();
@@ -151,5 +131,4 @@ public class CompanyController implements Preferences {
 		model.addAttribute("preferences", preferences);
 		return model;
 	}
-
 }

@@ -24,7 +24,8 @@
 
 		<form:hidden path="id" />
 		<form:hidden path="open" />
-		<form:hidden path="applicant" />		
+		<form:hidden path="applicant" />
+		<form:hidden path="companyID" />		
 		
 		<spring:bind path="title">
 			<label>Title</label>
@@ -33,12 +34,8 @@
 		</spring:bind>
 		<br />
 
-		<spring:bind path="company">
 			<label>Company</label>
-			<form:input path="company" type="text" id="company"
-				placeholder="Company" />
-			<form:errors path="company" />
-		</spring:bind>
+			${company}
 		<br />
 
 		<spring:bind path="salary">

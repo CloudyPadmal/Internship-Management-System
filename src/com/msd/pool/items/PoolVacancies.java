@@ -29,7 +29,7 @@ public class PoolVacancies implements VacancyDAO {
 				+ " (company, salary, title, description_1, description_2, ARDUINO, "
 				+ "FPGA, ROBOTICS, WIFI, ANTENNAS, NETWORKING, PROCESSORDESIGN, IMAGEPROCESSING, PROGRAMMING, AUTOMATION, "
 				+ "BIOMEDICAL, BIOMECHANICS, TELECOM, SEMICONDUCTORS, CIRCUITS, IOT, AI, SIGNALPROCESSING) "
-				+ "VALUES ('" + vacancy.getCompany() + "', '" + vacancy.getSalary() + "', '" + vacancy.getTitle()
+				+ "VALUES ('" + vacancy.getCompanyID() + "', '" + vacancy.getSalary() + "', '" + vacancy.getTitle()
 				+ "', '" + vacancy.getDescription_1() + "', '" + vacancy.getDescription_2() + "',"
 				+ criteria.isARDUINO() + "," + criteria.isFPGA() + "," + criteria.isROBOTICS() + "," + criteria.isWIFI()
 				+ "," + criteria.isANTENNAS() + "," + criteria.isNETWORKING() + "," + criteria.isPROCESSORDESIGN() + ","

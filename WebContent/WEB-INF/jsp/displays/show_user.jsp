@@ -15,7 +15,7 @@
 						</form:form></li>
 					<li><form:form action="/MSDProject/" method="POST">
 							<button type="submit" name="edit" value="edit" class="edit">Logout</button>
-						</form:form>
+						</form:form></li>
 				</ul>
 			</div>
 		</div>
@@ -28,33 +28,34 @@
 				<span aria-hidden="true">&times;</span>
 			</button>
 			<strong>${msg}</strong>
-			<c:set var="msg" value="" />
 		</div>
 	</c:if>
 
 	<div class="user-container">
-		<div class="col-sm-4">
-			<div class="panel panel-primary">
-				<div class="panel-heading">Email</div>
-				<div class="panel-body">${user.emailAddress}</div>
+		<div class="user-header">
+			<div class="col-sm-4">
+				<div class="panel panel-primary">
+					<div class="panel-heading">Email</div>
+					<div class="panel-body">${user.emailAddress}</div>
+				</div>
 			</div>
-		</div>
-		<div class="col-sm-2">
-			<div class="panel panel-primary">
-				<div class="panel-heading">Gender</div>
-				<div class="panel-body">${user.gender}</div>
+			<div class="col-sm-2">
+				<div class="panel panel-primary">
+					<div class="panel-heading">Gender</div>
+					<div class="panel-body">${user.gender}</div>
+				</div>
 			</div>
-		</div>
-		<div class="col-sm-3">
-			<div class="panel panel-primary">
-				<div class="panel-heading">Phone</div>
-				<div class="panel-body">${user.telephone}</div>
+			<div class="col-sm-3">
+				<div class="panel panel-primary">
+					<div class="panel-heading">Phone</div>
+					<div class="panel-body">${user.telephone}</div>
+				</div>
 			</div>
-		</div>
-		<div class="col-sm-3">
-			<div class="panel panel-primary">
-				<div class="panel-heading">GPA</div>
-				<div class="panel-body">${user.gradedPoint}</div>
+			<div class="col-sm-3">
+				<div class="panel panel-primary">
+					<div class="panel-heading">GPA</div>
+					<div class="panel-body">${user.gradedPoint}</div>
+				</div>
 			</div>
 		</div>
 		<div class="col-sm-12">
@@ -118,7 +119,6 @@
 							</c:when>
 							<c:otherwise>
 								<c:choose>
-
 									<c:when test="${vacancy.applicant == user.indexNumber}">
 										<c:if test="${user.applied1}">
 											<form:form action="cancel/${vacancy.id}/${user.indexNumber}"
@@ -147,6 +147,11 @@
 										<button type="submit" name="edit" value="edit"
 											class="btn btn-warning btn-lg">Someone applied for
 											it!</button>
+										<form:form action="request/${vacancy.id}/${user.indexNumber}"
+											method="POST">
+											<button type="submit" name="edit" value="edit"
+												class="btn btn-primary btn-lg">Make a request!</button>
+										</form:form>
 									</c:otherwise>
 								</c:choose>
 							</c:otherwise>

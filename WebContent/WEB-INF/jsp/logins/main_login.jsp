@@ -1,8 +1,6 @@
 <%@ include file="/WEB-INF/jsp/head.jsp"%>
 <html>
-
-	<body>
-	
+	<body>	
 		<nav class="navbar navbar-inverse navbar-fixed-top">
 			<div class="container-fluid">
 				<div class="navbar-header">
@@ -37,8 +35,7 @@
 					<button type="submit" class="midbutton positivebtn" name="login">Login</button>
 				</form:form>
 			</div>
-		</div>
-		
+		</div>		
 	</body>
-
 </html>
+<!-- © Padmal -->

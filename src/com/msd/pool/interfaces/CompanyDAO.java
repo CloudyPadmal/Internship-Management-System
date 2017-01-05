@@ -33,4 +33,7 @@ public interface CompanyDAO {
 
 	// Get a list of applicants in a given criteria
 	public List<Company> getTypeOfCompanies(PoolCriteria criteria);
+
+	// Get the name of company by loginID
+	public String getCompanyName(String loginID);
 }
