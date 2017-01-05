@@ -38,4 +38,7 @@ public interface VacancyDAO {
 
 	// Update vacancy status
 	public int closeVacancy(int vacancyID, String indexNumber);
+
+	// Remove applicant from vacancy
+	public int openVacancy(int vacancyID);
 }

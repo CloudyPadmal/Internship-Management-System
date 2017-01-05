@@ -63,6 +63,12 @@ public class PoolApplicants implements ApplicantDAO {
 							rs.getBoolean("SEMICONDUCTORS"), rs.getBoolean("CIRCUITS"), rs.getBoolean("IOT"),
 							rs.getBoolean("AI"), rs.getBoolean("SIGNALPROCESSING"));
 					// Fetch
+					info.setVacancy1(rs.getString("vacancy_A"));
+					info.setVacancy2(rs.getString("vacancy_B"));
+					info.setVacancy3(rs.getString("vacancy_C"));
+					info.setApplied1(rs.getBoolean("status_A"));
+					info.setApplied2(rs.getBoolean("status_B"));
+					info.setApplied3(rs.getBoolean("status_C"));
 					info.setName(rs.getString("name"));
 					info.setGender(rs.getString("gender"));
 					info.convertPrefToList(criteria);
@@ -139,20 +145,79 @@ public class PoolApplicants implements ApplicantDAO {
 
 	@Override
 	public int setChoice(String indexNumber, int choice, int vacancy) {
-		// TODO Auto-generated method stub
-		return 0;
+		// Map the choice
+		String userChoice = "";
+		String choiceBool = "";
+		switch (choice) {
+		case 1:
+			userChoice = "vacancy_A";
+			choiceBool = "status_A";
+			break;
+		case 2:
+			userChoice = "vacancy_B";
+			choiceBool = "status_B";
+			break;
+		case 3:
+			userChoice = "vacancy_C";
+			choiceBool = "status_C";
+			break;
+		default:
+			return 0;
+		}
+		String sql = "UPDATE " + ApplicantDAO.TABLE + " SET " + userChoice + " = " + vacancy + ", " + choiceBool
+				+ " = TRUE " + " WHERE indexNumber = '" + indexNumber + "'";
+		return dbHandler.update(sql);
 	}
 
 	@Override
 	public int removeChoice(String indexNumber, int choice, int vacancy) {
-		// TODO Auto-generated method stub
-		return 0;
+		// Map the choice
+		String userChoice = "";
+		String choiceBool = "";
+		switch (choice) {
+		case 1:
+			userChoice = "vacancy_A";
+			choiceBool = "status_A";
+			break;
+		case 2:
+			userChoice = "vacancy_B";
+			choiceBool = "status_B";
+			break;
+		case 3:
+			userChoice = "vacancy_C";
+			choiceBool = "status_C";
+			break;
+		default:
+			return 0;
+		}
+		String sql = "UPDATE " + ApplicantDAO.TABLE + " SET " + userChoice + " = NULL , " + choiceBool
+				+ " = NULL " + " WHERE indexNumber = '" + indexNumber + "'";
+		return dbHandler.update(sql);
 	}
 
 	@Override
 	public int updateChoice(String indexNumber, int newchoice, int vacancy) {
-		// TODO Auto-generated method stub
-		return 0;
+		// Map the choice
+		String userChoice = "";
+		String choiceBool = "";
+		switch (newchoice) {
+		case 1:
+			userChoice = "vacancy_A";
+			choiceBool = "status_A";
+			break;
+		case 2:
+			userChoice = "vacancy_B";
+			choiceBool = "status_B";
+			break;
+		case 3:
+			userChoice = "vacancy_C";
+			choiceBool = "status_C";
+			break;
+		default:
+			return 0;
+		}
+		String sql = "UPDATE " + ApplicantDAO.TABLE + " SET " + userChoice + " = " + vacancy + ", " + choiceBool
+				+ " = TRUE " + " WHERE indexNumber = '" + indexNumber + "'";
+		return dbHandler.update(sql);
 	}
-
 }

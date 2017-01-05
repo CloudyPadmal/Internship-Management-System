@@ -9425,6 +9425,14 @@ button.close {
 	opacity: .65
 }
 
+.vacancy-container .button .btn-danger {
+	width: 125px;
+	max-width: 125px;
+	white-space: normal;
+}
+
+
+
 .vacancy-container .button .btn-primary {
 	width: 125px;
 	max-width: 125px;

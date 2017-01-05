@@ -43,7 +43,7 @@ public class UserController {
 			model.addAttribute("user", user);
 			List<Vacancy> vacancies = poolVacancies.getVacancies(user.convertListToPref());
 			for (Vacancy vacancy : vacancies) {
-				vacancy.setCompany(poolCompanies.getCompanyName(vacancy.getCompany()));
+				vacancy.setCompanyName(poolCompanies.getCompanyName(vacancy.getCompanyID()));
 			}
 			model.addAttribute("vacancies", vacancies);
 		} else {
@@ -62,24 +62,70 @@ public class UserController {
 		model.addAttribute("user", user);
 		List<Vacancy> vacancies = poolVacancies.getVacancies(user.convertListToPref());
 		for (Vacancy vacancy : vacancies) {
-			vacancy.setCompany(poolCompanies.getCompanyName(vacancy.getCompany()));
+			vacancy.setCompanyName(poolCompanies.getCompanyName(vacancy.getCompanyID()));
 		}
 		model.addAttribute("vacancies", vacancies);
 		return "displays/show_user";
 	}
 
-	@RequestMapping(value = "/apply/{vacancyID}/{indexNumber}", method = RequestMethod.POST)
+	
+	@RequestMapping(value = "/apply/{vacancyID}/{indexNumber}/{choice}", method = RequestMethod.POST)
 	public String applyForVacancy(@PathVariable("vacancyID") int vacancyID, Model model,
-			@PathVariable("indexNumber") String indexNumber) {
+			@PathVariable("indexNumber") String indexNumber, @PathVariable("choice") int choice) {
+		// Update the vacancy table by closing the vacancy with applicant name
 		poolVacancies.closeVacancy(vacancyID, indexNumber);
+		// Update the user table giving the choice to the applicant
+		poolApplicants.setChoice(indexNumber, choice, vacancyID);		
 		// Pass the successful message to redirect
 		model.addAttribute("msg", "Application submitted succesfully!");
 		model.addAttribute("css", "success");
+		// Fetch the applicant
 		Applicant user = poolApplicants.fetchApplicant(indexNumber);
 		model.addAttribute("user", user);
+		// Fetch the list of vacancies
 		List<Vacancy> vacancies = poolVacancies.getVacancies(user.convertListToPref());
 		for (Vacancy vacancy : vacancies) {
-			vacancy.setCompany(poolCompanies.getCompanyName(vacancy.getCompany()));
+			vacancy.setCompanyName(poolCompanies.getCompanyName(vacancy.getCompanyID()));
+		}
+		model.addAttribute("vacancies", vacancies);
+		return "displays/show_user";
+	}
+	
+	@RequestMapping(value = "/cancel/{vacancyID}/{indexNumber}/{choice}", method = RequestMethod.POST)
+	public String cancelVacancy(@PathVariable("vacancyID") int vacancyID, Model model,
+			@PathVariable("indexNumber") String indexNumber, @PathVariable("choice") int choice) {
+		// Update the vacancy table by closing the vacancy with applicant name
+		poolVacancies.openVacancy(vacancyID);
+		// Update the user table giving the choice to the applicant
+		poolApplicants.removeChoice(indexNumber, choice, vacancyID);		
+		// Pass the successful message to redirect
+		model.addAttribute("msg", "Application rejected succesfully!");
+		model.addAttribute("css", "warning");
+		// Fetch the applicant
+		Applicant user = poolApplicants.fetchApplicant(indexNumber);
+		model.addAttribute("user", user);
+		// Fetch the list of vacancies
+		List<Vacancy> vacancies = poolVacancies.getVacancies(user.convertListToPref());
+		for (Vacancy vacancy : vacancies) {
+			vacancy.setCompanyName(poolCompanies.getCompanyName(vacancy.getCompanyID()));
+		}
+		model.addAttribute("vacancies", vacancies);
+		return "displays/show_user";
+	}
+	
+	@RequestMapping(value = "/request/{vacancyID}/{indexNumber}", method = RequestMethod.POST)
+	public String requestVacancy(@PathVariable("vacancyID") int vacancyID, Model model,
+			@PathVariable("indexNumber") String indexNumber) {		
+		// Pass the successful message to redirect
+		model.addAttribute("msg", "Request sent to administrator!");
+		model.addAttribute("css", "info");
+		// Fetch the applicant
+		Applicant user = poolApplicants.fetchApplicant(indexNumber);
+		model.addAttribute("user", user);
+		// Fetch the list of vacancies
+		List<Vacancy> vacancies = poolVacancies.getVacancies(user.convertListToPref());
+		for (Vacancy vacancy : vacancies) {
+			vacancy.setCompanyName(poolCompanies.getCompanyName(vacancy.getCompanyID()));
 		}
 		model.addAttribute("vacancies", vacancies);
 		return "displays/show_user";

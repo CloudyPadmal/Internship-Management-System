@@ -97,8 +97,10 @@
 						</c:forEach>
 					</div>
 					<div class="button col-md-2">
-						<button type="submit" name="edit" value="edit"
-							class="btn btn-warning btn-lg">${vacancy.applicant}</button><br />
+						<c:if test="${vacancy.applicant == ''}">
+							<button type="submit" name="edit" value="edit"
+								class="btn btn-warning btn-lg">${vacancy.applicant}</button>
+						</c:if>
 						<form:form action="vacancy/${vacancy.id}/delete" method="POST">
 							<button type="submit" name="1st" value="edit"
 								class="btn btn-danger btn-lg">Delete</button>

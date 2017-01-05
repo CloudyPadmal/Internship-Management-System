@@ -200,8 +200,14 @@ public class PoolVacancies implements VacancyDAO {
 
 	@Override
 	public int closeVacancy(int vacancyID, String indexNumber) {
-		System.out.println(indexNumber);
 		String sql = "UPDATE " + VacancyDAO.TABLE + " SET open = TRUE, applicant = '" + indexNumber + "' WHERE id = "
+				+ vacancyID;
+		return dbHandler.update(sql);
+	}
+	
+	@Override
+	public int openVacancy(int vacancyID) {
+		String sql = "UPDATE " + VacancyDAO.TABLE + " SET open = FALSE, applicant = NULL WHERE id = "
 				+ vacancyID;
 		return dbHandler.update(sql);
 	}
