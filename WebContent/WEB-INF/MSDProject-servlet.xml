@@ -48,6 +48,10 @@
 	<bean id="poolVacancies" class="com.msd.pool.items.PoolVacancies">
 		<property name="dbHandler" ref="dbTemplate" />
 	</bean>
+	
+	<bean id="poolRequests" class="com.msd.pool.items.PoolRequests">
+		<property name="dbHandler" ref="dbTemplate" />
+	</bean>
 
 	<bean id="userValidator" class="com.msd.pool.validators.PoolUserValidator" />
 	<bean id="companyValidator" class="com.msd.pool.validators.PoolCompanyValidator" />

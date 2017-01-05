@@ -211,4 +211,30 @@ public class PoolVacancies implements VacancyDAO {
 				+ vacancyID;
 		return dbHandler.update(sql);
 	}
+
+	public String getApplicant(int vacancyID) {
+		String sql = "SELECT applicant FROM " + VacancyDAO.TABLE + " WHERE id = '" + vacancyID + "'";
+		return dbHandler.query(sql, new ResultSetExtractor<String>() {
+			@Override
+			public String extractData(ResultSet rs) throws SQLException, DataAccessException {
+				if (rs.next()) {
+					return rs.getString("applicant");
+				}
+				return null;
+			}
+		});
+	}
+
+	public String getVacancyName(int vacancyID) {
+		String sql = "SELECT title FROM " + VacancyDAO.TABLE + " WHERE id = '" + vacancyID + "'";
+		return dbHandler.query(sql, new ResultSetExtractor<String>() {
+			@Override
+			public String extractData(ResultSet rs) throws SQLException, DataAccessException {
+				if (rs.next()) {
+					return rs.getString("title");
+				}
+				return null;
+			}
+		});
+	}
 }

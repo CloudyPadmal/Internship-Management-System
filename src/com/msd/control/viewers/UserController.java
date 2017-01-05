@@ -12,12 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.msd.items.Appeal;
 import com.msd.items.Applicant;
 import com.msd.items.LoginInfo;
 import com.msd.items.Vacancy;
 import com.msd.pool.items.PoolApplicants;
 import com.msd.pool.items.PoolCompanies;
 import com.msd.pool.items.PoolPasswords;
+import com.msd.pool.items.PoolRequests;
 import com.msd.pool.items.PoolVacancies;
 
 @Controller
@@ -32,6 +34,8 @@ public class UserController {
 	PoolVacancies poolVacancies;
 	@Autowired
 	PoolCompanies poolCompanies;
+	@Autowired
+	PoolRequests poolRequests;
 
 	/*****************************************************************************************
 	 * This method will be called when a user clicks LOG IN with user login ID
@@ -40,7 +44,6 @@ public class UserController {
 	 * will be redirected to the login page with a warning message. If they are
 	 * valid, it will be redirected to the user home page.
 	 ****************************************************************************************/
-	// This view will display the correctness of the user credentials
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String logUserIn(@ModelAttribute("info") LoginInfo info, ModelMap model, RedirectAttributes redirects) {
 		if (poolPW.matchThisAndThat(info)) {
@@ -56,20 +59,6 @@ public class UserController {
 			redirects.addFlashAttribute("css", "danger");
 			return "redirect:/user_login";
 		}
-		return "displays/show_user";
-	}
-
-	// Display User details
-	@RequestMapping(value = "/{indexNumber}", method = RequestMethod.POST)
-	public String showCompany(@PathVariable("indexNumber") String indexNumber, Model model) {
-		// Fetch applicant from database
-		Applicant user = poolApplicants.fetchApplicant(indexNumber);
-		model.addAttribute("user", user);
-		List<Vacancy> vacancies = poolVacancies.getVacancies(user.convertListToPref());
-		for (Vacancy vacancy : vacancies) {
-			vacancy.setCompanyName(poolCompanies.getCompanyName(vacancy.getCompanyID()));
-		}
-		model.addAttribute("vacancies", vacancies);
 		return "displays/show_user";
 	}
 
@@ -136,6 +125,14 @@ public class UserController {
 	@RequestMapping(value = "/request/{vacancyID}/{indexNumber}", method = RequestMethod.POST)
 	public String requestVacancy(@PathVariable("vacancyID") int vacancyID, Model model,
 			@PathVariable("indexNumber") String indexNumber) {
+		// Generate the request
+		Appeal appeal = new Appeal(vacancyID, indexNumber);
+		// Add the request to the request table
+		appeal.setGradedPoint(poolApplicants.getGPA(indexNumber));
+		appeal.setVacancyName(poolVacancies.getVacancyName(vacancyID));
+		appeal.setCurrentNumber(poolVacancies.getApplicant(vacancyID));
+		appeal.setCurrentGradedPoint(poolApplicants.getGPA(appeal.getCurrentNumber()));
+		poolRequests.addRequest(appeal);
 		// Pass the successful message to redirect
 		model.addAttribute("msg", "Request sent to administrator!");
 		model.addAttribute("css", "info");

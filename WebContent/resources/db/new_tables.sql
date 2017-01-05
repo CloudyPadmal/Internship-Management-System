@@ -99,7 +99,11 @@ CREATE TABLE IF NOT EXISTS vacancy_table (
 CREATE TABLE IF NOT EXISTS request_table (
 	request_id INT(5) AUTO_INCREMENT,
 	applicant VARCHAR(10) NOT NULL,
+	currentApplicant VARCHAR(10) NOT NULL,
 	vacancy INT(5) NOT NULL,
+	vacancyName VARCHAR(100) NOT NULL,
 	attended BOOL,
+	gradedPoint DECIMAL(5, 4) NOT NULL,
+	currentGradedPoint DECIMAL(5, 4) NOT NULL,
 	PRIMARY KEY(request_id)
 );

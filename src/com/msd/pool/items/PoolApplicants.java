@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.RowMapper;
 
 import com.msd.items.Applicant;
 import com.msd.pool.interfaces.ApplicantDAO;
+import com.msd.pool.interfaces.CompanyDAO;
 import com.msd.pool.interfaces.VacancyDAO;
 
 public class PoolApplicants implements ApplicantDAO {
@@ -219,5 +220,18 @@ public class PoolApplicants implements ApplicantDAO {
 		String sql = "UPDATE " + ApplicantDAO.TABLE + " SET " + userChoice + " = " + vacancy + ", " + choiceBool
 				+ " = TRUE " + " WHERE indexNumber = '" + indexNumber + "'";
 		return dbHandler.update(sql);
+	}
+
+	public double getGPA(String indexNumber) {
+		String sql = "SELECT gradedPoint FROM " + ApplicantDAO.TABLE + " WHERE indexNumber = '" + indexNumber + "'";
+		return dbHandler.query(sql, new ResultSetExtractor<Double>() {
+			@Override
+			public Double extractData(ResultSet rs) throws SQLException, DataAccessException {
+				if (rs.next()) {
+					return rs.getDouble("gradedPoint");
+				}
+				return null;
+			}
+		});
 	}
 }

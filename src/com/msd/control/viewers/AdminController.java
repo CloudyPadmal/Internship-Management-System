@@ -13,6 +13,7 @@ import com.msd.items.LoginInfo;
 import com.msd.pool.items.PoolApplicants;
 import com.msd.pool.items.PoolCompanies;
 import com.msd.pool.items.PoolPasswords;
+import com.msd.pool.items.PoolRequests;
 import com.msd.pool.items.PoolVacancies;
 
 @Controller
@@ -27,6 +28,8 @@ public class AdminController {
 	PoolCompanies poolCompanies;
 	@Autowired
 	PoolVacancies poolVacancies;
+	@Autowired
+	PoolRequests poolRequests;
 
 	/*****************************************************************************************
 	 * This method will generate the view for an administrative login
@@ -102,7 +105,21 @@ public class AdminController {
 	@RequestMapping(value = "/view_requests", method = RequestMethod.POST)
 	public String showAllRequests(Model model) {
 		// Add the user list under "users"
-		model.addAttribute("requests", poolVacancies.getAllVacancies());
+		model.addAttribute("requests", poolRequests.getAllRequests());
+		return "displays/full_request_list";
+	}
+	
+	@RequestMapping(value = "/request/accept/{indexNumber}/{vacancyID}", method = RequestMethod.POST)
+	public String acceptRequests(Model model) {
+		// Add the user list under "users"
+		model.addAttribute("requests", poolRequests.getAllRequests());
+		return "displays/full_request_list";
+	}
+	
+	@RequestMapping(value = "/request/decline/{indexNumber}/{vacancyID}", method = RequestMethod.POST)
+	public String declineRequests(Model model) {
+		// Add the user list under "users"
+		model.addAttribute("requests", poolRequests.getAllRequests());
 		return "displays/full_request_list";
 	}
 }
