@@ -7,7 +7,7 @@ import com.msd.pool.items.PoolCriteria;
 
 public interface VacancyDAO {
 
-	public final String TABLE = "positions";
+	public final String TABLE = "vacancy_table";
 
 	// New Vacancy
 	public int addVacancy(Vacancy vacancy);
@@ -37,8 +37,11 @@ public interface VacancyDAO {
 	public boolean isOpen(int vacancyID);
 
 	// Update vacancy status
-	public int closeVacancy(int vacancyID, String indexNumber);
+	public int closeVacancy(int vacancyID, String indexNumber, int choice);
 
 	// Remove applicant from vacancy
 	public int openVacancy(int vacancyID);
+
+	// Swap applicants
+	public int changeApplicant(String newID, int vacancyID, int newChoice);
 }

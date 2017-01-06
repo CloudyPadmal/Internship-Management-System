@@ -110,6 +110,7 @@ public class PoolVacancies implements VacancyDAO {
 				// Fetch
 				info.setId(rs.getInt("id"));
 				info.setApplicant(rs.getString("applicant"));
+				info.setChoice(rs.getInt("choice"));
 				info.setOpen(rs.getBoolean("open"));
 				info.convertPrefToList(criteria);
 				return info;
@@ -136,6 +137,7 @@ public class PoolVacancies implements VacancyDAO {
 						// Fetch
 						info.setId(rs.getInt("id"));
 						info.setApplicant(rs.getString("applicant"));
+						info.setChoice(rs.getInt("choice"));
 						info.setOpen(rs.getBoolean("open"));
 						info.convertPrefToList(criteria);
 						return info;
@@ -162,6 +164,7 @@ public class PoolVacancies implements VacancyDAO {
 						// Fetch
 						info.setId(rs.getInt("id"));
 						info.setApplicant(rs.getString("applicant"));
+						info.setChoice(rs.getInt("choice"));
 						info.setOpen(rs.getBoolean("open"));
 						info.convertPrefToList(criteria);
 						return info;
@@ -199,16 +202,15 @@ public class PoolVacancies implements VacancyDAO {
 	}
 
 	@Override
-	public int closeVacancy(int vacancyID, String indexNumber) {
-		String sql = "UPDATE " + VacancyDAO.TABLE + " SET open = TRUE, applicant = '" + indexNumber + "' WHERE id = "
-				+ vacancyID;
+	public int closeVacancy(int vacancyID, String indexNumber, int choice) {
+		String sql = "UPDATE " + VacancyDAO.TABLE + " SET open = TRUE, applicant = '" + indexNumber + "', choice = "
+				+ choice + " WHERE id = " + vacancyID;
 		return dbHandler.update(sql);
 	}
-	
+
 	@Override
 	public int openVacancy(int vacancyID) {
-		String sql = "UPDATE " + VacancyDAO.TABLE + " SET open = FALSE, applicant = NULL WHERE id = "
-				+ vacancyID;
+		String sql = "UPDATE " + VacancyDAO.TABLE + " SET open = FALSE, applicant = NULL WHERE id = " + vacancyID;
 		return dbHandler.update(sql);
 	}
 
@@ -232,6 +234,26 @@ public class PoolVacancies implements VacancyDAO {
 			public String extractData(ResultSet rs) throws SQLException, DataAccessException {
 				if (rs.next()) {
 					return rs.getString("title");
+				}
+				return null;
+			}
+		});
+	}
+
+	@Override
+	public int changeApplicant(String newID, int vacancyID, int newChoice) {
+		String sql = "UPDATE " + VacancyDAO.TABLE + " SET applicant = '" + newID + "', choice = " + newChoice
+				+ " WHERE id = " + vacancyID;
+		return dbHandler.update(sql);
+	}
+
+	public int getChoice(int vacancyID) {
+		String sql = "SELECT choice FROM " + VacancyDAO.TABLE + " WHERE id = '" + vacancyID + "'";
+		return dbHandler.query(sql, new ResultSetExtractor<Integer>() {
+			@Override
+			public Integer extractData(ResultSet rs) throws SQLException, DataAccessException {
+				if (rs.next()) {
+					return rs.getInt("choice");
 				}
 				return null;
 			}

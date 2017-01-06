@@ -42,17 +42,13 @@
 					<td id="description">${company.aboutUs}</td>
 					<td id="positions">${company.positions}</td>
 					<td>
-						<form type="submit" action="/MSDProject/company/${company.id}"
+						<form type="submit" action="company/view/${company.loginID}"
 							method="POST" class="button">
 							<button class="btn btn-primary">Show</button>
 						</form>
 						<form type="submit"
-							action="/MSDProject/company/${company.id}/delete" method="POST" class="button">
+							action="company/delete/${company.loginID}" method="POST" class="button">
 							<button class="btn btn-danger">Delete</button>
-						</form>
-						<form type="submit"
-							action="/MSDProject/company/${company.id}/update" method="POST" class="button">
-							<button class="btn btn-info">Update</button>
 						</form>
 				</tr>
 			</c:forEach>

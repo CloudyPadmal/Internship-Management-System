@@ -15,6 +15,7 @@ public class Vacancy {
 	private String description_1;
 	private String description_2;
 	private String applicant;
+	private int choice;
 	private boolean open;
 
 	public Vacancy() {/**/}
@@ -104,6 +105,14 @@ public class Vacancy {
 
 	public void setApplicant(String applicant) {
 		this.applicant = applicant;
+	}
+
+	public int getChoice() {
+		return choice;
+	}
+
+	public void setChoice(int choice) {
+		this.choice = choice;
 	}
 
 	public boolean isOpen() {

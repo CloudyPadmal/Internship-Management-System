@@ -32,8 +32,20 @@ public interface ApplicantDAO {
 	public int setChoice(String indexNumber, int choice, int vacancy);
 	
 	// Remove choice of vacancy
-	public int removeChoice(String indexNumber, int choice, int vacancy);
+	public int removeChoice(String indexNumber, int choice);
 	
 	// Update the choice of vacancy
 	public int updateChoice(String indexNumber, int newchoice, int vacancy);
+
+	// Get GPA of an applicant
+	public double getGPA(String indexNumber);
+	
+	// Get request appeals of an applicant
+	public String getAppeal(String indexNumber);
+
+	// Add appeal
+	public int addRequest(String indexNumber, int vacancyID);
+
+	// Delete appeal
+	public int deleteRequest(String indexNumber);
 }

@@ -170,12 +170,14 @@
 											it!</button>
 										<c:if
 											test="${(not user.applied1) || (not user.applied2) || (not user.applied3)}">
-											<form:form
-												action="/MSDProject/user/request/${vacancy.id}/${user.indexNumber}"
-												method="POST">
-												<button type="submit" name="edit" value="edit"
-													class="btn btn-primary btn-lg">Make a request!</button>
-											</form:form>
+											<c:if test="${not user.appealStatus}">
+												<form:form
+													action="/MSDProject/user/request/${vacancy.id}/${user.indexNumber}"
+													method="POST">
+													<button type="submit" name="edit" value="edit"
+														class="btn btn-primary btn-lg">Make a request!</button>
+												</form:form>
+											</c:if>
 										</c:if>
 									</c:otherwise>
 								</c:choose>

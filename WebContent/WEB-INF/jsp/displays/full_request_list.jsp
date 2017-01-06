@@ -34,26 +34,28 @@
 			</thead>
 
 			<c:forEach var="request" items="${requests}">
-				<tr>
-					<td id="request-row">${request.id}</td>
-					<td>${request.vacancyID}&nbsp;-&nbsp;${request.vacancyName}</td>
-					<td>${request.indexNumber}</td>
-					<td>${request.gradedPoint}</td>
-					<td>${request.currentNumber}</td>
-					<td>${request.currentGradedPoint}</td>
-					<td id="buttons">
-						<form type="submit"
-							action="request/accept/${request.indexNumber}/${request.vacancyID}"
-							method="POST">
-							<button class="btn btn-info">Accept</button>
-						</form>
-						<form type="submit"
-							action="request/decline/${request.indexNumber}/${request.vacancyID}"
-							method="POST">
-							<button class="btn btn-danger">Decline</button>
-						</form>
-					</td>
-				</tr>
+				<c:if test="${not request.attended}">
+					<tr>
+						<td id="request-row">${request.id}</td>
+						<td><b>${request.vacancyID}</b>&nbsp;-&nbsp;${request.vacancyName}</td>
+						<td>${request.indexNumber}</td>
+						<td>${request.gradedPoint}</td>
+						<td>${request.currentNumber}</td>
+						<td>${request.currentGradedPoint}</td>
+						<td id="buttons">
+							<form type="submit"
+								action="request/accept/${request.indexNumber}/${request.vacancyID}/${request.id}"
+								method="POST">
+								<button class="btn btn-info">Accept</button>
+							</form>
+							<form type="submit"
+								action="request/decline/${request.indexNumber}/${request.id}"
+								method="POST">
+								<button class="btn btn-danger">Decline</button>
+							</form>
+						</td>
+					</tr>
+				</c:if>
 			</c:forEach>
 		</table>
 	</div>

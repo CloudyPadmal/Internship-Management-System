@@ -87,7 +87,7 @@ public class UserController {
 			@PathVariable("indexNumber") String indexNumber, @PathVariable("choice") int choice,
 			RedirectAttributes redirects) {
 		// Update the vacancy table by closing the vacancy with applicant name
-		poolVacancies.closeVacancy(vacancyID, indexNumber);
+		poolVacancies.closeVacancy(vacancyID, indexNumber, choice);
 		// Update the user table giving the choice to the applicant
 		poolApplicants.setChoice(indexNumber, choice, vacancyID);
 		// Pass the successful message to redirect
@@ -108,7 +108,7 @@ public class UserController {
 		// Update the vacancy table by closing the vacancy with applicant name
 		poolVacancies.openVacancy(vacancyID);
 		// Update the user table giving the choice to the applicant
-		poolApplicants.removeChoice(indexNumber, choice, vacancyID);
+		poolApplicants.removeChoice(indexNumber, choice);
 		// Pass the successful message to redirect
 		redirects.addFlashAttribute("msg", "Application Cancelled!");
 		redirects.addFlashAttribute("css", "warning");
@@ -130,6 +130,7 @@ public class UserController {
 		appeal.setCurrentNumber(poolVacancies.getApplicant(vacancyID));
 		appeal.setCurrentGradedPoint(poolApplicants.getGPA(appeal.getCurrentNumber()));
 		poolRequests.addRequest(appeal);
+		poolApplicants.addRequest(indexNumber, vacancyID);
 		// Pass the successful message to redirect
 		redirects.addFlashAttribute("msg", "Request sent to administrator!");
 		redirects.addFlashAttribute("css", "info");

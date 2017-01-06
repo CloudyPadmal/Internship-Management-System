@@ -70,6 +70,8 @@ public class PoolApplicants implements ApplicantDAO {
 					info.setApplied1(rs.getBoolean("status_A"));
 					info.setApplied2(rs.getBoolean("status_B"));
 					info.setApplied3(rs.getBoolean("status_C"));
+					info.setAppeal(rs.getString("appeal"));
+					info.setAppealStatus(rs.getBoolean("appealStatus"));
 					info.setName(rs.getString("name"));
 					info.setGender(rs.getString("gender"));
 					info.convertPrefToList(criteria);
@@ -131,6 +133,8 @@ public class PoolApplicants implements ApplicantDAO {
 				info.setApplied1(rs.getBoolean("status_A"));
 				info.setApplied2(rs.getBoolean("status_B"));
 				info.setApplied3(rs.getBoolean("status_C"));
+				info.setAppeal(rs.getString("appeal"));
+				info.setAppealStatus(rs.getBoolean("appealStatus"));
 				info.convertPrefToList(criteria);
 				return info;
 			}
@@ -166,12 +170,12 @@ public class PoolApplicants implements ApplicantDAO {
 			return 0;
 		}
 		String sql = "UPDATE " + ApplicantDAO.TABLE + " SET " + userChoice + " = " + vacancy + ", " + choiceBool
-				+ " = TRUE " + " WHERE indexNumber = '" + indexNumber + "'";
+				+ " = TRUE WHERE indexNumber = '" + indexNumber + "'";
 		return dbHandler.update(sql);
 	}
 
 	@Override
-	public int removeChoice(String indexNumber, int choice, int vacancy) {
+	public int removeChoice(String indexNumber, int choice) {
 		// Map the choice
 		String userChoice = "";
 		String choiceBool = "";
@@ -191,8 +195,8 @@ public class PoolApplicants implements ApplicantDAO {
 		default:
 			return 0;
 		}
-		String sql = "UPDATE " + ApplicantDAO.TABLE + " SET " + userChoice + " = NULL , " + choiceBool
-				+ " = NULL " + " WHERE indexNumber = '" + indexNumber + "'";
+		String sql = "UPDATE " + ApplicantDAO.TABLE + " SET " + userChoice + " = NULL , " + choiceBool + " = NULL"
+				+ " WHERE indexNumber = '" + indexNumber + "'";
 		return dbHandler.update(sql);
 	}
 
@@ -222,6 +226,7 @@ public class PoolApplicants implements ApplicantDAO {
 		return dbHandler.update(sql);
 	}
 
+	@Override
 	public double getGPA(String indexNumber) {
 		String sql = "SELECT gradedPoint FROM " + ApplicantDAO.TABLE + " WHERE indexNumber = '" + indexNumber + "'";
 		return dbHandler.query(sql, new ResultSetExtractor<Double>() {
@@ -233,5 +238,33 @@ public class PoolApplicants implements ApplicantDAO {
 				return null;
 			}
 		});
+	}
+
+	@Override
+	public String getAppeal(String indexNumber) {
+		String sql = "SELECT appeal FROM " + ApplicantDAO.TABLE + " WHERE indexNumber = '" + indexNumber + "'";
+		return dbHandler.query(sql, new ResultSetExtractor<String>() {
+			@Override
+			public String extractData(ResultSet rs) throws SQLException, DataAccessException {
+				if (rs.next()) {
+					return rs.getString("appeal");
+				}
+				return null;
+			}
+		});
+	}
+
+	@Override
+	public int addRequest(String indexNumber, int vacancyID) {
+		String sql = "UPDATE " + ApplicantDAO.TABLE + " SET appeal = " + vacancyID + ", appealStatus = TRUE "
+				+ " WHERE indexNumber = '" + indexNumber + "'";
+		return dbHandler.update(sql);
+	}
+
+	@Override
+	public int deleteRequest(String indexNumber) {
+		String sql = "UPDATE " + ApplicantDAO.TABLE + " SET appeal = NULL, appealStatus = NULL WHERE indexNumber = '"
+				+ indexNumber + "'";
+		return dbHandler.update(sql);
 	}
 }
