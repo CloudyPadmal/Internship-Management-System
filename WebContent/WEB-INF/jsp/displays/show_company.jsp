@@ -1,5 +1,4 @@
 <%@ include file="/WEB-INF/jsp/head.jsp"%>
-<html>
 <body>
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container-fluid">
@@ -14,7 +13,7 @@
 								Vacancy</button>
 						</form:form></li>
 					<li><form:form
-							action="/MSDProject/reg/company/company/${company.loginID}/update"
+							action="/MSDProject/company/update/${company.loginID}"
 							method="POST">
 							<button type="submit" name="edit" value="edit" class="edit">Edit</button>
 						</form:form></li>
@@ -26,17 +25,18 @@
 		</div>
 	</nav>
 
-	<c:if test="${not empty msg}">
-		<div class="alert alert-${css} alert-dismissible" role="alert">
-			<button type="button" class="close" data-dismiss="alert"
-				aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</button>
-			<strong>${msg}</strong>
-		</div>
-	</c:if>
-
 	<div class="company-container">
+	
+		<c:if test="${not empty msg}">
+			<div class="alert alert-${css} alert-dismissible" role="alert">
+				<button type="button" class="close" data-dismiss="alert"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<strong>${msg}</strong>
+			</div>
+		</c:if>
+	
 		<div class="company-header">
 			<div class="col-sm-2">
 				<div class="panel panel-info">
@@ -78,6 +78,7 @@
 	</div>
 
 	<h1 class="vacancy-header">Vacancies</h1>
+
 	<div class="vacancy-container">
 		<c:forEach var="vacancy" items="${vacancies}">
 			<div class="panel panel-display">
@@ -86,33 +87,33 @@
 					</h3>
 				</div>
 				<div class="panel-body vacancy">
-					<div class="col-md-6">${vacancy.description_1}&nbsp;${vacancy.description_2}
-						adasdasda sdandad ghadghaf dahgsd adf aghdf ahgdf aghdf adf aghdfa
-						ghdfa ghdf ahgdf ahgsdfad ghadghaf dahgsd adf aghdf ahgdf aghdf
-						adf aghdfa ghdfa ga ghdf ahgdf ahgsdfad ghadghaf dahgsd adf aghdf
-						ahgdf aghdf adf aghdfa ghdfa ghdf ahgdf ahgsdf</div>
+					<div class="col-md-6">${vacancy.description_1}&nbsp;${vacancy.description_2}</div>
 					<div class="col-md-4 preferences">
 						<c:forEach var="pref" items="${vacancy.preferences}">
 							<li>${pref}</li>
 						</c:forEach>
 					</div>
 					<div class="button col-md-2">
-						<c:if test="${vacancy.applicant == ''}">
+						<br />
+						<c:if test="${not false}">
+							<form:form action="/MSDProject/vacancy/delete/${vacancy.id}" method="POST">
+								<button type="submit" name="edit" value="edit"
+									class="btn btn-danger btn-lg">Delete Vacancy</button>
+							</form:form>
+						</c:if>
+						<c:if test="${not false}">
+							<form:form action="/MSDProject/vacancy/update/${vacancy.id}" method="POST">
+								<button type="submit" name="update" value="edit"
+									class="btn btn-info btn-lg">Edit Vacancy</button>
+							</form:form>
+						</c:if>
+						<c:if test="${not (vacancy.applicant == NULL)}">
 							<button type="submit" name="edit" value="edit"
 								class="btn btn-warning btn-lg">${vacancy.applicant}</button>
 						</c:if>
-						<form:form action="vacancy/${vacancy.id}/delete" method="POST">
-							<button type="submit" name="1st" value="edit"
-								class="btn btn-danger btn-lg">Delete</button>
-						</form:form>
-						<form:form action="vacancy/${vacancy.id}/update" method="POST">
-							<button type="submit" name="1st" value="edit"
-								class="btn btn-info btn-lg">Update</button>
-						</form:form>
 					</div>
 				</div>
 			</div>
 		</c:forEach>
 	</div>
 </body>
-</html>

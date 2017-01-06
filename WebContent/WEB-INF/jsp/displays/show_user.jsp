@@ -9,7 +9,7 @@
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav navbar-right">
 					<li><form:form
-							action="/MSDProject/reg/user/users/${user.indexNumber}/update"
+							action="/MSDProject/reg/user/update/${user.indexNumber}"
 							method="POST">
 							<button type="submit" name="edit" value="edit" class="edit">Edit</button>
 						</form:form></li>
@@ -21,17 +21,18 @@
 		</div>
 	</nav>
 
-	<c:if test="${not empty msg}">
-		<div class="alert alert-${css} alert-dismissible" role="alert">
-			<button type="button" class="close" data-dismiss="alert"
-				aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</button>
-			<strong>${msg}</strong>
-		</div>
-	</c:if>
-
 	<div class="user-container">
+
+		<c:if test="${not empty msg}">
+			<div class="alert alert-${css} alert-dismissible" role="alert">
+				<button type="button" class="close" data-dismiss="alert"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<strong>${msg}</strong>
+			</div>
+		</c:if>
+
 		<div class="user-header">
 			<div class="col-sm-4">
 				<div class="panel panel-primary">
@@ -102,7 +103,9 @@
 										action="/MSDProject/user/apply/${vacancy.id}/${user.indexNumber}/1"
 										method="POST">
 										<button type="submit" name="1st" value="edit"
-											class="btn btn-primary btn-lg">Apply as <b>1st</b> Choice</button>
+											class="btn btn-primary btn-lg">
+											Apply as <b>1st</b> Choice
+										</button>
 									</form:form>
 								</c:if>
 								<c:if test="${not user.applied2}">
@@ -110,7 +113,9 @@
 										action="/MSDProject/user/apply/${vacancy.id}/${user.indexNumber}/2"
 										method="POST">
 										<button type="submit" name="2nd" value="edit"
-											class="btn btn-success btn-lg">Apply as <b>2nd</b> Choice</button>
+											class="btn btn-success btn-lg">
+											Apply as <b>2nd</b> Choice
+										</button>
 									</form:form>
 								</c:if>
 								<c:if test="${not user.applied3}">
@@ -118,7 +123,9 @@
 										action="/MSDProject/user/apply/${vacancy.id}/${user.indexNumber}/3"
 										method="POST">
 										<button type="submit" name="3rd" value="edit"
-											class="btn btn-info btn-lg">Apply as <b>3rd</b> Choice</button>
+											class="btn btn-info btn-lg">
+											Apply as <b>3rd</b> Choice
+										</button>
 									</form:form>
 								</c:if>
 							</c:when>
@@ -130,7 +137,9 @@
 												action="/MSDProject/user/cancel/${vacancy.id}/${user.indexNumber}/1"
 												method="POST">
 												<button type="submit" name="edit" value="edit"
-													class="btn btn-danger btn-lg">Cancel <b>1st</b> Choice</button>
+													class="btn btn-danger btn-lg">
+													Cancel <b>1st</b> Choice
+												</button>
 											</form:form>
 										</c:if>
 										<c:if test="${(user.applied2) && user.vacancy2 == vacancy.id}">
@@ -138,7 +147,9 @@
 												action="/MSDProject/user/cancel/${vacancy.id}/${user.indexNumber}/2"
 												method="POST">
 												<button type="submit" name="edit" value="edit"
-													class="btn btn-danger btn-lg">Cancel <b>2nd</b> Choice</button>
+													class="btn btn-danger btn-lg">
+													Cancel <b>2nd</b> Choice
+												</button>
 											</form:form>
 										</c:if>
 										<c:if test="${(user.applied3) && user.vacancy3 == vacancy.id}">
@@ -146,7 +157,9 @@
 												action="/MSDProject/user/cancel/${vacancy.id}/${user.indexNumber}/3"
 												method="POST">
 												<button type="submit" name="edit" value="edit"
-													class="btn btn-danger btn-lg">Cancel <b>3rd</b> Choice</button>
+													class="btn btn-danger btn-lg">
+													Cancel <b>3rd</b> Choice
+												</button>
 											</form:form>
 										</c:if>
 									</c:when>
@@ -155,13 +168,14 @@
 										<button type="submit" name="edit" value="edit"
 											class="btn btn-warning btn-lg">Someone applied for
 											it!</button>
-										<c:if test="${(not user.applied1) || (not user.applied2) || (not user.applied3)}">
-										<form:form
-											action="/MSDProject/user/request/${vacancy.id}/${user.indexNumber}"
-											method="POST">
-											<button type="submit" name="edit" value="edit"
-												class="btn btn-primary btn-lg">Make a request!</button>
-										</form:form>
+										<c:if
+											test="${(not user.applied1) || (not user.applied2) || (not user.applied3)}">
+											<form:form
+												action="/MSDProject/user/request/${vacancy.id}/${user.indexNumber}"
+												method="POST">
+												<button type="submit" name="edit" value="edit"
+													class="btn btn-primary btn-lg">Make a request!</button>
+											</form:form>
 										</c:if>
 									</c:otherwise>
 								</c:choose>

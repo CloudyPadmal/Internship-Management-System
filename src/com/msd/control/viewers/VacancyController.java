@@ -36,19 +36,27 @@ public class VacancyController implements Preferences {
 	@Autowired
 	PoolCompanies poolCompanies;
 
+	/*****************************************************************************************
+	 * This method is the validator binder. It will bind the vacancy details
+	 * validator to the vacancy creation page when a update or a new vacancy is
+	 * happening
+	 ****************************************************************************************/
 	@InitBinder
 	protected void initBinder(WebDataBinder binder) {
 		binder.setValidator(vacancyValidator);
 	}
 
-	// Creation form for a new vacancy
+	/*****************************************************************************************
+	 * This method will be called when a new vacancy is being created. It will
+	 * generate details required by a vacancy and pass them to the vacancy
+	 * creation form.
+	 ****************************************************************************************/
 	@RequestMapping(value = "/add/{company}", method = RequestMethod.POST)
-	public String registerVacancy(Model model, @PathVariable("company") String companyName) {
+	public String newVacancy(Model model, @PathVariable("company") String companyName) {
 		// Pass the Vacancy as "vacancyForm"
 		model = generatePrefList(model);
 		// Create a vacancy with a company attached to it with status open
-		model.addAttribute("vacancyForm",
-				new Vacancy(companyName, null, true));
+		model.addAttribute("vacancyForm", new Vacancy(companyName, null, true));
 		model.addAttribute("company", poolCompanies.getCompanyName(companyName));
 		// Notify that this is a new vacancy
 		model.addAttribute("status", true);
@@ -56,38 +64,48 @@ public class VacancyController implements Preferences {
 		return "logins/new_vacancy";
 	}
 
-	// All vacancies in the table
-	@RequestMapping(value = "/all", method = RequestMethod.GET)
-	public String showAllVacancies(Model model) {
-		// Add the vacancies list under "vacancies"
-		model.addAttribute("vacancies", poolVacancies.getAllVacancies());
-		return "displays/vacancy_list";
-	}
-
-	// Delete Vacancy
-	@RequestMapping(value = "/{vacancyID}/delete", method = RequestMethod.GET)
-	public String deleteVacancy(@PathVariable("vacancyID") int vacancyID, final RedirectAttributes redirectAttributes) {
+	/*****************************************************************************************
+	 * This method will be called when a company wants to delete a vacancy they
+	 * have created. When deleting a vacancy, 1. Vacancy should be deleted from
+	 * vacancy table 2. Decrement the # of positions in the company table 3.
+	 * Delete choice from the applicant table
+	 ****************************************************************************************/
+	@RequestMapping(value = "/delete/{vacancyID}", method = RequestMethod.POST)
+	public String deletesVacancy(@PathVariable("vacancyID") int vacancyID, RedirectAttributes redirectAttributes) {
+		// Get the company name of the vacancy
+		String companyName = poolVacancies.getCompanyName(vacancyID);
+		// Delete vacancy
 		poolVacancies.deleteVacancy(vacancyID);
+		poolCompanies.decrementVacancyCount(companyName);
+		// TODO : Delete user relationships when deleting a vacancy
 		// Pass the successful message to redirect
 		redirectAttributes.addFlashAttribute("msg", "Vacancy deleted!");
-		return "redirect:/";
+		redirectAttributes.addFlashAttribute("css", "success");
+		return "redirect:/company/view/" + companyName;
 	}
 
-	// Display Vacancy details
-	@RequestMapping(value = "/show/{vacancyID}", method = RequestMethod.GET)
-	public String showVacancy(@PathVariable("vacancyID") int vacancyID, Model model) {
-		// Fetch Vacancy from database
+	/*****************************************************************************************
+	 * This method will be called when a company wants to update a vacancy they
+	 * have created.
+	 ****************************************************************************************/
+	@RequestMapping(value = "/update/{vacancyID}", method = RequestMethod.POST)
+	private String updatesVacancy(@PathVariable("vacancyID") int vacancyID, Model model) {
+		// Fetch the Vacancy details from database
 		Vacancy vacancy = poolVacancies.fetchVacancy(vacancyID);
-		if (vacancy == null) {
-			// If there is no Vacancy, return a failure message
-			model.addAttribute("msg", "Vacancy not found");
-		}
-		// Add the Vacancy under "vacancy"
-		model.addAttribute("vacancy", vacancy);
-		return "displays/show_vacancy";
+		// Add details under "vacancyForm"
+		model.addAttribute("vacancyForm", vacancy);
+		model.addAttribute("company", poolCompanies.getCompanyName(vacancy.getCompanyID()));
+		// Generate preference list
+		model = generatePrefList(model);
+		// Add update notations
+		model.addAttribute("status", false);
+		return "logins/new_vacancy";
 	}
 
-	// This will be called upon clicking register button
+	/*****************************************************************************************
+	 * This method will be called when a company has created a new vacancy. It
+	 * will be validated and added to the vacancy table.
+	 ****************************************************************************************/
 	@RequestMapping(value = "vacancies", method = RequestMethod.POST, params = "create")
 	public String addVacancy(@ModelAttribute("vacancyForm") @Validated Vacancy vacancy, BindingResult result,
 			Model model, RedirectAttributes redirectAttributes) {
@@ -97,15 +115,19 @@ public class VacancyController implements Preferences {
 		} else {
 			// Pass success message to redirect view
 			redirectAttributes.addFlashAttribute("msg", "Vacancy created successfully!");
+			redirectAttributes.addFlashAttribute("css", "success");
 			// Add Vacancy to the Vacancy table
 			poolVacancies.addVacancy(vacancy);
 			poolCompanies.incrementVacancyCount(vacancy.getCompanyID());
 			// Display Vacancy details
-			return "redirect:/company/" + vacancy.getCompanyID();
+			return "redirect:/company/view/" + vacancy.getCompanyID();
 		}
 	}
 
-	// This will be called upon clicking register button
+	/*****************************************************************************************
+	 * This method will be called when a company is updating a vacancy they have created. It
+	 * will be validated and updated.
+	 ****************************************************************************************/
 	@RequestMapping(value = "vacancies", method = RequestMethod.POST, params = "update")
 	public String updateVacancy(@ModelAttribute("vacancyForm") @Validated Vacancy vacancy, BindingResult result,
 			Model model, RedirectAttributes redirectAttributes) {
@@ -115,14 +137,19 @@ public class VacancyController implements Preferences {
 		} else {
 			// Pass success message to redirect view
 			redirectAttributes.addFlashAttribute("msg", "Vacancy updated successfully!");
+			redirectAttributes.addFlashAttribute("css", "success");
 			// Add Vacancy to the Vacancy table
 			poolVacancies.updateVacancy(vacancy);
 			// Display Vacancy details
-			return "redirect:/company/" + vacancy.getCompanyID();
+			return "redirect:/company/view/" + vacancy.getCompanyID();
 		}
 	}
 
-	// Generate default values for preferences
+	/*****************************************************************************************
+	 * This method will generate the preferences in to a list which will be used
+	 * in generating the web form. It will be passed down to the page with the
+	 * key "preferences"
+	 ****************************************************************************************/
 	private Model generatePrefList(Model model) {
 		// Create a list of preferences
 		List<String> preferences = new ArrayList<>();

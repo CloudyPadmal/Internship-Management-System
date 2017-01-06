@@ -1,6 +1,5 @@
 package com.msd.control.viewers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,23 +41,9 @@ public class CompanyController implements Preferences {
 	private String companyLogin(LoginInfo info, ModelMap model, RedirectAttributes redirects) {
 		if (poolPW.matchThisAndThat(info)) {
 			// Password and the credentials are matching. Load company details
-			Company company = poolCompanies.fetchCompany(info.getUsername());
-			if (company == null) {
-				// Password and credentials don't match. Redirect to login page.
-				redirects.addFlashAttribute("msg", "Company not found!");
-				redirects.addFlashAttribute("css", "warning");
-				// This will not happen. But has handled it anyways
-				return "redirect:/company_login";
-			}
-			// Load a list of vacancies posted by the company
-			List<Vacancy> listOfVacancies = poolVacancies.getCompanyVacancies(company.getLoginID());
-			for (Vacancy vacancy : listOfVacancies) {
-				vacancy.setCompanyName(poolCompanies.getCompanyName(vacancy.getCompanyID()));
-			}
-			// Add the company under "company"
-			model.addAttribute("company", company);
-			model.addAttribute("vacancies", listOfVacancies);
-			return "displays/show_company";
+			redirects.addFlashAttribute("msg", "Logged in successfully!");
+			redirects.addFlashAttribute("css", "info");
+			return "redirect:/company/view/" + info.getUsername();
 		} else {
 			// Password and credentials don't match. Redirect to login page.
 			redirects.addFlashAttribute("msg", "Company or Password is wrong!");
@@ -66,69 +51,49 @@ public class CompanyController implements Preferences {
 			return "redirect:/company_login";
 		}
 	}
+	
+	
+	/*****************************************************************************************
+	 * This method will be the redirected method by POST methods related to
+	 * company. This will show the company home page with details and vacancies
+	 ****************************************************************************************/
+	@RequestMapping(value = "/view/{loginID}", method = RequestMethod.GET)
+	public String companyHomePage(Model model, @PathVariable("loginID") String loginID,
+			RedirectAttributes redirects) {
+		Company company = poolCompanies.fetchCompany(loginID);
+		if (company == null) {
+			// Password and credentials don't match. Redirect to login page.
+			redirects.addFlashAttribute("msg", "Company not found!");
+			redirects.addFlashAttribute("css", "warning");
+			// This will not happen. But has handled it anyways
+			return "redirect:/company_login";
+		}
+		// Load a list of vacancies posted by the company
+		List<Vacancy> listOfVacancies = poolVacancies.getCompanyVacancies(company.getLoginID());
+		for (Vacancy vacancy : listOfVacancies) {
+			vacancy.setCompanyName(poolCompanies.getCompanyName(vacancy.getCompanyID()));
+		}
+		// Add the company under "company"
+		model.addAttribute("company", company);
+		model.addAttribute("vacancies", listOfVacancies);
+		return "displays/show_company";
+	}
+	
 
 	/*****************************************************************************************
-	 * This method will be called when a company wants to delete a vacancy they
-	 * have created. When deleting a vacancy,
-	 * 1. Vacancy should be deleted from vacancy table
-	 * 2. Decrement the # of positions in the company table
-	 * 3. Delete choice from the applicant table
+	 * This method will be called when a company wants to update himself. It
+	 * will generate the company object with it's relevant attributes and pass
+	 * an extra variable to identify this is an update because it's the same
+	 * form for both new and update company
 	 ****************************************************************************************/
-	@RequestMapping(value = "/vacancy/{vacancyID}/delete", method = RequestMethod.POST)
-	private String deleteVacancy(@PathVariable("vacancyID") int vacancyID,
-			final RedirectAttributes redirectAttributes) {
-		String companyName = poolVacancies.getCompanyName(vacancyID);
-		// Delete vacancy
-		poolVacancies.deleteVacancy(vacancyID);
-		poolCompanies.decrementVacancyCount(companyName);
-		// Pass the successful message to redirect
-		redirectAttributes.addFlashAttribute("msg", "Vacancy deleted!");
-		redirectAttributes.addFlashAttribute("css", "success");
-		return "redirect:/company/" + companyName;
-	}
-
-	// Update Vacancy
-	@RequestMapping(value = "/vacancy/{vacancyID}/update", method = RequestMethod.POST)
-	private String showUpdateVacancy(@PathVariable("vacancyID") int vacancyID, Model model) {
-		// Fetch the Vacancy details from database
-		Vacancy vacancy = poolVacancies.fetchVacancy(vacancyID);
-		// Add details under "vacancyForm"
-		model.addAttribute("vacancyForm", vacancy);
-		model.addAttribute("company", poolCompanies.getCompanyName(vacancy.getCompanyID()));
-		// Generate preference list
-		model = generatePrefList(model);
-		// Add update notations
-		model.addAttribute("status", false);
-		return "logins/new_vacancy";
-	}
-
-	/*****************************************************************************************
-	 * This method will generate the preferences in to a list which will be used
-	 * in generating the web form. It will be passed down to the page with the
-	 * key "preferences"
-	 ****************************************************************************************/
-	private Model generatePrefList(Model model) {
-		// Create a list of preferences
-		List<String> preferences = new ArrayList<>();
-		preferences.add(ANTENNAS);
-		preferences.add(BIOMECHANICS);
-		preferences.add(BIOMEDICAL);
-		preferences.add(WIFI);
-		preferences.add(ARDUINO);
-		preferences.add(AUTOMATION);
-		preferences.add(AI);
-		preferences.add(CIRCUITS);
-		preferences.add(FPGA);
-		preferences.add(IMAGEPROCESSING);
-		preferences.add(IOT);
-		preferences.add(NETWORKING);
-		preferences.add(PROCESSORDESIGN);
-		preferences.add(PROGRAMMING);
-		preferences.add(SEMICONDUCTORS);
-		preferences.add(SIGNALPROCESSING);
-		preferences.add(TELECOM);
-		// Add them under "preferences"
-		model.addAttribute("preferences", preferences);
-		return model;
+	@RequestMapping(value = "/update/{loginID}", method = RequestMethod.POST)
+	public String showUpdateCompanyForm(@PathVariable("loginID") String loginID, Model model) {
+		// Fetch the company details from database
+		Company company = poolCompanies.fetchCompany(loginID);
+		// Add details under "companyForm"
+		model.addAttribute("companyForm", company);
+		// Notify this is an update
+		model.addAttribute("new_company", false);
+		return "logins/register_company";
 	}
 }

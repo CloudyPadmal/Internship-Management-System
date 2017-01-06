@@ -39,7 +39,7 @@
 					<td>${company.emailAddress}</td>
 					<td>${company.address}</td>
 					<td>${company.telephone}</td>
-					<td id="description">${company.aboutUs} asdagsdh asdg hj</td>
+					<td id="description">${company.aboutUs}</td>
 					<td id="positions">${company.positions}</td>
 					<td>
 						<form type="submit" action="/MSDProject/company/${company.id}"

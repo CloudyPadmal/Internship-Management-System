@@ -38,12 +38,20 @@ public class UserRegisterController implements Preferences {
 	@Autowired
 	PoolVacancies poolVacancies;
 
+	/*****************************************************************************************
+	 * This method is the validator binder. It will bind the user details
+	 * validator to the registration page when a update or a new register is
+	 * happening
+	 ****************************************************************************************/
 	@InitBinder
 	protected void initBinder(WebDataBinder binder) {
 		binder.setValidator(userValidator);
 	}
 
-	// Register form for a new user
+	/*****************************************************************************************
+	 * This method will be called when a new user wants to register. It will
+	 * generate the registration form
+	 ****************************************************************************************/
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String registrationForm(Model model) {
 		// Create a new applicant and add it to model
@@ -54,19 +62,20 @@ public class UserRegisterController implements Preferences {
 		model.addAttribute("register", true);
 		model.addAttribute("actionURL", "users");
 		// Display the login page
-		return "logins/register";
+		return "logins/register_user";
 	}
 
-	// This will be called upon clicking register button
+	/*****************************************************************************************
+	 * When a new user creates a profile, it will be directed to here. User will
+	 * be validated and directed to either home page or the registration page
+	 ****************************************************************************************/
 	@RequestMapping(value = "users", method = RequestMethod.POST, params = "register")
-	public String addNewUser(@ModelAttribute("userForm") @Validated Applicant user, BindingResult result, Model model,
+	public String addsNewUser(@ModelAttribute("userForm") @Validated Applicant user, BindingResult result, Model model,
 			RedirectAttributes redirectAttributes) {
 		if (result.hasErrors()) {
-			redirectAttributes.addFlashAttribute("msg", "Invalid registration data");
-			redirectAttributes.addFlashAttribute("css", "danger");
 			model.addAttribute("register", true);
 			model = generatePrefList(model);
-			return "logins/register";
+			return "logins/register_user";
 		} else {
 			// Try adding password to the password_table
 			int response = poolPW.addPassword(new LoginInfo(user.getIndexNumber(), user.getPassword()));
@@ -78,72 +87,45 @@ public class UserRegisterController implements Preferences {
 				// Add applicant to the user table
 				poolApplicants.addApplicant(user);
 				// Display user details
-				return "redirect:users/" + user.getIndexNumber();
+				return "redirect:/user/view/" + user.getIndexNumber();
 			} else {
 				// Pass success message to redirect view
 				model.addAttribute("msg", "A user with the same index number exist!");
 				model.addAttribute("css", "danger");
 				model = generatePrefList(model);
 				model.addAttribute("register", true);
-				return "logins/register";
+				return "logins/register_user";
 			}
 		}
 	}
 
+	/*****************************************************************************************
+	 * When a user updates his profile, this will be called. Once updated, he
+	 * will be redirected to his home page
+	 ****************************************************************************************/
 	@RequestMapping(value = "users", method = RequestMethod.POST, params = "update")
-	public String updateUser(@ModelAttribute("userForm") @Validated Applicant user, BindingResult result, Model model,
+	public String updatesUser(@ModelAttribute("userForm") @Validated Applicant user, BindingResult result, Model model,
 			RedirectAttributes redirectAttributes) {
 		if (result.hasErrors()) {
 			model = generatePrefList(model);
-			return "logins/register";
+			return "logins/register_user";
 		} else {
 			// Add applicant to the user table
 			poolApplicants.updateApplicant(user);
-			Applicant rUser = poolApplicants.fetchApplicant(user.getIndexNumber());
-			List<Vacancy> vacancies = poolVacancies.getVacancies(user.convertListToPref());
-			model.addAttribute("msg", "Updated successfully!");
-			model.addAttribute("css", "success");
-			model.addAttribute("vacancies", vacancies);
-			model.addAttribute("user", rUser);
-			// Display user details
-			return "displays/show_user";
+			// Pass the success message
+			redirectAttributes.addFlashAttribute("msg", "Updated successfully!");
+			redirectAttributes.addFlashAttribute("css", "success");
+			// Redirect
+			return "redirect:/user/view/" + user.getIndexNumber();
 		}
 	}
 
-	// All users in the table
-	@RequestMapping(value = "/users", method = RequestMethod.GET)
-	public String showAllUsers(Model model) {
-		// Add the user list under "users"
-		model.addAttribute("users", poolApplicants.getAllApplicants());
-		return "displays/list";
-	}
-
-	// Display User details
-	@RequestMapping(value = "/users/{index}", method = RequestMethod.POST)
-	public String showUser(@PathVariable("index") String index, Model model) {
-		// Fetch applicant from database
-		Applicant user = poolApplicants.fetchApplicant(index);
-		if (user == null) {
-			// If there is no user, return a failure message
-			model.addAttribute("msg", "User not found");
-		}
-		// Add the user account under "user"
-		model.addAttribute("user", user);
-		return "displays/show_user";
-	}
-
-	// Delete User account
-	@RequestMapping(value = "/users/{index}/delete", method = RequestMethod.POST)
-	public String deleteUser(@PathVariable("index") String index, final RedirectAttributes redirectAttributes) {
-		poolApplicants.deleteApplicant(index);
-		// Pass the successful message to redirect
-		redirectAttributes.addFlashAttribute("css", "success");
-		redirectAttributes.addFlashAttribute("msg", "User deleted!");
-		return "redirect:/admin/view_users";
-	}
-
-	// Display Update Form
-	@RequestMapping(value = "/users/{index}/update", method = RequestMethod.POST)
+	/*****************************************************************************************
+	 * The method will be called when a user wants to update his profile. This
+	 * will generate his existing details and show the update form. Since
+	 * passwords are not available with users, they will be set to null
+	 ****************************************************************************************/
+	@RequestMapping(value = "/update/{index}", method = RequestMethod.POST)
 	public String showUpdateUserForm(@PathVariable("index") String index, Model model) {
 		// Fetch the applicant from database
 		Applicant applicant = poolApplicants.fetchApplicant(index);
@@ -156,10 +138,14 @@ public class UserRegisterController implements Preferences {
 		// Add update notations
 		model.addAttribute("register", false);
 		model.addAttribute("actionURL", "/MSDProject/reg/user/users/");
-		return "logins/register";
+		return "logins/register_user";
 	}
 
-	// Generate default values for preferences
+	/*****************************************************************************************
+	 * This method will generate the preferences in to a list which will be used
+	 * in generating the web form. It will be passed down to the page with the
+	 * key "preferences"
+	 ****************************************************************************************/
 	private Model generatePrefList(Model model) {
 		// Create a list of preferences
 		List<String> preferences = new ArrayList<>();

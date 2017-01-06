@@ -209,6 +209,8 @@ audio
 
 
 
+
+
 :not
 
 
@@ -218,7 +220,9 @@ audio
 
 
 
+
  
+
 
 
 
@@ -239,7 +243,9 @@ controls
 
 
 
+
  
+
 
 
 
@@ -266,7 +272,10 @@ display
 
 
 
+
+
 :
+
 
 
 
@@ -284,7 +293,10 @@ display
 
 
 
+
 none
+
+
 
 
 
@@ -319,6 +331,8 @@ height
 
 
 
+
+
 :
 
 
@@ -328,7 +342,9 @@ height
 
 
 
+
  
+
 
 
 
@@ -413,6 +429,8 @@ svg
 
 
 
+
+
 :not
 
 
@@ -422,7 +440,9 @@ svg
 
 
 
+
  
+
 
 
 
@@ -441,7 +461,9 @@ svg
 
 
 
+
  
+
 
 
 
@@ -468,7 +490,10 @@ overflow
 
 
 
+
+
 :
+
 
 
 
@@ -486,7 +511,10 @@ overflow
 
 
 
+
 hidden
+
+
 
 
 
@@ -4299,6 +4327,8 @@ tbody.collapse.in {
 
 
 
+
+
 :not
 
 
@@ -4308,7 +4338,9 @@ tbody.collapse.in {
 
 
 
+
  
+
 
 
 
@@ -4327,7 +4359,9 @@ tbody.collapse.in {
 
 
 
+
  
+
 
 
 
@@ -4346,7 +4380,9 @@ tbody.collapse.in {
 
 
 
+
  
+
 
 
 
@@ -4365,7 +4401,9 @@ tbody.collapse.in {
 
 
 
+
  
+
 
 
 
@@ -4384,7 +4422,9 @@ tbody.collapse.in {
 
 
 
+
  
+
 
 
 
@@ -4404,7 +4444,9 @@ tbody.collapse.in {
 
 
 
+
 	
+
 
 
 
@@ -4431,6 +4473,8 @@ border-radius
 
 
 
+
+
 :
 
 
@@ -4440,7 +4484,9 @@ border-radius
 
 
 
+
  
+
 
 
 
@@ -4474,7 +4520,11 @@ border-radius
 
 
 
+
+
 :first-child
+
+
 
 
 
@@ -4500,7 +4550,9 @@ border-radius
 
 
 
+
  
+
 
 
 
@@ -4519,7 +4571,9 @@ border-radius
 
 
 
+
  
+
 
 
 
@@ -4538,7 +4592,9 @@ border-radius
 
 
 
+
  
+
 
 
 
@@ -4557,7 +4613,9 @@ border-radius
 
 
 
+
  
+
 
 
 
@@ -4584,6 +4642,8 @@ border-top-right-radius
 
 
 
+
+
 :
 
 
@@ -4593,7 +4653,9 @@ border-top-right-radius
 
 
 
+
  
+
 
 
 
@@ -4620,6 +4682,8 @@ border-bottom-right-radius
 
 
 
+
+
 :
 
 
@@ -4629,7 +4693,9 @@ border-bottom-right-radius
 
 
 
+
  
+
 
 
 
@@ -4659,7 +4725,11 @@ border-bottom-right-radius
 
 
 
+
+
 :last-child
+
+
 
 
 
@@ -4685,7 +4755,9 @@ border-bottom-right-radius
 
 
 
+
  
+
 
 
 
@@ -4704,7 +4776,9 @@ border-bottom-right-radius
 
 
 
+
  
+
 
 
 
@@ -4733,7 +4807,10 @@ border-bottom-right-radius
 
 
 
+
+
 :not
+
 
 
 
@@ -4752,6 +4829,7 @@ border-bottom-right-radius
 
 
 
+
 (
 :first-child
 
@@ -4762,7 +4840,9 @@ border-bottom-right-radius
 
 
 
+
  
+
 
 
 
@@ -4789,6 +4869,8 @@ border-top-left-radius
 
 
 
+
+
 :
 
 
@@ -4798,7 +4880,9 @@ border-top-left-radius
 
 
 
+
  
+
 
 
 
@@ -4825,6 +4909,8 @@ border-bottom-left-radius
 
 
 
+
+
 :
 
 
@@ -4834,7 +4920,9 @@ border-bottom-left-radius
 
 
 
+
  
+
 
 
 
@@ -4939,6 +5027,8 @@ border-bottom-left-radius
 
 
 
+
+
 :not
 
 
@@ -4948,7 +5038,9 @@ border-bottom-left-radius
 
 
 
+
  
+
 
 
 
@@ -4967,7 +5059,9 @@ border-bottom-left-radius
 
 
 
+
  
+
 
 
 
@@ -4986,7 +5080,9 @@ border-bottom-left-radius
 
 
 
+
  
+
 
 
 
@@ -5005,7 +5101,9 @@ border-bottom-left-radius
 
 
 
+
  
+
 
 
 
@@ -5032,6 +5130,8 @@ border-radius
 
 
 
+
+
 :
 
 
@@ -5041,7 +5141,9 @@ border-radius
 
 
 
+
  
+
 
 
 
@@ -5071,7 +5173,11 @@ border-radius
 
 
 
+
+
 :first-child
+
+
 
 
 
@@ -5097,7 +5203,9 @@ border-radius
 
 
 
+
  
+
 
 
 
@@ -5116,7 +5224,9 @@ border-radius
 
 
 
+
  
+
 
 
 
@@ -5143,7 +5253,10 @@ border-top-right-radius
 
 
 
+
+
 :
+
 
 
 
@@ -5161,8 +5274,11 @@ border-top-right-radius
 
 
 
+
 4
 px
+
+
 
 
 
@@ -5197,6 +5313,8 @@ border-bottom-right-radius
 
 
 
+
+
 :
 
 
@@ -5206,7 +5324,9 @@ border-bottom-right-radius
 
 
 
+
  
+
 
 
 
@@ -5233,7 +5353,10 @@ border-bottom-left-radius
 
 
 
+
+
 :
+
 
 
 
@@ -5251,11 +5374,14 @@ border-bottom-left-radius
 
 
 
+
 0
 }
 .btn-group-vertical
 >
 .btn
+
+
 
 
 
@@ -5289,6 +5415,8 @@ border-bottom-left-radius
 
 
 
+
+
 :not
 
 
@@ -5298,7 +5426,9 @@ border-bottom-left-radius
 
 
 
+
  
+
 
 
 
@@ -5317,7 +5447,9 @@ border-bottom-left-radius
 
 
 
+
  
+
 
 
 
@@ -5344,6 +5476,8 @@ border-top-left-radius
 
 
 
+
+
 :
 
 
@@ -5353,7 +5487,9 @@ border-top-left-radius
 
 
 
+
  
+
 
 
 
@@ -5380,6 +5516,8 @@ border-top-right-radius
 
 
 
+
+
 :
 
 
@@ -5389,7 +5527,9 @@ border-top-right-radius
 
 
 
+
  
+
 
 
 
@@ -5416,7 +5556,10 @@ border-bottom-left-radius
 
 
 
+
+
 :
+
 
 
 
@@ -5434,8 +5577,11 @@ border-bottom-left-radius
 
 
 
+
 4
 px
+
+
 
 
 
@@ -5579,7 +5725,9 @@ select[multiple].input-group-sm>.form-control, select[multiple].input-group-sm>.
 
 
 
+
  
+
 
 
 
@@ -5605,6 +5753,8 @@ select[multiple].input-group-sm>.form-control, select[multiple].input-group-sm>.
 
 
 
+
+
 :not
 
 
@@ -5614,7 +5764,9 @@ select[multiple].input-group-sm>.form-control, select[multiple].input-group-sm>.
 
 
 
+
  
+
 
 
 
@@ -5633,7 +5785,9 @@ select[multiple].input-group-sm>.form-control, select[multiple].input-group-sm>.
 
 
 
+
  
+
 
 
 
@@ -5652,7 +5806,9 @@ select[multiple].input-group-sm>.form-control, select[multiple].input-group-sm>.
 
 
 
+
  
+
 
 
 
@@ -5671,7 +5827,9 @@ select[multiple].input-group-sm>.form-control, select[multiple].input-group-sm>.
 
 
 
+
  
+
 
 
 
@@ -5698,6 +5856,8 @@ select[multiple].input-group-sm>.form-control, select[multiple].input-group-sm>.
 
 
 
+
+
 :not
 
 
@@ -5707,7 +5867,9 @@ select[multiple].input-group-sm>.form-control, select[multiple].input-group-sm>.
 
 
 
+
  
+
 
 
 
@@ -5726,7 +5888,9 @@ select[multiple].input-group-sm>.form-control, select[multiple].input-group-sm>.
 
 
 
+
  
+
 
 
 
@@ -5745,7 +5909,9 @@ select[multiple].input-group-sm>.form-control, select[multiple].input-group-sm>.
 
 
 
+
  
+
 
 
 
@@ -5764,7 +5930,9 @@ select[multiple].input-group-sm>.form-control, select[multiple].input-group-sm>.
 
 
 
+
  
+
 
 
 
@@ -5791,6 +5959,8 @@ select[multiple].input-group-sm>.form-control, select[multiple].input-group-sm>.
 
 
 
+
+
 :not
 
 
@@ -5800,7 +5970,9 @@ select[multiple].input-group-sm>.form-control, select[multiple].input-group-sm>.
 
 
 
+
  
+
 
 
 
@@ -5819,7 +5991,9 @@ select[multiple].input-group-sm>.form-control, select[multiple].input-group-sm>.
 
 
 
+
  
+
 
 
 
@@ -5838,7 +6012,9 @@ select[multiple].input-group-sm>.form-control, select[multiple].input-group-sm>.
 
 
 
+
  
+
 
 
 
@@ -5857,7 +6033,9 @@ select[multiple].input-group-sm>.form-control, select[multiple].input-group-sm>.
 
 
 
+
  
+
 
 
 
@@ -5884,6 +6062,8 @@ border-radius
 
 
 
+
+
 :
 
 
@@ -5893,7 +6073,9 @@ border-radius
 
 
 
+
  
+
 
 
 
@@ -5948,6 +6130,7 @@ border-radius
 
 
 
+
  
 
 
@@ -5957,7 +6140,10 @@ border-radius
 
 
 
+
 .form-control
+
+
 
 
 
@@ -5993,9 +6179,13 @@ border-radius
 
 
 
+
+
 :first-child
 ,
 .input-group-btn
+
+
 
 
 
@@ -6017,6 +6207,8 @@ border-radius
 .btn
 ,
 .input-group-btn
+
+
 
 
 
@@ -6040,6 +6232,8 @@ border-radius
 .btn
 ,
 .input-group-btn
+
+
 
 
 
@@ -6077,9 +6271,13 @@ border-radius
 
 
 
+
+
 :last-child
 >
 .btn-group
+
+
 
 
 
@@ -6106,7 +6304,9 @@ border-radius
 
 
 
+
 	
+
 
 
 
@@ -6125,7 +6325,9 @@ border-radius
 
 
 
+
  
+
 
 
 
@@ -6154,6 +6356,8 @@ border-radius
 
 
 
+
+
 :last-child
 >
 .btn
@@ -6173,6 +6377,8 @@ border-radius
 
 
 
+
+
 :not
 
 
@@ -6182,7 +6388,9 @@ border-radius
 
 
 
+
  
+
 
 
 
@@ -6202,7 +6410,9 @@ border-radius
 
 
 
+
 	
+
 
 
 
@@ -6221,7 +6431,9 @@ border-radius
 
 
 
+
  
+
 
 
 
@@ -6240,7 +6452,9 @@ border-radius
 
 
 
+
  
+
 
 
 
@@ -6267,6 +6481,8 @@ border-top-right-radius
 
 
 
+
+
 :
 
 
@@ -6276,7 +6492,9 @@ border-top-right-radius
 
 
 
+
  
+
 
 
 
@@ -6303,6 +6521,8 @@ border-bottom-right-radius
 
 
 
+
+
 :
 
 
@@ -6312,7 +6532,9 @@ border-bottom-right-radius
 
 
 
+
  
+
 
 
 
@@ -9583,7 +9805,6 @@ button.close {
 	padding-left: 5px;
 	margin-right: auto;
 	margin-left: auto;
-	background-color: black;
 }
 
 .user-container .user-header {
@@ -9677,7 +9898,6 @@ button.close {
 	padding-left: 5px;
 	margin-right: auto;
 	margin-left: auto;
-	background-color: black;
 }
 
 .company-container .company-header {
@@ -9702,8 +9922,8 @@ button.close {
 }
 
 .request-list .btn {
-	display: inline-block; 
-	vertical-align : middle;
+	display: inline-block;
+	vertical-align: middle;
 }
 
 .request-list #gpa {
@@ -9713,4 +9933,23 @@ button.close {
 .request-list form {
 	display: inline-block;
 	margin: 5px;
+}
+
+.register-container {
+	margin: 50px;
+	padding-right: 100px;
+	padding-left: 100px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+#register-boxes {
+	padding: 5px 0px;
+	margin-left: 20px;
+}
+
+.register-buttons {
+	float: right;
+	margin: 0px 25px 25px 0px;
+	
 }
