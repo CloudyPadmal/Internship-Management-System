@@ -210,7 +210,7 @@ public class PoolVacancies implements VacancyDAO {
 
 	@Override
 	public int openVacancy(int vacancyID) {
-		String sql = "UPDATE " + VacancyDAO.TABLE + " SET open = FALSE, applicant = NULL WHERE id = " + vacancyID;
+		String sql = "UPDATE " + VacancyDAO.TABLE + " SET open = FALSE, applicant = NULL, choice = NULL WHERE id = " + vacancyID;
 		return dbHandler.update(sql);
 	}
 
@@ -247,6 +247,7 @@ public class PoolVacancies implements VacancyDAO {
 		return dbHandler.update(sql);
 	}
 
+	@Override
 	public int getChoice(int vacancyID) {
 		String sql = "SELECT choice FROM " + VacancyDAO.TABLE + " WHERE id = '" + vacancyID + "'";
 		return dbHandler.query(sql, new ResultSetExtractor<Integer>() {
@@ -258,5 +259,38 @@ public class PoolVacancies implements VacancyDAO {
 				return null;
 			}
 		});
+	}
+	
+	@Override
+	public int deleteApplicantBinds(String indexNumber) {
+		String sql = "UPDATE " + VacancyDAO.TABLE + " SET applicant = NULL, choice = NULL, open = FALSE WHERE applicant = '" + indexNumber + "'";
+		return dbHandler.update(sql);
+	}
+	
+	@Override
+	public List<Vacancy> getUserVacancies(String indexNumber) {
+		List<Vacancy> list = dbHandler.query("SELECT * FROM " + VacancyDAO.TABLE + " WHERE applicant = '" + indexNumber + "'",
+				new RowMapper<Vacancy>() {
+					public Vacancy mapRow(ResultSet rs, int row) throws SQLException {
+						// Create a new vacancy and a criteria
+						Vacancy info = new Vacancy(rs.getString("title"), rs.getString("company"), rs.getInt("salary"),
+								rs.getString("description_1"), rs.getString("description_2"));
+						PoolCriteria criteria = new PoolCriteria(rs.getBoolean("ARDUINO"), rs.getBoolean("FPGA"),
+								rs.getBoolean("ROBOTICS"), rs.getBoolean("WIFI"), rs.getBoolean("ANTENNAS"),
+								rs.getBoolean("NETWORKING"), rs.getBoolean("PROCESSORDESIGN"),
+								rs.getBoolean("IMAGEPROCESSING"), rs.getBoolean("PROGRAMMING"),
+								rs.getBoolean("AUTOMATION"), rs.getBoolean("BIOMEDICAL"), rs.getBoolean("BIOMECHANICS"),
+								rs.getBoolean("TELECOM"), rs.getBoolean("SEMICONDUCTORS"), rs.getBoolean("CIRCUITS"),
+								rs.getBoolean("IOT"), rs.getBoolean("AI"), rs.getBoolean("SIGNALPROCESSING"));
+						// Fetch
+						info.setId(rs.getInt("id"));
+						info.setApplicant(rs.getString("applicant"));
+						info.setChoice(rs.getInt("choice"));
+						info.setOpen(rs.getBoolean("open"));
+						info.convertPrefToList(criteria);
+						return info;
+					}
+				});
+		return list;
 	}
 }

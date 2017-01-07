@@ -208,4 +208,44 @@ public class AdminController {
 		redirects.addFlashAttribute("css", "danger");
 		return "redirect:/admin/view_companies";
 	}
+	
+	/*****************************************************************************************
+	 * This method will be called when the administrator wants to view a user profile
+	 ****************************************************************************************/
+	@RequestMapping(value = "/user/view/{indexNumber}", method = RequestMethod.POST)
+	public String viewUser(Model model, RedirectAttributes redirects, @PathVariable("indexNumber") String indexNumber) {
+		// Get the new applicant and current applicant
+		Applicant applicant = poolApplicants.fetchApplicant(indexNumber);
+		// Get a list of vacancies
+		List<Vacancy> list = poolVacancies.getUserVacancies(indexNumber);
+		model.addAttribute("user", applicant);
+		model.addAttribute("vacancies", list);
+		redirects.addFlashAttribute("msg", "Applicant " + indexNumber + " with " + list.size() + " vacancies!");
+		redirects.addFlashAttribute("css", "info");
+		return "redirect:/admin/view_users";
+	}
+
+	/*****************************************************************************************
+	 * This method will be called when the administrator wants to delete a
+	 * user. When deleting a user, 
+	 * 1. Delete user from user table
+	 * 2. Delete passwords from password table
+	 * 3. Delete vacancy choices from vacancy table
+	 * 4. Delete requests from request table
+	 ****************************************************************************************/
+	@RequestMapping(value = "/user/delete/{indexNumber}", method = RequestMethod.POST)
+	public String deleteUser(Model model, RedirectAttributes redirects, @PathVariable("indexNumber") String indexNumber) {
+		// Delete vacancies requested by the user
+		poolVacancies.deleteApplicantBinds(indexNumber);		
+		// Delete password
+		poolPW.deletePassword(indexNumber);
+		// Delete requests
+		poolRequests.deleteRequestsByUser(indexNumber);
+		// Delete User
+		poolApplicants.deleteApplicant(indexNumber);
+		// Submit success message
+		redirects.addFlashAttribute("msg", "User deleted!");
+		redirects.addFlashAttribute("css", "warning");
+		return "redirect:/admin/view_users";
+	}
 }

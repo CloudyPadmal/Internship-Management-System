@@ -85,4 +85,10 @@ public class PoolRequests implements RequestDAO {
 		String sql = "UPDATE " + RequestDAO.TABLE + " SET attended = TRUE WHERE request_id = ?";
 		return dbHandler.update(sql, id);
 	}
+	
+	@Override
+	public int deleteRequestsByUser(String indexNumber) {
+		String sql = "DELETE FROM " + RequestDAO.TABLE + " WHERE applicant = ?";
+		return dbHandler.update(sql, indexNumber);
+	}
 }

@@ -22,4 +22,7 @@ public interface RequestDAO {
 
 	// Update a request
 	public int updateRequest(int id);
+
+	// Remove requests by a user
+	public int deleteRequestsByUser(String indexNumber);
 }

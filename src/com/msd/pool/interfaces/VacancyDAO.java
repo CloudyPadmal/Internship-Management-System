@@ -44,4 +44,14 @@ public interface VacancyDAO {
 
 	// Swap applicants
 	public int changeApplicant(String newID, int vacancyID, int newChoice);
+
+	// Get the choice of a vacancy
+	public int getChoice(int vacancyID);
+
+	// Delete references to applicant
+	public int deleteApplicantBinds(String indexNumber);
+
+	// Get a list of vacancies of a user
+	public List<Vacancy> getUserVacancies(String indexNumber);
+	
 }
