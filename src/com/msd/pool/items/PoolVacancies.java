@@ -29,15 +29,14 @@ public class PoolVacancies implements VacancyDAO {
 				+ " (company, salary, title, description_1, description_2, ARDUINO, "
 				+ "FPGA, ROBOTICS, WIFI, ANTENNAS, NETWORKING, PROCESSORDESIGN, IMAGEPROCESSING, PROGRAMMING, AUTOMATION, "
 				+ "BIOMEDICAL, BIOMECHANICS, TELECOM, SEMICONDUCTORS, CIRCUITS, IOT, AI, SIGNALPROCESSING) "
-				+ "VALUES ('" + vacancy.getCompanyID() + "', '" + vacancy.getSalary() + "', '" + vacancy.getTitle()
-				+ "', '" + vacancy.getDescription_1() + "', '" + vacancy.getDescription_2() + "',"
-				+ criteria.isARDUINO() + "," + criteria.isFPGA() + "," + criteria.isROBOTICS() + "," + criteria.isWIFI()
-				+ "," + criteria.isANTENNAS() + "," + criteria.isNETWORKING() + "," + criteria.isPROCESSORDESIGN() + ","
-				+ criteria.isIMAGEPROCESSING() + "," + criteria.isPROGRAMMING() + "," + criteria.isAUTOMATION() + ","
-				+ criteria.isBIOMEDICAL() + "," + criteria.isBIOMECHANICS() + "," + criteria.isTELECOM() + ","
-				+ criteria.isSEMICONDUCTORS() + "," + criteria.isCIRCUITS() + "," + criteria.isIOT() + ","
-				+ criteria.isAI() + "," + criteria.isSIGNALPROCESSING() + ")";
-		return dbHandler.update(sql);
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		return dbHandler.update(sql, vacancy.getCompanyID(), vacancy.getSalary(), vacancy.getTitle(),
+				vacancy.getDescription_1(), vacancy.getDescription_2(), criteria.isARDUINO(), criteria.isFPGA(),
+				criteria.isROBOTICS(), criteria.isWIFI(), criteria.isANTENNAS(), criteria.isNETWORKING(),
+				criteria.isPROCESSORDESIGN(), criteria.isIMAGEPROCESSING(), criteria.isPROGRAMMING(),
+				criteria.isAUTOMATION(), criteria.isBIOMEDICAL(), criteria.isBIOMECHANICS(), criteria.isTELECOM(),
+				criteria.isSEMICONDUCTORS(), criteria.isCIRCUITS(), criteria.isIOT(), criteria.isAI(),
+				criteria.isSIGNALPROCESSING());
 	}
 
 	@Override
@@ -78,19 +77,19 @@ public class PoolVacancies implements VacancyDAO {
 	@Override
 	public int updateVacancy(Vacancy vacancy) {
 		PoolCriteria criteria = vacancy.convertListToPref();
-
-		String sql = "UPDATE " + VacancyDAO.TABLE + " SET salary = " + vacancy.getSalary() + ", title = '"
-				+ vacancy.getTitle() + "', description_1 = '" + vacancy.getDescription_1() + "', description_2 = '"
-				+ vacancy.getDescription_2() + "', ARDUINO = " + criteria.isARDUINO() + ", FPGA = " + criteria.isFPGA()
-				+ ", ROBOTICS = " + criteria.isROBOTICS() + ", WIFI = " + criteria.isWIFI() + ", ANTENNAS = "
-				+ criteria.isANTENNAS() + ", NETWORKING = " + criteria.isNETWORKING() + ", PROCESSORDESIGN = "
-				+ criteria.isPROCESSORDESIGN() + ", IMAGEPROCESSING = " + criteria.isIMAGEPROCESSING()
-				+ ", PROGRAMMING = " + criteria.isPROGRAMMING() + ", AUTOMATION = " + criteria.isAUTOMATION()
-				+ ", BIOMEDICAL = " + criteria.isBIOMEDICAL() + ", BIOMECHANICS = " + criteria.isBIOMECHANICS()
-				+ ", TELECOM = " + criteria.isTELECOM() + ", SEMICONDUCTORS = " + criteria.isSEMICONDUCTORS()
-				+ ", CIRCUITS = " + criteria.isCIRCUITS() + ", IOT = " + criteria.isIOT() + ", AI = " + criteria.isAI()
-				+ ", SIGNALPROCESSING = " + criteria.isSIGNALPROCESSING() + " WHERE id = " + vacancy.getId();
-		return dbHandler.update(sql);
+		String sql = "UPDATE " + VacancyDAO.TABLE
+				+ " SET salary = ?, title = ?, description_1 = ?, description_2 = ?, ARDUINO = ?, "
+				+ "FPGA = ?, ROBOTICS = ?, WIFI = ?, ANTENNAS = ?, NETWORKING = ?, PROCESSORDESIGN = ?, "
+				+ "IMAGEPROCESSING = ?, PROGRAMMING = ?, AUTOMATION = ?, BIOMEDICAL = ?, BIOMECHANICS = ?, "
+				+ "TELECOM = ?, SEMICONDUCTORS = ?, CIRCUITS = ?, IOT = ?, AI = ?, SIGNALPROCESSING = ? "
+				+ "WHERE id = ?";
+		return dbHandler.update(sql, vacancy.getSalary(), vacancy.getTitle(), vacancy.getDescription_1(),
+				vacancy.getDescription_2(), criteria.isARDUINO(), criteria.isFPGA(), criteria.isROBOTICS(),
+				criteria.isWIFI(), criteria.isANTENNAS(), criteria.isNETWORKING(), criteria.isPROCESSORDESIGN(),
+				criteria.isIMAGEPROCESSING(), criteria.isPROGRAMMING(), criteria.isAUTOMATION(),
+				criteria.isBIOMEDICAL(), criteria.isBIOMECHANICS(), criteria.isTELECOM(), criteria.isSEMICONDUCTORS(),
+				criteria.isCIRCUITS(), criteria.isIOT(), criteria.isAI(), criteria.isSIGNALPROCESSING(),
+				vacancy.getId());
 	}
 
 	@Override
@@ -210,7 +209,8 @@ public class PoolVacancies implements VacancyDAO {
 
 	@Override
 	public int openVacancy(int vacancyID) {
-		String sql = "UPDATE " + VacancyDAO.TABLE + " SET open = FALSE, applicant = NULL, choice = NULL WHERE id = " + vacancyID;
+		String sql = "UPDATE " + VacancyDAO.TABLE + " SET open = FALSE, applicant = NULL, choice = NULL WHERE id = "
+				+ vacancyID;
 		return dbHandler.update(sql);
 	}
 
@@ -260,16 +260,18 @@ public class PoolVacancies implements VacancyDAO {
 			}
 		});
 	}
-	
+
 	@Override
 	public int deleteApplicantBinds(String indexNumber) {
-		String sql = "UPDATE " + VacancyDAO.TABLE + " SET applicant = NULL, choice = NULL, open = FALSE WHERE applicant = '" + indexNumber + "'";
+		String sql = "UPDATE " + VacancyDAO.TABLE
+				+ " SET applicant = NULL, choice = NULL, open = FALSE WHERE applicant = '" + indexNumber + "'";
 		return dbHandler.update(sql);
 	}
-	
+
 	@Override
 	public List<Vacancy> getUserVacancies(String indexNumber) {
-		List<Vacancy> list = dbHandler.query("SELECT * FROM " + VacancyDAO.TABLE + " WHERE applicant = '" + indexNumber + "'",
+		List<Vacancy> list = dbHandler.query(
+				"SELECT * FROM " + VacancyDAO.TABLE + " WHERE applicant = '" + indexNumber + "'",
 				new RowMapper<Vacancy>() {
 					public Vacancy mapRow(ResultSet rs, int row) throws SQLException {
 						// Create a new vacancy and a criteria

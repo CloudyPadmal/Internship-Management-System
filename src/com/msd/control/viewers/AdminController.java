@@ -138,7 +138,7 @@ public class AdminController {
 			// Update current user's choice
 			poolApplicants.removeChoice(currentApplicant.getIndexNumber(), oldChoice);
 			poolApplicants.setChoice(indexNumber, newChoice, vacancyID);
-			// Set request status to attended
+			// Delete the request
 			poolRequests.deleteRequest(id);
 			// Delete request from user table
 			poolApplicants.deleteRequest(indexNumber);
@@ -208,9 +208,10 @@ public class AdminController {
 		redirects.addFlashAttribute("css", "danger");
 		return "redirect:/admin/view_companies";
 	}
-	
+
 	/*****************************************************************************************
-	 * This method will be called when the administrator wants to view a user profile
+	 * This method will be called when the administrator wants to view a user
+	 * profile
 	 ****************************************************************************************/
 	@RequestMapping(value = "/user/view/{indexNumber}", method = RequestMethod.POST)
 	public String viewUser(Model model, RedirectAttributes redirects, @PathVariable("indexNumber") String indexNumber) {
@@ -226,17 +227,16 @@ public class AdminController {
 	}
 
 	/*****************************************************************************************
-	 * This method will be called when the administrator wants to delete a
-	 * user. When deleting a user, 
-	 * 1. Delete user from user table
-	 * 2. Delete passwords from password table
-	 * 3. Delete vacancy choices from vacancy table
-	 * 4. Delete requests from request table
+	 * This method will be called when the administrator wants to delete a user.
+	 * When deleting a user, 1. Delete user from user table 2. Delete passwords
+	 * from password table 3. Delete vacancy choices from vacancy table 4.
+	 * Delete requests from request table
 	 ****************************************************************************************/
 	@RequestMapping(value = "/user/delete/{indexNumber}", method = RequestMethod.POST)
-	public String deleteUser(Model model, RedirectAttributes redirects, @PathVariable("indexNumber") String indexNumber) {
+	public String deleteUser(Model model, RedirectAttributes redirects,
+			@PathVariable("indexNumber") String indexNumber) {
 		// Delete vacancies requested by the user
-		poolVacancies.deleteApplicantBinds(indexNumber);		
+		poolVacancies.deleteApplicantBinds(indexNumber);
 		// Delete password
 		poolPW.deletePassword(indexNumber);
 		// Delete requests
@@ -247,5 +247,48 @@ public class AdminController {
 		redirects.addFlashAttribute("msg", "User deleted!");
 		redirects.addFlashAttribute("css", "warning");
 		return "redirect:/admin/view_users";
+	}
+
+	/*****************************************************************************************
+	 * This method will be called when the administrator approves a vacancy.
+	 * When approving a vacancy,
+	 * 1. Update approve status of a user in user table
+	 * 2. Update vacancy status as not available
+	 * 3. Remove references of user from other vacancies 
+	 ****************************************************************************************/
+	@RequestMapping(value = "/vacancy/accept/{vacancyID}", method = RequestMethod.POST)
+	public String acceptVacancy(Model model, RedirectAttributes redirects, @PathVariable("vacancyID") int vacancyID) {
+		// Submit success message
+		redirects.addFlashAttribute("msg", "Approved!");
+		redirects.addFlashAttribute("css", "info");
+		return "redirect:/admin/view_vacancies";
+	}
+
+	/*****************************************************************************************
+	 * This method will be called when the administrator rejects a vacancy.
+	 * When rejecting a vacancy,
+	 * 1. Remove choice from user table
+	 * 2. 
+	 ****************************************************************************************/
+	@RequestMapping(value = "/vacancy/reject/{vacancyID}", method = RequestMethod.POST)
+	public String rejectVacancy(Model model, RedirectAttributes redirects, @PathVariable("vacancyID") int vacancyID) {
+		// Submit success message
+		redirects.addFlashAttribute("msg", "Rejected!");
+		redirects.addFlashAttribute("css", "danger");
+		return "redirect:/admin/view_vacancies";
+	}
+
+	/*****************************************************************************************
+	 * This method will be called when the administrator deletes a vacancy.
+	 * When deleting a vacancy,
+	 * 1. Delete the vacancy from vacancy table
+	 * 2. Remove choices from user table
+	 ****************************************************************************************/
+	@RequestMapping(value = "/vacancy/delete/{vacancyID}", method = RequestMethod.POST)
+	public String deleteVacancy(Model model, RedirectAttributes redirects, @PathVariable("vacancyID") int vacancyID) {
+		// Submit success message
+		redirects.addFlashAttribute("msg", "Deleted!");
+		redirects.addFlashAttribute("css", "warning");
+		return "redirect:/admin/view_vacancies";
 	}
 }

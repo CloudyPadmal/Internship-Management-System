@@ -67,12 +67,19 @@ public class UserController {
 		// Fetch the applicant
 		Applicant user = poolApplicants.fetchApplicant(indexNumber);
 		model.addAttribute("user", user);
-		// Fetch the list of vacancies
-		List<Vacancy> vacancies = poolVacancies.getVacancies(user.convertListToPref());
-		for (Vacancy vacancy : vacancies) {
-			vacancy.setCompanyName(poolCompanies.getCompanyName(vacancy.getCompanyID()));
+		// If the user got a chance already, show the congratualtion message
+		if (user.isAwarded()) {
+			Vacancy award = poolVacancies.fetchVacancy(user.getAwardedVacancy());
+			award.setCompanyName(poolCompanies.getCompanyName(award.getCompanyID()));
+			model.addAttribute("congrats", award);
+		} else {
+			// Fetch the list of vacancies
+			List<Vacancy> vacancies = poolVacancies.getVacancies(user.convertListToPref());
+			for (Vacancy vacancy : vacancies) {
+				vacancy.setCompanyName(poolCompanies.getCompanyName(vacancy.getCompanyID()));
+			}
+			model.addAttribute("vacancies", vacancies);
 		}
-		model.addAttribute("vacancies", vacancies);
 		return "displays/show_user";
 	}
 

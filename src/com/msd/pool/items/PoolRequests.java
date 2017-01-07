@@ -66,7 +66,7 @@ public class PoolRequests implements RequestDAO {
 
 	@Override
 	public List<Appeal> getAllRequests() {
-		List<Appeal> list = dbHandler.query("SELECT * FROM " + RequestDAO.TABLE, new RowMapper<Appeal>() {
+		List<Appeal> list = dbHandler.query("SELECT * FROM " + RequestDAO.TABLE + " ORDER BY applicant ASC", new RowMapper<Appeal>() {
 			public Appeal mapRow(ResultSet rs, int row) throws SQLException {
 				Appeal info = new Appeal(rs.getInt("request_id"), rs.getInt("vacancy"), rs.getString("applicant"),
 						rs.getBoolean("attended"));

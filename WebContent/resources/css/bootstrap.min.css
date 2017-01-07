@@ -4143,6 +4143,46 @@ tbody.collapse.in {
 	left: 0;
 	z-index: 1000;
 	display: none;
+	padding: 2px;
+	margin: 1px;
+	font-size: 14px;
+	list-style: none;
+	background-color: #fff;
+	-webkit-background-clip: padding-box;
+	background-clip: padding-box;
+	border: 1px solid #ccc;
+	border: 1px solid rgba(0, 0, 0, .15);
+	border-radius: 4px;
+	-webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+	box-shadow: 0 6px 12px rgba(0, 0, 0, .175)
+}
+
+.dropdown-menu .btn {
+	display: inline-block;
+	width: 75px;
+	max-width: 75px;
+	font-size: 14px;
+	font-weight: 400;
+	text-align: center;
+	vertical-align: middle;
+	-ms-touch-action: manipulation;
+	touch-action: manipulation;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background-image: none;
+	border: 1px solid transparent;
+	border-radius: 4px
+}
+
+.old_dropdown-menu {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	z-index: 1000;
+	display: none;
 	float: left;
 	min-width: 160px;
 	padding: 5px 0;
@@ -4172,7 +4212,14 @@ tbody.collapse.in {
 	background-color: #e5e5e5
 }
 
-.dropdown-menu>li>a {
+.dropdown-menu>li {
+	display: block;
+	margin-bottom: -18px;
+	padding: 3px;
+	color: #333;
+}
+
+.old-dropdown-menu>li>a {
 	display: block;
 	padding: 3px 20px;
 	clear: both;
@@ -9730,10 +9777,6 @@ button.close {
 	border-radius: 4px
 }
 
-.vacancy-list #buttons {
-	vertical-align: middle
-}
-
 .vacancy-list #description {
 	max-width: 250px;
 }
@@ -9952,4 +9995,26 @@ button.close {
 	float: right;
 	margin: 0px 25px 25px 0px;
 	
+}
+
+.congratulations {
+	padding-right: 15px;
+	padding-left: 15px;
+	margin-right: auto;
+	margin-left: auto;
+	text-align: center;
+}
+
+.congratulations .panel-heading {
+	background: green;
+	font-size: x-large;
+	color: white;
+}
+
+.blink_me {
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {  
+  50% { opacity: 0; }
 }

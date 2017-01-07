@@ -22,9 +22,10 @@ public class Applicant extends User implements Preferences {
 	private boolean applied3;
 	private String appeal;
 	private boolean appealStatus;
+	private int awardedVacancy;
+	private boolean awarded;
 
-	public Applicant() {
-		/**/}
+	public Applicant() {/**/}
 
 	public Applicant(String indexNumber, String surname, String emailAddress, String telephone, Double gradedPoint,
 			String aboutMe) {
@@ -176,5 +177,21 @@ public class Applicant extends User implements Preferences {
 		} else {
 			return 0;
 		}
+	}
+
+	public int getAwardedVacancy() {
+		return awardedVacancy;
+	}
+
+	public void setAwardedVacancy(int awardedVacancy) {
+		this.awardedVacancy = awardedVacancy;
+	}
+
+	public boolean isAwarded() {
+		return awarded;
+	}
+
+	public void setAwarded(boolean awarded) {
+		this.awarded = awarded;
 	}
 }
