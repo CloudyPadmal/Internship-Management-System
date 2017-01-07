@@ -53,5 +53,8 @@ public interface VacancyDAO {
 
 	// Get a list of vacancies of a user
 	public List<Vacancy> getUserVacancies(String indexNumber);
+
+	// Mark a vacancy as awarded
+	public int markAwarded(int vacancyID);
 	
 }

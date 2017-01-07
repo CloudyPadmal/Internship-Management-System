@@ -45,24 +45,30 @@
 					<td>${vacancy.id}</td>
 					<td>${vacancy.title}</td>
 					<td>${vacancy.salary}</td>
-					<td id="description">${vacancy.description_1}&nbsp;${vacancy.description_2}
-						asdasdgaj sdhjkah djkah djkahgsdkj askjd khagd hagd agdg asdg asg
-						dag sdjagsdh asdg hj</td>
+					<td id="description">${vacancy.description_1}&nbsp;${vacancy.description_2}</td>
 					<td><c:if test="${vacancy.open}">
-							<div class="btn-group">
-								<button type="button" class="btn btn-success dropdown-toggle"
-									data-toggle="dropdown">${vacancy.applicant}</button>
-								<ul class="dropdown-menu" role="menu">
-									<li><form type="submit"
-											action="vacancy/accept/${vacancy.id}" method="POST">
-											<button class="btn btn-primary">Approve</button>
-										</form></li>
-									<li><form type="submit"
-											action="vacancy/reject/${vacancy.id}" method="POST">
-											<button class="btn btn-warning">Reject</button>
-										</form></li>
-								</ul>
-							</div>
+							<c:choose>
+								<c:when test="${vacancy.awarded}">
+									<button type="button" class="btn btn-awarded disabled"
+										data-toggle="dropdown">${vacancy.applicant}</button>
+								</c:when>
+								<c:otherwise>
+									<div class="btn-group">
+										<button type="button" class="btn btn-success dropdown-toggle"
+											data-toggle="dropdown">${vacancy.applicant}</button>
+										<ul class="dropdown-menu" role="menu">
+											<li><form type="submit"
+													action="vacancy/accept/${vacancy.id}" method="POST">
+													<button class="btn btn-primary">Approve</button>
+												</form></li>
+											<li><form type="submit"
+													action="vacancy/reject/${vacancy.id}" method="POST">
+													<button class="btn btn-warning">Reject</button>
+												</form></li>
+										</ul>
+									</div>
+								</c:otherwise>
+							</c:choose>
 						</c:if></td>
 					<td><c:forEach var="preference" items="${vacancy.preferences}">
 							<li>${preference}</li>

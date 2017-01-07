@@ -3805,6 +3805,12 @@ select[multiple].form-group-lg .form-control, textarea.form-group-lg .form-contr
 	border-color: #ccc
 }
 
+.btn-awarded {
+	color: #eeeeec;
+	background-color: #5c3566;
+	border-color: #19ad67
+}
+
 .btn-default.active, .btn-default.focus, .btn-default:active,
 	.btn-default:focus, .btn-default:hover, .open>.dropdown-toggle.btn-default
 	{

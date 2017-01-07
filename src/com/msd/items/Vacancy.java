@@ -17,6 +17,7 @@ public class Vacancy {
 	private String applicant;
 	private int choice;
 	private boolean open;
+	private boolean awarded;
 
 	public Vacancy() {/**/}
 	
@@ -121,6 +122,14 @@ public class Vacancy {
 
 	public void setOpen(boolean open) {
 		this.open = open;
+	}
+
+	public boolean isAwarded() {
+		return awarded;
+	}
+
+	public void setAwarded(boolean awarded) {
+		this.awarded = awarded;
 	}
 
 	public PoolCriteria convertListToPref() {

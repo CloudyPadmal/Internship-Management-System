@@ -48,4 +48,7 @@ public interface ApplicantDAO {
 
 	// Delete appeal
 	public int deleteRequest(String indexNumber);
+
+	// Mark a vacancy as awarded
+	public int markAwarded(String applicant, int vacancy);
 }

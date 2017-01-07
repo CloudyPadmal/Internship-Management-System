@@ -26,12 +26,9 @@ public class PoolCompanies implements CompanyDAO {
 	@Override
 	public int addCompany(Company company) {
 		String sql = "INSERT INTO " + CompanyDAO.TABLE
-				+ " (loginID, company, address, emailAddress, telephone, aboutUS, positions) " + "VALUES ('"
-				+ company.getLoginID() + "', '" + company.getCompany() + "', '" + company.getAddress() + "', '"
-				+ company.getEmailAddress() + "', '" + company.getTelephone() + "', '" + company.getAboutUs() + "',"
-				+ company.getPositions() + ")";
-
-		return dbHandler.update(sql);
+				+ " (loginID, company, address, emailAddress, telephone, aboutUS, positions) VALUES (?, ?, ?, ?, ?, ?, ?)";
+		return dbHandler.update(sql, company.getLoginID(), company.getCompany(), company.getAddress(),
+				company.getEmailAddress(), company.getTelephone(), company.getAboutUs(), company.getPositions());
 	}
 
 	@Override
@@ -58,13 +55,13 @@ public class PoolCompanies implements CompanyDAO {
 		String sql = "DELETE FROM " + CompanyDAO.TABLE + " WHERE loginID = ?";
 		return dbHandler.update(sql, companyName);
 	}
-	
+
 	@Override
 	public int updateCompany(Company newCompany) {
-		String sql = "UPDATE " + CompanyDAO.TABLE + " SET company = '" + newCompany.getCompany() + "', address = '"
-				+ newCompany.getAddress() + "', emailAddress = '" + newCompany.getEmailAddress() + "', telephone = '"
-				+ newCompany.getTelephone() + "', aboutUs = '" + newCompany.getAboutUs() + "' WHERE loginID = '" + newCompany.getLoginID() + "'";
-		return dbHandler.update(sql);
+		String sql = "UPDATE " + CompanyDAO.TABLE + " SET company = ?, address = ?, emailAddress = ?, "
+				+ "telephone = ?, aboutUs = ? WHERE loginID = ?";
+		return dbHandler.update(sql, newCompany.getCompany(), newCompany.getAddress(), newCompany.getEmailAddress(),
+				newCompany.getTelephone(), newCompany.getAboutUs(), newCompany.getLoginID());
 	}
 
 	@Override
@@ -91,18 +88,16 @@ public class PoolCompanies implements CompanyDAO {
 
 	@Override
 	public int incrementVacancyCount(String companyName) {
-		String sql = "UPDATE " + CompanyDAO.TABLE + " SET positions = positions + 1 WHERE loginID = '" + companyName + "'";
-		System.out.println(sql);
-		return dbHandler.update(sql);
+		String sql = "UPDATE " + CompanyDAO.TABLE + " SET positions = positions + 1 WHERE loginID = ?";
+		return dbHandler.update(sql, companyName);
 	}
-	
+
 	@Override
 	public int decrementVacancyCount(String companyName) {
-		String sql = "UPDATE " + CompanyDAO.TABLE + " SET positions = positions - 1 WHERE loginID = '" + companyName + "'";
-		System.out.println(sql);
-		return dbHandler.update(sql);
+		String sql = "UPDATE " + CompanyDAO.TABLE + " SET positions = positions - 1 WHERE loginID = ?";
+		return dbHandler.update(sql, companyName);
 	}
-	
+
 	@Override
 	public String getCompanyName(String loginID) {
 		String sql = "SELECT company FROM " + CompanyDAO.TABLE + " WHERE loginID = '" + loginID + "'";

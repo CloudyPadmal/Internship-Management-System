@@ -60,6 +60,8 @@ public class PoolVacancies implements VacancyDAO {
 					info.setId(vacancyID);
 					info.setApplicant(rs.getString("applicant"));
 					info.setOpen(rs.getBoolean("open"));
+					info.setChoice(rs.getInt("choice"));
+					info.setAwarded(rs.getBoolean("awarded"));
 					info.convertPrefToList(criteria);
 					return info;
 				}
@@ -111,6 +113,7 @@ public class PoolVacancies implements VacancyDAO {
 				info.setApplicant(rs.getString("applicant"));
 				info.setChoice(rs.getInt("choice"));
 				info.setOpen(rs.getBoolean("open"));
+				info.setAwarded(rs.getBoolean("awarded"));
 				info.convertPrefToList(criteria);
 				return info;
 			}
@@ -138,6 +141,7 @@ public class PoolVacancies implements VacancyDAO {
 						info.setApplicant(rs.getString("applicant"));
 						info.setChoice(rs.getInt("choice"));
 						info.setOpen(rs.getBoolean("open"));
+						info.setAwarded(rs.getBoolean("awarded"));
 						info.convertPrefToList(criteria);
 						return info;
 					}
@@ -164,6 +168,7 @@ public class PoolVacancies implements VacancyDAO {
 						info.setId(rs.getInt("id"));
 						info.setApplicant(rs.getString("applicant"));
 						info.setChoice(rs.getInt("choice"));
+						info.setAwarded(rs.getBoolean("awarded"));
 						info.setOpen(rs.getBoolean("open"));
 						info.convertPrefToList(criteria);
 						return info;
@@ -202,16 +207,14 @@ public class PoolVacancies implements VacancyDAO {
 
 	@Override
 	public int closeVacancy(int vacancyID, String indexNumber, int choice) {
-		String sql = "UPDATE " + VacancyDAO.TABLE + " SET open = TRUE, applicant = '" + indexNumber + "', choice = "
-				+ choice + " WHERE id = " + vacancyID;
-		return dbHandler.update(sql);
+		String sql = "UPDATE " + VacancyDAO.TABLE + " SET open = TRUE, applicant = ?, choice = ? WHERE id = ?";
+		return dbHandler.update(sql, indexNumber, choice, vacancyID);
 	}
 
 	@Override
 	public int openVacancy(int vacancyID) {
-		String sql = "UPDATE " + VacancyDAO.TABLE + " SET open = FALSE, applicant = NULL, choice = NULL WHERE id = "
-				+ vacancyID;
-		return dbHandler.update(sql);
+		String sql = "UPDATE " + VacancyDAO.TABLE + " SET open = FALSE, applicant = NULL, choice = NULL WHERE id = ?";
+		return dbHandler.update(sql, vacancyID);
 	}
 
 	public String getApplicant(int vacancyID) {
@@ -242,9 +245,8 @@ public class PoolVacancies implements VacancyDAO {
 
 	@Override
 	public int changeApplicant(String newID, int vacancyID, int newChoice) {
-		String sql = "UPDATE " + VacancyDAO.TABLE + " SET applicant = '" + newID + "', choice = " + newChoice
-				+ " WHERE id = " + vacancyID;
-		return dbHandler.update(sql);
+		String sql = "UPDATE " + VacancyDAO.TABLE + " SET applicant = ?, choice = ? WHERE id = ?";
+		return dbHandler.update(sql, newID, newChoice, vacancyID);
 	}
 
 	@Override
@@ -264,8 +266,8 @@ public class PoolVacancies implements VacancyDAO {
 	@Override
 	public int deleteApplicantBinds(String indexNumber) {
 		String sql = "UPDATE " + VacancyDAO.TABLE
-				+ " SET applicant = NULL, choice = NULL, open = FALSE WHERE applicant = '" + indexNumber + "'";
-		return dbHandler.update(sql);
+				+ " SET applicant = NULL, choice = NULL, open = FALSE WHERE applicant = ?";
+		return dbHandler.update(sql, indexNumber);
 	}
 
 	@Override
@@ -289,10 +291,17 @@ public class PoolVacancies implements VacancyDAO {
 						info.setApplicant(rs.getString("applicant"));
 						info.setChoice(rs.getInt("choice"));
 						info.setOpen(rs.getBoolean("open"));
+						info.setAwarded(rs.getBoolean("awarded"));
 						info.convertPrefToList(criteria);
 						return info;
 					}
 				});
 		return list;
+	}
+
+	@Override
+	public int markAwarded(int vacancyID) {
+		String sql = "UPDATE " + VacancyDAO.TABLE + " SET awarded = TRUE WHERE id = ?";
+		return dbHandler.update(sql, vacancyID);
 	}
 }

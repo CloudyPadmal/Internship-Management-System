@@ -258,6 +258,9 @@ public class AdminController {
 	 ****************************************************************************************/
 	@RequestMapping(value = "/vacancy/accept/{vacancyID}", method = RequestMethod.POST)
 	public String acceptVacancy(Model model, RedirectAttributes redirects, @PathVariable("vacancyID") int vacancyID) {
+		// Mark as awarded in user table
+		poolApplicants.markAwarded(poolVacancies.getApplicant(vacancyID), vacancyID);
+		poolVacancies.markAwarded(vacancyID);
 		// Submit success message
 		redirects.addFlashAttribute("msg", "Approved!");
 		redirects.addFlashAttribute("css", "info");
@@ -268,10 +271,16 @@ public class AdminController {
 	 * This method will be called when the administrator rejects a vacancy.
 	 * When rejecting a vacancy,
 	 * 1. Remove choice from user table
-	 * 2. 
+	 * 2. Open vacancy
 	 ****************************************************************************************/
 	@RequestMapping(value = "/vacancy/reject/{vacancyID}", method = RequestMethod.POST)
 	public String rejectVacancy(Model model, RedirectAttributes redirects, @PathVariable("vacancyID") int vacancyID) {
+		// Fetch the vacancy
+		Vacancy vacancy = poolVacancies.fetchVacancy(vacancyID);
+		// Open the vacancy
+		poolVacancies.openVacancy(vacancyID);
+		// Remove choice from user
+		poolApplicants.removeChoice(vacancy.getApplicant(), vacancy.getChoice());
 		// Submit success message
 		redirects.addFlashAttribute("msg", "Rejected!");
 		redirects.addFlashAttribute("css", "danger");

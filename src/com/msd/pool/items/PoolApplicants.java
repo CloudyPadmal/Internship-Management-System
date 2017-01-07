@@ -31,17 +31,16 @@ public class PoolApplicants implements ApplicantDAO {
 				+ " (name, surname, gender, indexNumber, emailAddress, telephone, gradedPoint, aboutMe, ARDUINO, "
 				+ "FPGA, ROBOTICS, WIFI, ANTENNAS, NETWORKING, PROCESSORDESIGN, IMAGEPROCESSING, PROGRAMMING, AUTOMATION, "
 				+ "BIOMEDICAL, BIOMECHANICS, TELECOM, SEMICONDUCTORS, CIRCUITS, IOT, AI, SIGNALPROCESSING) "
-				+ "VALUES ('" + applicant.getName() + "', '" + applicant.getSurname() + "', '" + applicant.getGender()
-				+ "', '" + applicant.getIndexNumber() + "', '" + applicant.getEmailAddress() + "', '"
-				+ applicant.getTelephone() + "'," + applicant.getGradedPoint() + ", '" + applicant.getAboutMe() + "',"
-				+ criteria.isARDUINO() + "," + criteria.isFPGA() + "," + criteria.isROBOTICS() + "," + criteria.isWIFI()
-				+ "," + criteria.isANTENNAS() + "," + criteria.isNETWORKING() + "," + criteria.isPROCESSORDESIGN() + ","
-				+ criteria.isIMAGEPROCESSING() + "," + criteria.isPROGRAMMING() + "," + criteria.isAUTOMATION() + ","
-				+ criteria.isBIOMEDICAL() + "," + criteria.isBIOMECHANICS() + "," + criteria.isTELECOM() + ","
-				+ criteria.isSEMICONDUCTORS() + "," + criteria.isCIRCUITS() + "," + criteria.isIOT() + ","
-				+ criteria.isAI() + "," + criteria.isSIGNALPROCESSING() + ")";
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-		return dbHandler.update(sql);
+		return dbHandler.update(sql, applicant.getName(), applicant.getSurname(), applicant.getGender(),
+				applicant.getIndexNumber(), applicant.getEmailAddress(), applicant.getTelephone(),
+				applicant.getGradedPoint(), applicant.getAboutMe(), criteria.isARDUINO(), criteria.isFPGA(),
+				criteria.isROBOTICS(), criteria.isWIFI(), criteria.isANTENNAS(), criteria.isNETWORKING(),
+				criteria.isPROCESSORDESIGN(), criteria.isIMAGEPROCESSING(), criteria.isPROGRAMMING(),
+				criteria.isAUTOMATION(), criteria.isBIOMEDICAL(), criteria.isBIOMECHANICS(), criteria.isTELECOM(),
+				criteria.isSEMICONDUCTORS(), criteria.isCIRCUITS(), criteria.isIOT(), criteria.isAI(),
+				criteria.isSIGNALPROCESSING());
 	}
 
 	@Override
@@ -74,6 +73,8 @@ public class PoolApplicants implements ApplicantDAO {
 					info.setAppealStatus(rs.getBoolean("appealStatus"));
 					info.setName(rs.getString("name"));
 					info.setGender(rs.getString("gender"));
+					info.setAwarded(rs.getBoolean("awarded"));
+					info.setAwardedVacancy(rs.getInt("awardedVacancy"));
 					info.convertPrefToList(criteria);
 					return info;
 				}
@@ -90,23 +91,21 @@ public class PoolApplicants implements ApplicantDAO {
 
 	@Override
 	public int updateApplicant(Applicant newApplicant) {
-
 		PoolCriteria criteria = newApplicant.convertListToPref();
-		String sql = "UPDATE " + ApplicantDAO.TABLE + " SET name = '" + newApplicant.getName() + "', surname = '"
-				+ newApplicant.getSurname() + "', gender = '" + newApplicant.getGender() + "', emailAddress = '"
-				+ newApplicant.getEmailAddress() + "', telephone = '" + newApplicant.getTelephone()
-				+ "', gradedPoint = " + newApplicant.getGradedPoint() + ", aboutMe = '" + newApplicant.getAboutMe()
-				+ "', emailAddress = '" + newApplicant.getEmailAddress() + "', ARDUINO = " + criteria.isARDUINO()
-				+ ", FPGA = " + criteria.isFPGA() + ", ROBOTICS = " + criteria.isROBOTICS() + ", WIFI = "
-				+ criteria.isWIFI() + ", ANTENNAS = " + criteria.isANTENNAS() + ", NETWORKING = "
-				+ criteria.isNETWORKING() + ", PROCESSORDESIGN = " + criteria.isPROCESSORDESIGN()
-				+ ", IMAGEPROCESSING = " + criteria.isIMAGEPROCESSING() + ", PROGRAMMING = " + criteria.isPROGRAMMING()
-				+ ", AUTOMATION = " + criteria.isAUTOMATION() + ", BIOMEDICAL = " + criteria.isBIOMEDICAL()
-				+ ", BIOMECHANICS = " + criteria.isBIOMECHANICS() + ", TELECOM = " + criteria.isTELECOM()
-				+ ", SEMICONDUCTORS = " + criteria.isSEMICONDUCTORS() + ", CIRCUITS = " + criteria.isCIRCUITS()
-				+ ", IOT = " + criteria.isIOT() + ", AI = " + criteria.isAI() + ", SIGNALPROCESSING = "
-				+ criteria.isSIGNALPROCESSING() + " WHERE indexNumber = '" + newApplicant.getIndexNumber() + "'";
-		return dbHandler.update(sql);
+		String sql = "UPDATE " + ApplicantDAO.TABLE
+				+ " SET name = ?, surname = ?, gender = ?, emailAddress = ?, telephone = ?, gradedPoint = ?, "
+				+ "aboutMe = ?, emailAddress = ?, ARDUINO = ?, FPGA = ?, ROBOTICS = ?, WIFI = ?, ANTENNAS = ?, "
+				+ "NETWORKING = ?, PROCESSORDESIGN = ?, IMAGEPROCESSING = ?, PROGRAMMING = ?, AUTOMATION = ?, "
+				+ "BIOMEDICAL = ?, BIOMECHANICS = ?, TELECOM = ?, SEMICONDUCTORS = ?, CIRCUITS = ?, IOT = ?, "
+				+ "AI = ?, SIGNALPROCESSING = ? WHERE indexNumber = ?";
+		return dbHandler.update(sql, newApplicant.getName(), newApplicant.getSurname(), newApplicant.getGender(),
+				newApplicant.getEmailAddress(), newApplicant.getTelephone(), newApplicant.getGradedPoint(),
+				newApplicant.getAboutMe(), newApplicant.getEmailAddress(), criteria.isARDUINO(), criteria.isFPGA(),
+				criteria.isROBOTICS(), criteria.isWIFI(), criteria.isANTENNAS(), criteria.isNETWORKING(),
+				criteria.isPROCESSORDESIGN(), criteria.isIMAGEPROCESSING(), criteria.isPROGRAMMING(),
+				criteria.isAUTOMATION(), criteria.isBIOMEDICAL(), criteria.isBIOMECHANICS(), criteria.isTELECOM(),
+				criteria.isSEMICONDUCTORS(), criteria.isCIRCUITS(), criteria.isIOT(), criteria.isAI(),
+				criteria.isSIGNALPROCESSING(), newApplicant.getIndexNumber());
 	}
 
 	@Override
@@ -135,6 +134,8 @@ public class PoolApplicants implements ApplicantDAO {
 				info.setApplied3(rs.getBoolean("status_C"));
 				info.setAppeal(rs.getString("appeal"));
 				info.setAppealStatus(rs.getBoolean("appealStatus"));
+				info.setAwarded(rs.getBoolean("awarded"));
+				info.setAwardedVacancy(rs.getInt("awardedVacancy"));
 				info.convertPrefToList(criteria);
 				return info;
 			}
@@ -266,5 +267,12 @@ public class PoolApplicants implements ApplicantDAO {
 		String sql = "UPDATE " + ApplicantDAO.TABLE + " SET appeal = NULL, appealStatus = NULL WHERE indexNumber = '"
 				+ indexNumber + "'";
 		return dbHandler.update(sql);
+	}
+
+	@Override
+	public int markAwarded(String applicant, int vacancy) {
+		String sql = "UPDATE " + ApplicantDAO.TABLE + " SET awardedVacancy = ?, awarded = TRUE WHERE indexNumber = '"
+				+ applicant + "'";
+		return dbHandler.update(sql, vacancy);
 	}
 }
