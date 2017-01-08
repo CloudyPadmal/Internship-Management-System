@@ -150,6 +150,7 @@
 						element="label class='checkbox' id='register-boxes'" />
 					<br />
 					<form:errors path="preferences" class="control-label" />
+					<br />
 				</div>
 			</div>
 		</spring:bind>
@@ -164,6 +165,7 @@
 					</label> <label class="radio-inline"> <form:radiobutton
 							path="gender" value="F" />Female
 					</label>
+					<br />
 					<form:errors path="gender" class="control-label" />
 				</div>
 			</div>
