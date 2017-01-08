@@ -1,15 +1,19 @@
 package com.msd.pool.validators;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
-import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-import com.msd.items.Applicant;
 import com.msd.items.Company;
 
 @Component
 public class PoolCompanyValidator implements Validator {
+
+	private Pattern pattern;
+	private Matcher matcher;
 
 	@Override
 	public boolean supports(Class<?> c) {
@@ -18,31 +22,69 @@ public class PoolCompanyValidator implements Validator {
 	}
 
 	@Override
-	public void validate(Object subject, Errors err) {
+	public void validate(Object subject, Errors errors) {
 		// Cast subject into an Applicant
 		Company company = (Company) subject;
-		/*
 
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "NotEmpty.userForm.name");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "surname", "NotEmpty.userForm.surname");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "emailAddress", "NotEmpty.userForm.emailAddress");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "indexNumber", "NotEmpty.userForm.indexNumber");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "telephone", "NotEmpty.userForm.telephone");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "gradedPoint", "NotEmpty.userForm.gradedPoint");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "gender", "NotEmpty.userForm.gender");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "aboutMe", "NotEmpty.userForm.aboutMe");
-
-		if (user.getTelephone() == null || user.getTelephone().length() <= 0) {
-			errors.rejectValue("telephone", "Valid.userForm.telephone");
+		// company
+		if (company.getCompany().isEmpty()) {
+			errors.rejectValue("company", "NotEmpty.companyForm.name");
 		}
-
-		if (user.getPreferences() == null || user.getPreferences().size() < 3) {
-			errors.rejectValue("preferences", "Valid.userForm.preferences");
+		// loginID
+		try {
+			if (company.getLoginID().isEmpty()) {
+				errors.rejectValue("loginID", "NotEmpty.companyForm.loginID");
+			}
+		} catch (java.lang.NullPointerException e) {
+			// TODO: handle exception
 		}
-		
-		if (user.getIndexNumber().length() != 7) {
-			errors.rejectValue("indexNumber", "Valid.userForm.indexNumber");
+		// address
+		if (company.getAddress().isEmpty()) {
+			errors.rejectValue("address", "NotEmpty.companyForm.address");
 		}
-		*/
+		// emailAddress
+		if (company.getEmailAddress().isEmpty()) {
+			errors.rejectValue("emailAddress", "NotEmpty.companyForm.emailAddress");
+		} else if (!validate(company.getEmailAddress().toString())) {
+			errors.rejectValue("emailAddress", "Valid.companyForm.emailAddress");
+		}
+		// password
+		try {
+			if (company.getPassword().isEmpty()) {
+				errors.rejectValue("password", "NotEmpty.companyForm.password");
+			}
+		} catch (java.lang.NullPointerException e) {
+			// TODO: handle exception
+		}
+		// confirmPassword
+		try {
+			if (company.getConfirmPassword().isEmpty()) {
+				errors.rejectValue("confirmPassword", "NotEmpty.companyForm.confirmPassword");
+			}
+			if (!company.getPassword().equals(company.getConfirmPassword())) {
+				errors.rejectValue("confirmPassword", "Diff.companyForm.confirmPassword");
+			}
+		} catch (java.lang.NullPointerException e) {
+			// TODO: handle exception
+		}
+		// telephone
+		if (company.getTelephone().isEmpty()) {
+			errors.rejectValue("telephone", "NotEmpty.companyForm.telephone");
+		} else if (company.getTelephone().length() != 10) {
+			errors.rejectValue("telephone", "Valid.companyForm.telephone");
+		}
+		// aboutUs
+		if (company.getAboutUs().isEmpty()) {
+			errors.rejectValue("aboutUs", "NotEmpty.companyForm.aboutUs");
+		}
 	}
+
+	private boolean validate(final String hex) {
+		String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+				+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+		pattern = Pattern.compile(EMAIL_PATTERN);
+		matcher = pattern.matcher(hex);
+		return matcher.matches();
+	}
+
 }

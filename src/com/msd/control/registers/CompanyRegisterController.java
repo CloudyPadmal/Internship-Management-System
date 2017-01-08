@@ -65,6 +65,7 @@ public class CompanyRegisterController implements Preferences {
 	public String addsCompany(@ModelAttribute("companyForm") @Validated Company company, BindingResult result,
 			Model model, RedirectAttributes redirectAttributes) {
 		if (result.hasErrors() || company.isNotOK()) {
+			model.addAttribute("new_company", true);
 			return "logins/register_company";
 		} else {
 			// Pass success message to redirect view

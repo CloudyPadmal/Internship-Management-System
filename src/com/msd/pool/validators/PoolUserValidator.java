@@ -40,15 +40,23 @@ public class PoolUserValidator implements Validator {
 			errors.rejectValue("emailAddress", "Valid.userForm.emailAddress");
 		}
 		// Password
-		if (user.getPassword().isEmpty()) {
-			errors.rejectValue("password", "NotEmpty.userForm.password");
+		try {
+			if (user.getPassword().isEmpty()) {
+				errors.rejectValue("password", "NotEmpty.userForm.password");
+			}
+		} catch (NullPointerException e) {
+			// TODO: handle exception
 		}
 		// Confirm Password
-		if (user.getConfirmPassword().isEmpty()) {
-			errors.rejectValue("confirmPassword", "NotEmpty.userForm.confirmPassword");
-		}
-		if (!user.getPassword().equals(user.getConfirmPassword())) {
-			errors.rejectValue("confirmPassword", "Diff.userForm.confirmPassword");
+		try {
+			if (user.getConfirmPassword().isEmpty()) {
+				errors.rejectValue("confirmPassword", "NotEmpty.userForm.confirmPassword");
+			}
+			if (!user.getPassword().equals(user.getConfirmPassword())) {
+				errors.rejectValue("confirmPassword", "Diff.userForm.confirmPassword");
+			}
+		} catch (NullPointerException e) {
+			// TODO: handle exception
 		}
 		// Index Number
 		if (user.getIndexNumber().isEmpty()) {
@@ -64,7 +72,9 @@ public class PoolUserValidator implements Validator {
 		}
 		// GPA
 		try {
-			if (user.getGradedPoint() > 4.3 || user.getGradedPoint() < 1.0) {
+			if (!(user.getGradedPoint() instanceof Double)) {
+				errors.rejectValue("gradedPoint", "Diff.userForm.gradedPoint");
+			} else if (user.getGradedPoint() > 4.3 || user.getGradedPoint() < 1.0) {
 				errors.rejectValue("gradedPoint", "Diff.userForm.gradedPoint");
 			}
 		} catch (java.lang.NullPointerException e) {
