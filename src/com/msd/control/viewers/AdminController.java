@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.msd.items.Appeal;
 import com.msd.items.Applicant;
 import com.msd.items.Company;
 import com.msd.items.LoginInfo;
@@ -117,10 +118,13 @@ public class AdminController {
 
 	/*****************************************************************************************
 	 * This method will be called when a request is accepted. Once a request is
-	 * being accepted, 1. Remove current user from the vacancy table 2. Add new
-	 * user to the vacancy table 3. Remove choice from current user table 4.
-	 * Update choice for the new user 5. Update request status in new user table
-	 * 5. Update request status as attended
+	 * being accepted, 
+	 * 1. Remove current user from the vacancy table 
+	 * 2. Add new user to the vacancy table 
+	 * 3. Remove choice from current user table 
+	 * 4. Update choice for the new user 
+	 * 5. Update request status in new user table
+	 * 6. Update request status as attended
 	 ****************************************************************************************/
 	@RequestMapping(value = "/request/accept/{indexNumber}/{vacancyID}/{id}", method = RequestMethod.POST)
 	public String acceptRequests(Model model, RedirectAttributes redirects,
@@ -155,8 +159,9 @@ public class AdminController {
 
 	/*****************************************************************************************
 	 * This method will be called when a request is cancelled. When canceling a
-	 * request, 1. Remove the request status in user table 2. Update the request
-	 * status as attended
+	 * request, 
+	 * 1. Remove the request status in user table 
+	 * 2. Update the request status as attended
 	 ****************************************************************************************/
 	@RequestMapping(value = "/request/decline/{indexNumber}/{id}", method = RequestMethod.POST)
 	public String declineRequests(Model model, RedirectAttributes redirects,
@@ -185,8 +190,10 @@ public class AdminController {
 
 	/*****************************************************************************************
 	 * This method will be called when the administrator wants to delete a
-	 * company. When deleting a company, 1. Delete company from company table 2.
-	 * Delete company from password table 3. Delete vacancies from vacancy table
+	 * company. When deleting a company, 
+	 * 1. Delete company from company table 
+	 * 2. Delete company from password table 
+	 * 3. Delete vacancies from vacancy table
 	 * 4. Update choices for applicants
 	 ****************************************************************************************/
 	@RequestMapping(value = "/company/delete/{loginID}", method = RequestMethod.POST)
@@ -228,9 +235,11 @@ public class AdminController {
 
 	/*****************************************************************************************
 	 * This method will be called when the administrator wants to delete a user.
-	 * When deleting a user, 1. Delete user from user table 2. Delete passwords
-	 * from password table 3. Delete vacancy choices from vacancy table 4.
-	 * Delete requests from request table
+	 * When deleting a user, 
+	 * 1. Delete user from user table 
+	 * 2. Delete passwords from password table 
+	 * 3. Delete vacancy choices from vacancy table 
+	 * 4. Delete requests from request table
 	 ****************************************************************************************/
 	@RequestMapping(value = "/user/delete/{indexNumber}", method = RequestMethod.POST)
 	public String deleteUser(Model model, RedirectAttributes redirects,
@@ -292,9 +301,26 @@ public class AdminController {
 	 * When deleting a vacancy,
 	 * 1. Delete the vacancy from vacancy table
 	 * 2. Remove choices from user table
+	 * 3. Remove requests from request table
+	 * 4. Decrement company positions by one
 	 ****************************************************************************************/
 	@RequestMapping(value = "/vacancy/delete/{vacancyID}", method = RequestMethod.POST)
 	public String deleteVacancy(Model model, RedirectAttributes redirects, @PathVariable("vacancyID") int vacancyID) {
+		// Fetch the vacancy
+		Vacancy vacancy = poolVacancies.fetchVacancy(vacancyID);
+		// Remove choices from applicants
+		poolApplicants.removeChoice(vacancy.getApplicant(), vacancy.getChoice());
+		// Remove existing requests
+		List<Appeal> list = poolRequests.getAppeals(vacancy.getId());
+		for (Appeal appeal : list) {
+			// Delete existing requests
+			poolApplicants.deleteRequest(appeal.getIndexNumber());
+			poolRequests.deleteRequest(appeal.getId());
+		}
+		// Decrement position count
+		poolCompanies.decrementVacancyCount(vacancy.getCompanyID());
+		// Delete vacancy from vacancy table
+		poolVacancies.deleteVacancy(vacancyID);
 		// Submit success message
 		redirects.addFlashAttribute("msg", "Deleted!");
 		redirects.addFlashAttribute("css", "warning");

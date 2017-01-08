@@ -95,13 +95,13 @@
 					</div>
 					<div class="button col-md-2">
 						<br />
-						<c:if test="${not false}">
+						<c:if test="${not vacancy.awarded}">
 							<form:form action="/MSDProject/vacancy/delete/${vacancy.id}" method="POST">
 								<button type="submit" name="edit" value="edit"
 									class="btn btn-danger btn-lg">Delete Vacancy</button>
 							</form:form>
 						</c:if>
-						<c:if test="${not false}">
+						<c:if test="${not vacancy.awarded}">
 							<form:form action="/MSDProject/vacancy/update/${vacancy.id}" method="POST">
 								<button type="submit" name="update" value="edit"
 									class="btn btn-info btn-lg">Edit Vacancy</button>

@@ -257,22 +257,20 @@ public class PoolApplicants implements ApplicantDAO {
 
 	@Override
 	public int addRequest(String indexNumber, int vacancyID) {
-		String sql = "UPDATE " + ApplicantDAO.TABLE + " SET appeal = " + vacancyID + ", appealStatus = TRUE "
-				+ " WHERE indexNumber = '" + indexNumber + "'";
-		return dbHandler.update(sql);
+		String sql = "UPDATE " + ApplicantDAO.TABLE + " SET appeal = ?, appealStatus = TRUE "
+				+ " WHERE indexNumber = ?";
+		return dbHandler.update(sql, vacancyID, indexNumber);
 	}
 
 	@Override
 	public int deleteRequest(String indexNumber) {
-		String sql = "UPDATE " + ApplicantDAO.TABLE + " SET appeal = NULL, appealStatus = NULL WHERE indexNumber = '"
-				+ indexNumber + "'";
-		return dbHandler.update(sql);
+		String sql = "UPDATE " + ApplicantDAO.TABLE + " SET appeal = NULL, appealStatus = NULL WHERE indexNumber = ?";
+		return dbHandler.update(sql, indexNumber);
 	}
 
 	@Override
 	public int markAwarded(String applicant, int vacancy) {
-		String sql = "UPDATE " + ApplicantDAO.TABLE + " SET awardedVacancy = ?, awarded = TRUE WHERE indexNumber = '"
-				+ applicant + "'";
-		return dbHandler.update(sql, vacancy);
+		String sql = "UPDATE " + ApplicantDAO.TABLE + " SET awardedVacancy = ?, awarded = TRUE WHERE indexNumber = ?";
+		return dbHandler.update(sql, vacancy, applicant);
 	}
 }

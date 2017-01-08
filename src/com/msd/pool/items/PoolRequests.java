@@ -66,7 +66,7 @@ public class PoolRequests implements RequestDAO {
 
 	@Override
 	public List<Appeal> getAllRequests() {
-		List<Appeal> list = dbHandler.query("SELECT * FROM " + RequestDAO.TABLE + " ORDER BY applicant ASC", new RowMapper<Appeal>() {
+		List<Appeal> list = dbHandler.query("SELECT * FROM " + RequestDAO.TABLE + " ORDER BY vacancy ASC", new RowMapper<Appeal>() {
 			public Appeal mapRow(ResultSet rs, int row) throws SQLException {
 				Appeal info = new Appeal(rs.getInt("request_id"), rs.getInt("vacancy"), rs.getString("applicant"),
 						rs.getBoolean("attended"));
@@ -90,5 +90,21 @@ public class PoolRequests implements RequestDAO {
 	public int deleteRequestsByUser(String indexNumber) {
 		String sql = "DELETE FROM " + RequestDAO.TABLE + " WHERE applicant = ?";
 		return dbHandler.update(sql, indexNumber);
+	}
+
+	@Override
+	public List<Appeal> getAppeals(int id) {
+		List<Appeal> list = dbHandler.query("SELECT * FROM " + RequestDAO.TABLE + " WHERE vacancy = " + id + " ORDER BY applicant ASC", new RowMapper<Appeal>() {
+			public Appeal mapRow(ResultSet rs, int row) throws SQLException {
+				Appeal info = new Appeal(rs.getInt("request_id"), rs.getInt("vacancy"), rs.getString("applicant"),
+						rs.getBoolean("attended"));
+				info.setGradedPoint(rs.getDouble("gradedPoint"));
+				info.setCurrentGradedPoint(rs.getDouble("currentGradedPoint"));
+				info.setCurrentNumber(rs.getString("currentApplicant"));
+				info.setVacancyName(rs.getString("vacancyName"));
+				return info;
+			}
+		});
+		return list;
 	}
 }

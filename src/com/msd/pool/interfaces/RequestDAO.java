@@ -25,4 +25,7 @@ public interface RequestDAO {
 
 	// Remove requests by a user
 	public int deleteRequestsByUser(String indexNumber);
+
+	// List out requests for a vacancy
+	public List<Appeal> getAppeals(int id);
 }
