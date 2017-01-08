@@ -1,7 +1,5 @@
 package com.msd.items;
 
-import com.sun.org.apache.xml.internal.security.utils.Base64;
-
 public final class LoginInfo {
 
 	private String username;
@@ -23,13 +21,15 @@ public final class LoginInfo {
 
 	public String getencodedPassword() {
 		// Creates a base 64 encoded password
-		return Base64.encode(password.getBytes());
+		//return Base64.encode(password.getBytes());
+		return this.password;
 	}
 
 	public String decodePassword(String password) {
 		// Decodes the encrypted password
 		try {
-			return new String(Base64.decode(password), "UTF-8");
+			//return new String(Base64.decode(password), "UTF-8");
+			return this.password;
 		} catch (Exception e) {
 			return null;
 		}
