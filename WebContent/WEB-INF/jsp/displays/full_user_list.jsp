@@ -51,12 +51,12 @@
 					<td>
 						<form type="submit"
 							action="user/view/${user.indexNumber}"
-							method="POST">
+							method="POST" class="button">
 							<button class="btn btn-info">Query</button>
 						</form>
 						<form type="submit"
 							action="user/delete/${user.indexNumber}"
-							method="POST">
+							method="POST" class="button">
 							<button class="btn btn-danger">Delete</button>
 						</form>
 					</td>

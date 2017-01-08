@@ -49,7 +49,7 @@
 						<form type="submit"
 							action="company/delete/${company.loginID}" method="POST" class="button">
 							<button class="btn btn-danger">Delete</button>
-						</form>
+						</form></td>
 				</tr>
 			</c:forEach>
 		</table>

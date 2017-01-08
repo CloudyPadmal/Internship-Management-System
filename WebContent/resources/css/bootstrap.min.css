@@ -9819,6 +9819,10 @@ button.close {
 	margin: 0px;
 }
 
+.user-list .button {
+	margin: 0px;
+}
+
 .user-list #description {
 	max-width: 200px;
 }

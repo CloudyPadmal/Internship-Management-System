@@ -183,9 +183,10 @@ public class AdminController {
 	public String viewCompany(Model model, RedirectAttributes redirects, @PathVariable("loginID") String loginID) {
 		// Get the new applicant and current applicant
 		Company company = poolCompanies.fetchCompany(loginID);
-		redirects.addFlashAttribute("msg", "Company " + company.getCompany());
-		redirects.addFlashAttribute("css", "info");
-		return "redirect:/admin/view_companies";
+		List<Vacancy> list = poolVacancies.getCompanyVacancies(loginID);
+		model.addAttribute("company", company);
+		model.addAttribute("vacancies", list);
+		return "displays/admin_show_company";
 	}
 
 	/*****************************************************************************************
@@ -230,7 +231,7 @@ public class AdminController {
 		model.addAttribute("vacancies", list);
 		redirects.addFlashAttribute("msg", "Applicant " + indexNumber + " with " + list.size() + " vacancies!");
 		redirects.addFlashAttribute("css", "info");
-		return "redirect:/admin/view_users";
+		return "displays/admin_show_user";
 	}
 
 	/*****************************************************************************************
