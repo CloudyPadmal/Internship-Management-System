@@ -3,7 +3,6 @@ package com.msd.pool.interfaces;
 import java.util.List;
 
 import com.msd.items.Applicant;
-import com.msd.items.LoginInfo;
 import com.msd.pool.items.PoolCriteria;
 
 public interface ApplicantDAO {

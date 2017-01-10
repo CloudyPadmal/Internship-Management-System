@@ -4,11 +4,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.msd.items.LoginInfo;
 import com.msd.pool.interfaces.PasswordDAO;
@@ -17,6 +19,8 @@ public class PoolPasswords implements PasswordDAO {
 
 	// Create a database handler
 	JdbcTemplate dbHandler;
+
+	private @Autowired PasswordEncoder passwordEncoder;
 
 	// Setter for handler
 	public void setdbHandler(JdbcTemplate dbHandler) {
@@ -27,7 +31,8 @@ public class PoolPasswords implements PasswordDAO {
 	public int addPassword(LoginInfo info) {
 		String sql = "INSERT INTO " + PasswordDAO.TABLE + " (username, password, user_type) " + "VALUES (?, ?, ?)";
 		try {
-			return dbHandler.update(sql, info.getUsername(), info.getencodedPassword(), info.isCompany());
+			return dbHandler.update(sql, info.getUsername(), passwordEncoder.encode(info.getPassword()),
+					info.getUserType());
 		} catch (org.springframework.dao.DuplicateKeyException e) {
 			return 0;
 		}
@@ -77,7 +82,7 @@ public class PoolPasswords implements PasswordDAO {
 	@Override
 	public int updatePassword(LoginInfo info) {
 		String sql = "UPDATE " + PasswordDAO.TABLE + " SET password = ? WHERE username = ?";
-		return dbHandler.update(sql, info.getUsername(), info.getencodedPassword());
+		return dbHandler.update(sql, info.getUsername(), passwordEncoder.encode(info.getPassword()));
 	}
 
 	@Override
@@ -101,11 +106,10 @@ public class PoolPasswords implements PasswordDAO {
 		if (originalData == null) {
 			return false;
 		}
-		// Decode both passwords
-		String decodedPW = originalData.decodePassword(originalData.getPassword());
-		String typedPW = typedData.getPassword();
+
 		// Check if the passwords are correct as well as the user types
-		return decodedPW.equals(typedPW) && (originalData.isCompany() == typedData.isCompany());
+		return passwordEncoder.matches(typedData.getPassword(), originalData.getPassword())
+				&& (originalData.isCompany() == typedData.isCompany());
 	}
 
 	// Validate admin passwords
@@ -118,10 +122,10 @@ public class PoolPasswords implements PasswordDAO {
 			return false;
 		}
 		// Decode both passwords
-		String adminPW = originalData.decodePassword(originalData.getPassword());
+		String adminPW = originalData.getPassword();
 		String typedPW = typedData.getPassword();
 		// Check if the passwords are correct as well as the user types
-		return adminPW.equals(typedPW);
+		return passwordEncoder.matches(originalData.getPassword(), typedData.getPassword());
 	}
 
 	@Override
@@ -135,5 +139,13 @@ public class PoolPasswords implements PasswordDAO {
 					}
 				});
 		return list;
+	}
+
+	public PasswordEncoder getPasswordEncoder() {
+		return passwordEncoder;
+	}
+
+	public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+		this.passwordEncoder = passwordEncoder;
 	}
 }

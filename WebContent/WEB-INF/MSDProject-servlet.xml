@@ -21,16 +21,16 @@
 
 	<!-- Create a database first -->
 
-	<bean id="connector"
+	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url" value="jdbc:mysql://localhost:3306/testdbMSD?useSSL=false" />
 		<property name="username" value="root" />
-		<property name="password" value="root" />
+		<property name="password" value="admin" />
 	</bean>
 
 	<bean id="dbTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-		<property name="dataSource" ref="connector" />
+		<property name="dataSource" ref="dataSource" />
 	</bean>
 
 	<bean id="poolPW" class="com.msd.pool.items.PoolPasswords">
@@ -61,7 +61,11 @@
 		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
 		<property name="basename" value="/WEB-INF/messages/messages" />
 	</bean>
+	
+	<bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+	</bean>
 
 	<mvc:resources mapping="/resources/**" location="/resources/" />
 	<mvc:annotation-driven />
+	<import resource="spring-security.xml" />
 </beans>

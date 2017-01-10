@@ -3,6 +3,11 @@ package com.msd.control.viewers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -36,6 +41,7 @@ public class UserController {
 	PoolCompanies poolCompanies;
 	@Autowired
 	PoolRequests poolRequests;
+	private @Autowired AuthenticationManager authenticationManager;
 
 	/*****************************************************************************************
 	 * This method will be called when a user clicks LOG IN with user login ID
@@ -46,11 +52,14 @@ public class UserController {
 	 ****************************************************************************************/
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String logUserIn(@ModelAttribute("info") LoginInfo info, ModelMap model, RedirectAttributes redirects) {
-		if (poolPW.matchThisAndThat(info)) {
+		try{
+			Authentication request = new UsernamePasswordAuthenticationToken(info.getUsername(), info.getPassword());
+			Authentication result = authenticationManager.authenticate(request);
+			SecurityContextHolder.getContext().setAuthentication(result);
 			redirects.addFlashAttribute("msg", "Logged in successfully!");
 			redirects.addFlashAttribute("css", "info");
 			return "redirect:/user/view/" + info.getUsername();
-		} else {
+		}catch (AuthenticationException ex) {
 			redirects.addFlashAttribute("msg", "Username or Password is wrong!");
 			redirects.addFlashAttribute("css", "danger");
 			return "redirect:/user_login";

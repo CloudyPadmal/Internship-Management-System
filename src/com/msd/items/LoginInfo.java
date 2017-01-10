@@ -1,6 +1,7 @@
 package com.msd.items;
 
-import com.sun.org.apache.xml.internal.security.utils.Base64;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 public final class LoginInfo {
 
@@ -19,20 +20,6 @@ public final class LoginInfo {
 		this.username = username;
 		this.password = password;
 		this.company = company;
-	}
-
-	public String getencodedPassword() {
-		// Creates a base 64 encoded password
-		return Base64.encode(password.getBytes());
-	}
-
-	public String decodePassword(String password) {
-		// Decodes the encrypted password
-		try {
-			return new String(Base64.decode(password), "UTF-8");
-		} catch (Exception e) {
-			return null;
-		}
 	}
 
 	public String getUsername() {
@@ -57,5 +44,9 @@ public final class LoginInfo {
 
 	public void setCompany(boolean company) {
 		this.company = company;
+	}
+	
+	public String getUserType(){
+		return company ? UserType.ROLE_COMPANY.toString() : UserType.ROLE_USER.toString();
 	}
 }
