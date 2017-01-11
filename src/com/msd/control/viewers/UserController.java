@@ -76,6 +76,8 @@ public class UserController {
 	public String userHomePage(Model model, @PathVariable("indexNumber") String indexNumber,
 			RedirectAttributes redirects) {
 		// Fetch the applicant
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		System.out.println(auth);
 		Applicant user = poolApplicants.fetchApplicant(indexNumber);
 		model.addAttribute("user", user);
 		// If the user got a chance already, show the congratulation message
