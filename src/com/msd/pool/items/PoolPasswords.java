@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
@@ -63,12 +62,23 @@ public class PoolPasswords implements PasswordDAO {
 
 	@Override
 	public LoginInfo fetchAdmin(String username) {
-		String sql = "SELECT * FROM " + PasswordDAO.ADMIN + " WHERE username = ?";
 		try {
-			LoginInfo info = dbHandler.queryForObject(sql, new Object[] { username },
-					new BeanPropertyRowMapper<LoginInfo>(LoginInfo.class));
-			return info;
+			String sql = "SELECT * FROM " + PasswordDAO.ADMIN + " WHERE username = '" + username + "'";
+			return dbHandler.query(sql, new ResultSetExtractor<LoginInfo>() {
+				@Override
+				public LoginInfo extractData(ResultSet rs) throws SQLException, DataAccessException {
+					if (rs.next()) {
+						// Create a new applicant and a criteria
+						LoginInfo info = new LoginInfo(rs.getString("username"), rs.getString("password"),
+								rs.getBoolean("user_type"));
+						return info;
+					}
+					return null;
+				}
+			});
 		} catch (org.springframework.dao.EmptyResultDataAccessException e) {
+			return null;
+		} catch (org.springframework.dao.IncorrectResultSizeDataAccessException n) {
 			return null;
 		}
 	}
@@ -101,12 +111,10 @@ public class PoolPasswords implements PasswordDAO {
 	public boolean matchThisAndThat(LoginInfo typedData) {
 		// Fetch data in the password table
 		LoginInfo originalData = fetchUser(typedData.getUsername());
-		// If there are no matching password or no account, data will be passed
-		// null
+		// If there are no matching password or no account, data will be null
 		if (originalData == null) {
 			return false;
 		}
-
 		// Check if the passwords are correct as well as the user types
 		return passwordEncoder.matches(typedData.getPassword(), originalData.getPassword())
 				&& (originalData.isCompany() == typedData.isCompany());
@@ -116,16 +124,12 @@ public class PoolPasswords implements PasswordDAO {
 	public boolean matchThisAndAdmin(LoginInfo typedData) {
 		// Fetch data from the admin password table
 		LoginInfo originalData = fetchAdmin(typedData.getUsername());
-		// If there are no matching password or no account, data will be passed
-		// null
+		// If there are no matching password or no account, data will be null
 		if (originalData == null) {
 			return false;
 		}
-		// Decode both passwords
-		String adminPW = originalData.getPassword();
-		String typedPW = typedData.getPassword();
-		// Check if the passwords are correct as well as the user types
-		return passwordEncoder.matches(originalData.getPassword(), typedData.getPassword());
+		// Check if the passwords are correct
+		return passwordEncoder.matches(typedData.getPassword(), originalData.getPassword());
 	}
 
 	@Override

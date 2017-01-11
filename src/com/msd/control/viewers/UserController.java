@@ -52,14 +52,16 @@ public class UserController {
 	 ****************************************************************************************/
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String logUserIn(@ModelAttribute("info") LoginInfo info, ModelMap model, RedirectAttributes redirects) {
-		try{
+		try {
+			boolean a = poolPW.matchThisAndThat(info);
+			System.out.println(a);
 			Authentication request = new UsernamePasswordAuthenticationToken(info.getUsername(), info.getPassword());
 			Authentication result = authenticationManager.authenticate(request);
 			SecurityContextHolder.getContext().setAuthentication(result);
 			redirects.addFlashAttribute("msg", "Logged in successfully!");
 			redirects.addFlashAttribute("css", "info");
 			return "redirect:/user/view/" + info.getUsername();
-		}catch (AuthenticationException ex) {
+		} catch (AuthenticationException ex) {
 			redirects.addFlashAttribute("msg", "Username or Password is wrong!");
 			redirects.addFlashAttribute("css", "danger");
 			return "redirect:/user_login";

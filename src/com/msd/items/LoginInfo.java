@@ -1,8 +1,5 @@
 package com.msd.items;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
 public final class LoginInfo {
 
 	private String username;
