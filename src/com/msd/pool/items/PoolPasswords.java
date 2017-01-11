@@ -152,4 +152,14 @@ public class PoolPasswords implements PasswordDAO {
 	public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
 		this.passwordEncoder = passwordEncoder;
 	}
+
+	public int makeActive(String username) {
+		String sql = "UPDATE " + PasswordDAO.TABLE + " SET active = TRUE WHERE username = ?";
+		return dbHandler.update(sql, username);		
+	}
+	
+	public int makeInactive(String username) {
+		String sql = "UPDATE " + PasswordDAO.TABLE + " SET active = FALSE WHERE username = ?";
+		return dbHandler.update(sql, username);		
+	}
 }

@@ -3,7 +3,6 @@ package com.msd.pool.validators;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import com.msd.items.Applicant;
 import com.msd.items.Vacancy;
 
 public class PoolVacancyValidator implements Validator {
@@ -16,7 +15,7 @@ public class PoolVacancyValidator implements Validator {
 
 	@Override
 	public void validate(Object arg0, Errors errors) {
-		Vacancy vacancy = (Vacancy) arg0;
+		//Vacancy vacancy = (Vacancy) arg0;
 		/*
 		 * // User name if (user.getName().isEmpty()) {
 		 * errors.rejectValue("name", "NotEmpty.userForm.name"); } // Surname if

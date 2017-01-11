@@ -53,8 +53,7 @@ public class UserController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String logUserIn(@ModelAttribute("info") LoginInfo info, ModelMap model, RedirectAttributes redirects) {
 		try {
-			boolean a = poolPW.matchThisAndThat(info);
-			System.out.println(a);
+			poolPW.makeActive(info.getUsername());
 			Authentication request = new UsernamePasswordAuthenticationToken(info.getUsername(), info.getPassword());
 			Authentication result = authenticationManager.authenticate(request);
 			SecurityContextHolder.getContext().setAuthentication(result);
@@ -62,6 +61,7 @@ public class UserController {
 			redirects.addFlashAttribute("css", "info");
 			return "redirect:/user/view/" + info.getUsername();
 		} catch (AuthenticationException ex) {
+			System.out.println(ex.getMessage());
 			redirects.addFlashAttribute("msg", "Username or Password is wrong!");
 			redirects.addFlashAttribute("css", "danger");
 			return "redirect:/user_login";
@@ -78,7 +78,7 @@ public class UserController {
 		// Fetch the applicant
 		Applicant user = poolApplicants.fetchApplicant(indexNumber);
 		model.addAttribute("user", user);
-		// If the user got a chance already, show the congratualtion message
+		// If the user got a chance already, show the congratulation message
 		if (user.isAwarded()) {
 			Vacancy award = poolVacancies.fetchVacancy(user.getAwardedVacancy());
 			award.setCompanyName(poolCompanies.getCompanyName(award.getCompanyID()));
@@ -153,5 +153,16 @@ public class UserController {
 		redirects.addFlashAttribute("msg", "Request sent to administrator!");
 		redirects.addFlashAttribute("css", "info");
 		return "redirect:/user/view/" + indexNumber;
+	}
+	
+	@RequestMapping(value = "/logout/{indexNumber}", method = RequestMethod.POST)
+	public String logOut(Model model,
+			@PathVariable("indexNumber") String indexNumber, RedirectAttributes redirects) {
+		// Generate the request
+		poolPW.makeInactive(indexNumber);
+		// Pass the successful message to redirect
+		redirects.addFlashAttribute("msg", "Logged out!");
+		redirects.addFlashAttribute("css", "success");
+		return "redirect:/";
 	}
 }

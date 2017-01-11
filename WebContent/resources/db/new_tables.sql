@@ -2,6 +2,7 @@ CREATE TABLE IF NOT EXISTS password_table (
 	username VARCHAR(50) NOT NULL,
 	password VARCHAR(300) NOT NULL,
 	user_type VARCHAR(50) NOT NULL,
+	active BOOL,
 	PRIMARY KEY(username)
 );
 	
@@ -10,6 +11,7 @@ CREATE TABLE IF NOT EXISTS admin_table (
 	username VARCHAR(50) NOT NULL,
 	password VARCHAR(300) NOT NULL,
 	user_type VARCHAR(50) NOT NULL,
+	active BOOL,
 	PRIMARY KEY(id)
 );
 	

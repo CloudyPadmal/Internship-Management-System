@@ -67,5 +67,7 @@
 
 	<mvc:resources mapping="/resources/**" location="/resources/" />
 	<mvc:annotation-driven />
-	<import resource="spring-security.xml" />
+	
+	<import resource="MSDProject-security.xml" />
+	
 </beans>

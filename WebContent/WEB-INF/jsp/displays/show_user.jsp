@@ -13,7 +13,7 @@
 							method="POST">
 							<button type="submit" name="edit" value="edit" class="edit">Edit</button>
 						</form:form></li>
-					<li><form:form action="/MSDProject/" method="POST">
+					<li><form:form action="/MSDProject/user/logout/${user.indexNumber}" method="POST">
 							<button type="submit" name="edit" value="edit" class="edit">Logout</button>
 						</form:form></li>
 				</ul>

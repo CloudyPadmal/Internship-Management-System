@@ -11,8 +11,6 @@ import org.springframework.jdbc.core.RowMapper;
 
 import com.msd.items.Applicant;
 import com.msd.pool.interfaces.ApplicantDAO;
-import com.msd.pool.interfaces.CompanyDAO;
-import com.msd.pool.interfaces.VacancyDAO;
 
 public class PoolApplicants implements ApplicantDAO {
 

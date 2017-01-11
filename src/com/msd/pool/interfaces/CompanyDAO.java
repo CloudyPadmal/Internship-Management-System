@@ -2,7 +2,6 @@ package com.msd.pool.interfaces;
 
 import java.util.List;
 
-import com.msd.items.Applicant;
 import com.msd.items.Company;
 import com.msd.pool.items.PoolCriteria;
 
