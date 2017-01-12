@@ -156,10 +156,21 @@ public class UserController {
 		redirects.addFlashAttribute("css", "info");
 		return "redirect:/user/view/" + indexNumber;
 	}
-	
+
+	@RequestMapping(value = "/request/cancel/{indexNumber}", method = RequestMethod.POST)
+	public String cancelRequestedVacancy(Model model, @PathVariable("indexNumber") String indexNumber,
+			RedirectAttributes redirects) {
+		// Delete the request
+		poolApplicants.deleteRequest(indexNumber);
+		poolRequests.deleteRequestsByUser(indexNumber);
+		// Pass the successful message to redirect
+		redirects.addFlashAttribute("msg", "Request cancelled!");
+		redirects.addFlashAttribute("css", "info");
+		return "redirect:/user/view/" + indexNumber;
+	}
+
 	@RequestMapping(value = "/logout/{indexNumber}", method = RequestMethod.POST)
-	public String logOut(Model model,
-			@PathVariable("indexNumber") String indexNumber, RedirectAttributes redirects) {
+	public String logOut(Model model, @PathVariable("indexNumber") String indexNumber, RedirectAttributes redirects) {
 		// Generate the request
 		poolPW.makeInactive(indexNumber);
 		// Pass the successful message to redirect

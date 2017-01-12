@@ -13,7 +13,9 @@
 							method="POST">
 							<button type="submit" name="edit" value="edit" class="edit">Edit</button>
 						</form:form></li>
-					<li><form:form action="/MSDProject/user/logout/${user.indexNumber}" method="POST">
+					<li><form:form
+							action="/MSDProject/user/logout/${user.indexNumber}"
+							method="POST">
 							<button type="submit" name="edit" value="edit" class="edit">Logout</button>
 						</form:form></li>
 				</ul>
@@ -191,9 +193,22 @@
 											</c:when>
 
 											<c:otherwise>
-												<button type="submit" name="edit" value="edit"
-													class="btn btn-warning btn-lg">Someone applied for
-													it!</button>
+												<c:choose>
+													<c:when test="${user.appeal == vacancy.id}">
+														<form:form
+															action="/MSDProject/user/request/cancel/${user.indexNumber}"
+															method="POST">
+															<button type="submit" name="edit" value="edit"
+																class="btn btn-info btn-lg">Requested! Cancel it!!
+															</button>
+														</form:form>
+													</c:when>
+													<c:otherwise>
+														<button type="submit" name="edit" value="edit"
+															class="btn btn-warning btn-lg">Someone applied for it!
+														</button>
+													</c:otherwise>
+												</c:choose>
 												<c:if
 													test="${(not user.applied1) || (not user.applied2) || (not user.applied3)}">
 													<c:if test="${not user.appealStatus}">

@@ -255,14 +255,37 @@ public class PoolApplicants implements ApplicantDAO {
 
 	@Override
 	public int addRequest(String indexNumber, int vacancyID) {
-		String sql = "UPDATE " + ApplicantDAO.TABLE + " SET appeal = ?, appealStatus = TRUE "
-				+ " WHERE indexNumber = ?";
+		Applicant applicant = fetchApplicant(indexNumber);
+		String choice;
+		if (!applicant.isApplied1()) {
+			choice = ",status_A = TRUE, vacancy_A = 'req'";
+		} else if (!applicant.isApplied2()) {
+			choice = ",status_B = TRUE, vacancy_B = 'req'";
+		} else if (!applicant.isApplied3()) {
+			choice = ",status_C = TRUE, vacancy_C = 'req'";
+		} else {
+			choice = null;
+		}
+		String sql = "UPDATE " + ApplicantDAO.TABLE + " SET appeal = ?, appealStatus = TRUE"
+				+ choice + " WHERE indexNumber = ?";
 		return dbHandler.update(sql, vacancyID, indexNumber);
 	}
 
 	@Override
 	public int deleteRequest(String indexNumber) {
-		String sql = "UPDATE " + ApplicantDAO.TABLE + " SET appeal = NULL, appealStatus = NULL WHERE indexNumber = ?";
+		Applicant applicant = fetchApplicant(indexNumber);
+		String choice;
+		if (applicant.getVacancy1().equals("req")) {
+			choice = ",status_A = FALSE, vacancy_A = NULL";
+		} else if (applicant.getVacancy2().equals("req")) {
+			choice = ",status_B = FALSE, vacancy_B = NULL";
+		} else if (applicant.getVacancy3().equals("req")) {
+			choice = ",status_C = FALSE, vacancy_C = NULL";
+		} else {
+			choice = null;
+		}
+		String sql = "UPDATE " + ApplicantDAO.TABLE + " SET appeal = NULL, appealStatus = NULL"
+				+ choice + " WHERE indexNumber = ?";
 		return dbHandler.update(sql, indexNumber);
 	}
 
