@@ -78,6 +78,7 @@ public class UserController {
 		// Fetch the applicant
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		System.out.println(auth);
+		// {indexNumber} is not required, it can be fetch from auth.getName() which is the username. That can be used to fetc data for logged in user
 		Applicant user = poolApplicants.fetchApplicant(indexNumber);
 		model.addAttribute("user", user);
 		// If the user got a chance already, show the congratulation message
