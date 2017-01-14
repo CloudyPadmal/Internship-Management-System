@@ -59,6 +59,7 @@ public class UserController {
 			SecurityContextHolder.getContext().setAuthentication(result);
 			redirects.addFlashAttribute("msg", "Logged in successfully!");
 			redirects.addFlashAttribute("css", "info");
+			redirects.addFlashAttribute("user", info.getUsername());
 			return "redirect:/user/view/" + info.getUsername();
 		} catch (AuthenticationException ex) {
 			System.out.println(ex.getMessage());
@@ -79,6 +80,31 @@ public class UserController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		System.out.println(auth);
 		// {indexNumber} is not required, it can be fetch from auth.getName() which is the username. That can be used to fetc data for logged in user
+		/*try {
+			if (model.asMap().get("user").equals(indexNumber)) {
+				Applicant user = poolApplicants.fetchApplicant(indexNumber);
+				model.addAttribute("user", user);
+				// If the user got a chance already, show the congratulation message
+				if (user.isAwarded()) {
+					Vacancy award = poolVacancies.fetchVacancy(user.getAwardedVacancy());
+					award.setCompanyName(poolCompanies.getCompanyName(award.getCompanyID()));
+					model.addAttribute("congrats", award);
+				} else {
+					// Fetch the list of vacancies
+					List<Vacancy> vacancies = poolVacancies.getVacancies(user.convertListToPref());
+					for (Vacancy vacancy : vacancies) {
+						vacancy.setCompanyName(poolCompanies.getCompanyName(vacancy.getCompanyID()));
+					}
+					model.addAttribute("vacancies", vacancies);
+				}
+				return "displays/show_user";
+			} else {
+				return "redirect:/";
+			}
+		} catch (NullPointerException e) {
+			return "redirect:/";
+		}*/
+		
 		Applicant user = poolApplicants.fetchApplicant(indexNumber);
 		model.addAttribute("user", user);
 		// If the user got a chance already, show the congratulation message
@@ -114,6 +140,7 @@ public class UserController {
 		// Pass the successful message to redirect
 		redirects.addFlashAttribute("msg", "Application submitted succesfully!");
 		redirects.addFlashAttribute("css", "success");
+		redirects.addFlashAttribute("user", indexNumber);
 		return "redirect:/user/view/" + indexNumber;
 	}
 
@@ -133,6 +160,7 @@ public class UserController {
 		// Pass the successful message to redirect
 		redirects.addFlashAttribute("msg", "Application Cancelled!");
 		redirects.addFlashAttribute("css", "warning");
+		redirects.addFlashAttribute("user", indexNumber);
 		return "redirect:/user/view/" + indexNumber;
 	}
 
@@ -155,6 +183,7 @@ public class UserController {
 		// Pass the successful message to redirect
 		redirects.addFlashAttribute("msg", "Request sent to administrator!");
 		redirects.addFlashAttribute("css", "info");
+		redirects.addFlashAttribute("user", indexNumber);
 		return "redirect:/user/view/" + indexNumber;
 	}
 
@@ -167,6 +196,7 @@ public class UserController {
 		// Pass the successful message to redirect
 		redirects.addFlashAttribute("msg", "Request cancelled!");
 		redirects.addFlashAttribute("css", "info");
+		redirects.addFlashAttribute("user", indexNumber);
 		return "redirect:/user/view/" + indexNumber;
 	}
 

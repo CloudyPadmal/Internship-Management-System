@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.msd.items.LoginInfo;
+import com.msd.items.UserType;
 import com.msd.pool.interfaces.PasswordDAO;
 
 public class PoolPasswords implements PasswordDAO {
@@ -47,7 +48,7 @@ public class PoolPasswords implements PasswordDAO {
 					if (rs.next()) {
 						// Create a new applicant and a criteria
 						LoginInfo info = new LoginInfo(rs.getString("username"), rs.getString("password"),
-								rs.getBoolean("user_type"));
+								rs.getString("user_type").equals(UserType.ROLE_COMPANY.toString()));
 						return info;
 					}
 					return null;

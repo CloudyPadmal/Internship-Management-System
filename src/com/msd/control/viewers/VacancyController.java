@@ -111,6 +111,9 @@ public class VacancyController implements Preferences {
 			Model model, RedirectAttributes redirectAttributes) {
 		if (result.hasErrors()) {
 			model = generatePrefList(model);
+			// Notify that this is a new vacancy
+			model.addAttribute("status", true);
+			model.addAttribute("company", poolCompanies.getCompanyName(vacancy.getCompanyID()));
 			return "logins/new_vacancy";
 		} else {
 			// Pass success message to redirect view
@@ -133,6 +136,7 @@ public class VacancyController implements Preferences {
 			Model model, RedirectAttributes redirectAttributes) {
 		if (result.hasErrors()) {
 			model = generatePrefList(model);
+			model.addAttribute("company", poolCompanies.getCompanyName(vacancy.getCompanyID()));
 			return "logins/new_vacancy";
 		} else {
 			// Pass success message to redirect view

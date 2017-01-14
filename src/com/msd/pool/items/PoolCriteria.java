@@ -200,7 +200,7 @@ public class PoolCriteria implements Preferences {
 	 * @return WHERE clause for a database fetch
 	 */
 	public String getWhereQuery() {
-		String set = " = TRUE AND ";
+		String set = " = TRUE OR ";
 		StringBuilder sBuilder = new StringBuilder();
 		sBuilder.append(isAI() ? "AI" + set : "");
 		sBuilder.append(isANTENNAS() ? "ANTENNAS" + set : "");
@@ -223,7 +223,7 @@ public class PoolCriteria implements Preferences {
 		// Prepare the return statement
 		String rawQuery = sBuilder.toString();
 		if (rawQuery.contains(set)) {
-			rawQuery = " WHERE " + rawQuery.substring(0, rawQuery.length() - 5);
+			rawQuery = " WHERE " + rawQuery.substring(0, rawQuery.length() - 4);
 			return rawQuery;
 		} else {
 			return null;
