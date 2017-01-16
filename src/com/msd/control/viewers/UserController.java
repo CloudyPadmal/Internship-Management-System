@@ -2,12 +2,17 @@ package com.msd.control.viewers;
 
 import java.util.List;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -41,43 +46,20 @@ public class UserController {
 	PoolCompanies poolCompanies;
 	@Autowired
 	PoolRequests poolRequests;
-	private @Autowired AuthenticationManager authenticationManager;
-
-	/*****************************************************************************************
-	 * This method will be called when a user clicks LOG IN with user login ID
-	 * and password. The passed down values (user name, password) then will be
-	 * checked for validity with poolPW. If the credentials are invalid, view
-	 * will be redirected to the login page with a warning message. If they are
-	 * valid, it will be redirected to the user home page.
-	 ****************************************************************************************/
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String logUserIn(@ModelAttribute("info") LoginInfo info, ModelMap model, RedirectAttributes redirects) {
-		try {
-			poolPW.makeActive(info.getUsername());
-			Authentication request = new UsernamePasswordAuthenticationToken(info.getUsername(), info.getPassword());
-			Authentication result = authenticationManager.authenticate(request);
-			SecurityContextHolder.getContext().setAuthentication(result);
-			redirects.addFlashAttribute("msg", "Logged in successfully!");
-			redirects.addFlashAttribute("css", "info");
-			redirects.addFlashAttribute("user", info.getUsername());
-			return "redirect:/user/view/" + info.getUsername();
-		} catch (AuthenticationException ex) {
-			System.out.println(ex.getMessage());
-			redirects.addFlashAttribute("msg", "Username or Password is wrong!");
-			redirects.addFlashAttribute("css", "danger");
-			return "redirect:/user_login";
-		}
-	}
 
 	/*****************************************************************************************
 	 * This method will be the redirected method by POST methods related to
 	 * applicant. This will show the user page with user details and vacancies
+	 * @throws ServletException 
 	 ****************************************************************************************/
 	@RequestMapping(value = "/view/{indexNumber}", method = RequestMethod.GET)
 	public String userHomePage(Model model, @PathVariable("indexNumber") String indexNumber,
-			RedirectAttributes redirects) {
+			RedirectAttributes redirects) throws ServletException {
 		// Fetch the applicant
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if(auth == null || !auth.getName().equals(indexNumber)){
+			throw new ServletException("Unauthorised");
+		}
 		System.out.println(auth);
 		// {indexNumber} is not required, it can be fetch from auth.getName() which is the username. That can be used to fetc data for logged in user
 		/*try {
@@ -200,11 +182,17 @@ public class UserController {
 		return "redirect:/user/view/" + indexNumber;
 	}
 
-	@RequestMapping(value = "/logout/{indexNumber}", method = RequestMethod.POST)
-	public String logOut(Model model, @PathVariable("indexNumber") String indexNumber, RedirectAttributes redirects) {
-		// Generate the request
-		poolPW.makeInactive(indexNumber);
+	@RequestMapping(value = "/logout", method = RequestMethod.POST)
+	public String logOut(Model model, HttpServletRequest request, RedirectAttributes redirects) {
+		// Generate the request 
+		// Inactive means deactivate user completely, not during the session
+		//poolPW.makeInactive(indexNumber);
 		// Pass the successful message to redirect
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    if (auth != null){    
+	        new SecurityContextLogoutHandler().logout(request, null, auth);
+	    }
+		
 		redirects.addFlashAttribute("msg", "Logged out!");
 		redirects.addFlashAttribute("css", "success");
 		return "redirect:/";
