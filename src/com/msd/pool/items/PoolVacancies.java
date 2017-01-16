@@ -26,11 +26,11 @@ public class PoolVacancies implements VacancyDAO {
 	public int addVacancy(Vacancy vacancy) {
 		PoolCriteria criteria = vacancy.convertListToPref();
 		String sql = "INSERT INTO " + VacancyDAO.TABLE
-				+ " (company, salary, title, description_1, description_2, ARDUINO, "
+				+ " (company, companyName, salary, title, description_1, description_2, ARDUINO, "
 				+ "FPGA, ROBOTICS, WIFI, ANTENNAS, NETWORKING, PROCESSORDESIGN, IMAGEPROCESSING, PROGRAMMING, AUTOMATION, "
 				+ "BIOMEDICAL, BIOMECHANICS, TELECOM, SEMICONDUCTORS, CIRCUITS, IOT, AI, SIGNALPROCESSING) "
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-		return dbHandler.update(sql, vacancy.getCompanyID(), vacancy.getSalary(), vacancy.getTitle(),
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		return dbHandler.update(sql, vacancy.getCompanyID(), vacancy.getCompanyName(), vacancy.getSalary(), vacancy.getTitle(),
 				vacancy.getDescription_1(), vacancy.getDescription_2(), criteria.isARDUINO(), criteria.isFPGA(),
 				criteria.isROBOTICS(), criteria.isWIFI(), criteria.isANTENNAS(), criteria.isNETWORKING(),
 				criteria.isPROCESSORDESIGN(), criteria.isIMAGEPROCESSING(), criteria.isPROGRAMMING(),
@@ -47,8 +47,8 @@ public class PoolVacancies implements VacancyDAO {
 			public Vacancy extractData(ResultSet rs) throws SQLException, DataAccessException {
 				if (rs.next()) {
 					// Create a new vacancy and a criteria
-					Vacancy info = new Vacancy(rs.getString("title"), rs.getString("company"), rs.getInt("salary"),
-							rs.getString("description_1"), rs.getString("description_2"));
+					Vacancy info = new Vacancy(rs.getString("title"), rs.getString("company"), rs.getString("companyName"), 
+							rs.getInt("salary"), rs.getString("description_1"), rs.getString("description_2"));
 					PoolCriteria criteria = new PoolCriteria(rs.getBoolean("ARDUINO"), rs.getBoolean("FPGA"),
 							rs.getBoolean("ROBOTICS"), rs.getBoolean("WIFI"), rs.getBoolean("ANTENNAS"),
 							rs.getBoolean("NETWORKING"), rs.getBoolean("PROCESSORDESIGN"),
@@ -99,8 +99,8 @@ public class PoolVacancies implements VacancyDAO {
 		List<Vacancy> list = dbHandler.query("SELECT * FROM " + VacancyDAO.TABLE, new RowMapper<Vacancy>() {
 			public Vacancy mapRow(ResultSet rs, int row) throws SQLException {
 				// Create a new vacancy and a criteria
-				Vacancy info = new Vacancy(rs.getString("title"), rs.getString("company"), rs.getInt("salary"),
-						rs.getString("description_1"), rs.getString("description_2"));
+				Vacancy info = new Vacancy(rs.getString("title"), rs.getString("company"), rs.getString("companyName"), 
+						rs.getInt("salary"), rs.getString("description_1"), rs.getString("description_2"));
 				PoolCriteria criteria = new PoolCriteria(rs.getBoolean("ARDUINO"), rs.getBoolean("FPGA"),
 						rs.getBoolean("ROBOTICS"), rs.getBoolean("WIFI"), rs.getBoolean("ANTENNAS"),
 						rs.getBoolean("NETWORKING"), rs.getBoolean("PROCESSORDESIGN"), rs.getBoolean("IMAGEPROCESSING"),
@@ -127,8 +127,8 @@ public class PoolVacancies implements VacancyDAO {
 				new RowMapper<Vacancy>() {
 					public Vacancy mapRow(ResultSet rs, int row) throws SQLException {
 						// Create a new vacancy and a criteria
-						Vacancy info = new Vacancy(rs.getString("title"), rs.getString("company"), rs.getInt("salary"),
-								rs.getString("description_1"), rs.getString("description_2"));
+						Vacancy info = new Vacancy(rs.getString("title"), rs.getString("company"), rs.getString("companyName"), 
+								rs.getInt("salary"), rs.getString("description_1"), rs.getString("description_2"));
 						PoolCriteria criteria = new PoolCriteria(rs.getBoolean("ARDUINO"), rs.getBoolean("FPGA"),
 								rs.getBoolean("ROBOTICS"), rs.getBoolean("WIFI"), rs.getBoolean("ANTENNAS"),
 								rs.getBoolean("NETWORKING"), rs.getBoolean("PROCESSORDESIGN"),
@@ -155,8 +155,8 @@ public class PoolVacancies implements VacancyDAO {
 				new RowMapper<Vacancy>() {
 					public Vacancy mapRow(ResultSet rs, int row) throws SQLException {
 						// Create a new vacancy and a criteria
-						Vacancy info = new Vacancy(rs.getString("title"), rs.getString("company"), rs.getInt("salary"),
-								rs.getString("description_1"), rs.getString("description_2"));
+						Vacancy info = new Vacancy(rs.getString("title"), rs.getString("company"), rs.getString("companyName"), 
+								rs.getInt("salary"), rs.getString("description_1"), rs.getString("description_2"));
 						PoolCriteria criteria = new PoolCriteria(rs.getBoolean("ARDUINO"), rs.getBoolean("FPGA"),
 								rs.getBoolean("ROBOTICS"), rs.getBoolean("WIFI"), rs.getBoolean("ANTENNAS"),
 								rs.getBoolean("NETWORKING"), rs.getBoolean("PROCESSORDESIGN"),
@@ -217,6 +217,7 @@ public class PoolVacancies implements VacancyDAO {
 		return dbHandler.update(sql, vacancyID);
 	}
 
+	@Override
 	public String getApplicant(int vacancyID) {
 		String sql = "SELECT applicant FROM " + VacancyDAO.TABLE + " WHERE id = '" + vacancyID + "'";
 		return dbHandler.query(sql, new ResultSetExtractor<String>() {
@@ -277,8 +278,8 @@ public class PoolVacancies implements VacancyDAO {
 				new RowMapper<Vacancy>() {
 					public Vacancy mapRow(ResultSet rs, int row) throws SQLException {
 						// Create a new vacancy and a criteria
-						Vacancy info = new Vacancy(rs.getString("title"), rs.getString("company"), rs.getInt("salary"),
-								rs.getString("description_1"), rs.getString("description_2"));
+						Vacancy info = new Vacancy(rs.getString("title"), rs.getString("company"), rs.getString("companyName"), 
+								rs.getInt("salary"), rs.getString("description_1"), rs.getString("description_2"));
 						PoolCriteria criteria = new PoolCriteria(rs.getBoolean("ARDUINO"), rs.getBoolean("FPGA"),
 								rs.getBoolean("ROBOTICS"), rs.getBoolean("WIFI"), rs.getBoolean("ANTENNAS"),
 								rs.getBoolean("NETWORKING"), rs.getBoolean("PROCESSORDESIGN"),

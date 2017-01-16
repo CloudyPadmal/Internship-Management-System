@@ -2,56 +2,30 @@ package com.msd.control.viewers;
 
 import java.util.List;
 
+import javax.servlet.ServletException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.msd.items.Company;
-import com.msd.items.LoginInfo;
 import com.msd.items.Vacancy;
 import com.msd.pool.interfaces.Preferences;
 import com.msd.pool.items.PoolCompanies;
-import com.msd.pool.items.PoolPasswords;
 import com.msd.pool.items.PoolVacancies;
 
 @Controller
 @RequestMapping("company")
 public class CompanyController implements Preferences {
 
-	@Autowired
-	PoolPasswords poolPW;
-	@Autowired
-	PoolCompanies poolCompanies;
-	@Autowired
-	PoolVacancies poolVacancies;
-
-	/*****************************************************************************************
-	 * This method will be called when a company clicks LOG IN with company
-	 * login ID and password. The passed down values (user name, password) then
-	 * will be checked for validity with poolPW. If the credentials are invalid,
-	 * view will be redirected to the login page with a warning message. If they
-	 * are valid, it will be redirected to the company home page.
-	 ****************************************************************************************/
-	@RequestMapping(value = "/login", method = RequestMethod.POST, params = "login")
-	private String companyLogin(LoginInfo info, ModelMap model, RedirectAttributes redirects) {
-		if (poolPW.matchThisAndThat(info)) {
-			// Password and the credentials are matching. Load company details
-			redirects.addFlashAttribute("msg", "Logged in successfully!");
-			redirects.addFlashAttribute("css", "info");
-			return "redirect:/company/view/" + info.getUsername();
-		} else {
-			// Password and credentials don't match. Redirect to login page.
-			redirects.addFlashAttribute("msg", "Company or Password is wrong!");
-			redirects.addFlashAttribute("css", "danger");
-			return "redirect:/company_login";
-		}
-	}
-	
+	private @Autowired PoolCompanies poolCompanies;
+	private @Autowired PoolVacancies poolVacancies;
 	
 	/*****************************************************************************************
 	 * This method will be the redirected method by POST methods related to
@@ -59,7 +33,12 @@ public class CompanyController implements Preferences {
 	 ****************************************************************************************/
 	@RequestMapping(value = "/view/{loginID}", method = RequestMethod.GET)
 	public String companyHomePage(Model model, @PathVariable("loginID") String loginID,
-			RedirectAttributes redirects) {
+			RedirectAttributes redirects) throws ServletException {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();				
+		if (auth == null || !auth.getName().equals(loginID)) {
+			throw new ServletException("Unauthorised");
+		}
+		// Fetch the applicant
 		Company company = poolCompanies.fetchCompany(loginID);
 		if (company == null) {
 			// Password and credentials don't match. Redirect to login page.
@@ -70,9 +49,6 @@ public class CompanyController implements Preferences {
 		}
 		// Load a list of vacancies posted by the company
 		List<Vacancy> listOfVacancies = poolVacancies.getCompanyVacancies(company.getLoginID());
-		for (Vacancy vacancy : listOfVacancies) {
-			vacancy.setCompanyName(poolCompanies.getCompanyName(vacancy.getCompanyID()));
-		}
 		// Add the company under "company"
 		model.addAttribute("company", company);
 		model.addAttribute("vacancies", listOfVacancies);

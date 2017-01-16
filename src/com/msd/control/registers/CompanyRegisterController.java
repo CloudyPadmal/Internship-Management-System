@@ -70,13 +70,13 @@ public class CompanyRegisterController implements Preferences {
 		} else {
 			// Pass success message to redirect view
 			redirectAttributes.addFlashAttribute("css", "success");
-			redirectAttributes.addFlashAttribute("msg", "Welcome " + company.getCompany());
+			redirectAttributes.addFlashAttribute("msg", company.getCompany() + " added successfully");
 			// Add company to the company table
 			poolCompanies.addCompany(company);
 			// Add password of the company to the password table
 			poolPW.addPassword(new LoginInfo(company.getLoginID(), company.getPassword(), true));
 			// Display Company details
-			return "redirect:/company/view/" + company.getLoginID();
+			return "redirect:/";
 		}
 	}
 

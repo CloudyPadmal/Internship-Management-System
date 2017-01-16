@@ -14,7 +14,7 @@
 							<button type="submit" name="edit" value="edit" class="edit">Edit</button>
 						</form:form></li>
 					<li><form:form
-							action="/MSDProject/user/logout"
+							action="/MSDProject/logout"
 							method="POST">
 							<button type="submit" name="edit" value="edit" class="edit">Logout</button>
 						</form:form></li>

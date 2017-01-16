@@ -7,6 +7,18 @@
 
 	<http auto-config='true'>
 		<intercept-url pattern="/user/**" access="hasRole('ROLE_USER')" />
+		
+		<intercept-url pattern="/company/**" access="hasRole('ROLE_COMPANY')" />
+		
+		<intercept-url pattern="/admin/view_users" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/admin/view_companies" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/admin/view_requests" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/admin/view_vacancies" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/admin/user/**" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/admin/request/**" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/admin/company/**" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/admin/vacancy/**" access="hasRole('ROLE_ADMIN')" />
+		
 		<intercept-url pattern="/images/**" access="permitAll" />
 		<intercept-url pattern="/css/**" access="permitAll" />
 		<intercept-url pattern="/js/**" access="permitAll" />
@@ -19,7 +31,7 @@
 	
 	<authentication-manager alias="authenticationManager">
 		<authentication-provider>
-			<password-encoder ref="passwordEncoder"></password-encoder>
+			<password-encoder ref="passwordEncoder" />
 			<jdbc-user-service data-source-ref="dataSource"		
 				users-by-username-query="select username, password, active from password_table where username=?"
 				authorities-by-username-query="select username, user_type from password_table where username=?" />	

@@ -5,6 +5,13 @@
 			<div class="navbar-header">
 				<a class="navbar-brand">All Companies</a>
 			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav navbar-right">
+					<li><form:form action="/MSDProject/logout" method="POST">
+							<button type="submit" name="edit" value="edit" class="edit">Logout</button>
+						</form:form></li>
+				</ul>
+			</div>
 		</div>
 	</nav>
 	<div class="company-list">
@@ -46,10 +53,11 @@
 							method="POST" class="button">
 							<button class="btn btn-primary">Show</button>
 						</form>
-						<form type="submit"
-							action="company/delete/${company.loginID}" method="POST" class="button">
+						<form type="submit" action="company/delete/${company.loginID}"
+							method="POST" class="button">
 							<button class="btn btn-danger">Delete</button>
-						</form></td>
+						</form>
+					</td>
 				</tr>
 			</c:forEach>
 		</table>

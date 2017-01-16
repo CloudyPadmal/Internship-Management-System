@@ -8,8 +8,11 @@
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav navbar-right">
-					<li><form:form action="view_requests" method="POST">
+				<li><form:form action="view_requests" method="POST">
 							<button type="submit" name="edit" value="edit" class="edit">Requests</button>
+						</form:form></li>
+						<li><form:form action="/MSDProject/logout" method="POST">
+							<button type="submit" name="edit" value="edit" class="edit">Logout</button>
 						</form:form></li>
 				</ul>
 			</div>

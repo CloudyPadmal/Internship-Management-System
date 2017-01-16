@@ -85,8 +85,7 @@ public class UserRegisterController implements Preferences {
 				redirectAttributes.addFlashAttribute("css", "success");
 				// Add applicant to the user table
 				poolApplicants.addApplicant(user);
-				// Display user details
-				return "redirect:/user/view/" + user.getIndexNumber();
+				return "redirect:/";
 			} else {
 				// Pass success message to redirect view
 				model.addAttribute("msg", "A user with the same index number exist!");

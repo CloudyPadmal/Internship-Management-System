@@ -5,7 +5,7 @@
 			<div class="navbar-header">
 				<c:choose>
 					<c:when test="${status}">
-						<a class="navbar-brand">New Vacancy for ${company}</a>
+						<a class="navbar-brand">New Vacancy for ${vacancyForm.companyName}</a>
 					</c:when>
 					<c:otherwise>
 						<a class="navbar-brand">Update</a>
@@ -32,6 +32,7 @@
 		<form:hidden path="open" />
 		<form:hidden path="applicant" />
 		<form:hidden path="companyID" />
+		<form:hidden path="companyName" />
 
 		<spring:bind path="title">
 			<div class="form-group ${status.error ? 'has-error' : ''}">

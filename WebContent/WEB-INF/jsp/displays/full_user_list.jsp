@@ -9,7 +9,9 @@
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="/MSDProject/admin/">Logout</a></li>
+					<li><form:form action="/MSDProject/logout" method="POST">
+							<button type="submit" name="edit" value="edit" class="edit">Logout</button>
+						</form:form></li>
 				</ul>
 			</div>
 		</div>

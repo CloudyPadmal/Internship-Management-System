@@ -18,7 +18,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.msd.items.Vacancy;
 import com.msd.pool.interfaces.Preferences;
-import com.msd.pool.items.PoolApplicants;
 import com.msd.pool.items.PoolCompanies;
 import com.msd.pool.items.PoolVacancies;
 import com.msd.pool.validators.PoolVacancyValidator;
@@ -27,14 +26,9 @@ import com.msd.pool.validators.PoolVacancyValidator;
 @RequestMapping("vacancy")
 public class VacancyController implements Preferences {
 
-	@Autowired
-	PoolVacancyValidator vacancyValidator;
-	@Autowired
-	PoolApplicants poolApplicants;
-	@Autowired
-	PoolVacancies poolVacancies;
-	@Autowired
-	PoolCompanies poolCompanies;
+	private @Autowired PoolVacancyValidator vacancyValidator;
+	private @Autowired PoolVacancies poolVacancies;
+	private @Autowired PoolCompanies poolCompanies;
 
 	/*****************************************************************************************
 	 * This method is the validator binder. It will bind the vacancy details
@@ -56,7 +50,7 @@ public class VacancyController implements Preferences {
 		// Pass the Vacancy as "vacancyForm"
 		model = generatePrefList(model);
 		// Create a vacancy with a company attached to it with status open
-		model.addAttribute("vacancyForm", new Vacancy(companyName, null, true));
+		model.addAttribute("vacancyForm", new Vacancy(companyName, poolCompanies.getCompanyName(companyName), null, true));
 		model.addAttribute("company", poolCompanies.getCompanyName(companyName));
 		// Notify that this is a new vacancy
 		model.addAttribute("status", true);
@@ -94,7 +88,6 @@ public class VacancyController implements Preferences {
 		Vacancy vacancy = poolVacancies.fetchVacancy(vacancyID);
 		// Add details under "vacancyForm"
 		model.addAttribute("vacancyForm", vacancy);
-		model.addAttribute("company", poolCompanies.getCompanyName(vacancy.getCompanyID()));
 		// Generate preference list
 		model = generatePrefList(model);
 		// Add update notations
@@ -113,7 +106,6 @@ public class VacancyController implements Preferences {
 			model = generatePrefList(model);
 			// Notify that this is a new vacancy
 			model.addAttribute("status", true);
-			model.addAttribute("company", poolCompanies.getCompanyName(vacancy.getCompanyID()));
 			return "logins/new_vacancy";
 		} else {
 			// Pass success message to redirect view
@@ -136,7 +128,6 @@ public class VacancyController implements Preferences {
 			Model model, RedirectAttributes redirectAttributes) {
 		if (result.hasErrors()) {
 			model = generatePrefList(model);
-			model.addAttribute("company", poolCompanies.getCompanyName(vacancy.getCompanyID()));
 			return "logins/new_vacancy";
 		} else {
 			// Pass success message to redirect view

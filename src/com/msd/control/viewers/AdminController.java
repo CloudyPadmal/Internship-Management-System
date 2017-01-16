@@ -2,7 +2,15 @@ package com.msd.control.viewers;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -27,16 +35,12 @@ import com.msd.pool.items.PoolVacancies;
 @RequestMapping("admin")
 public class AdminController {
 
-	@Autowired
-	PoolPasswords poolPW;
-	@Autowired
-	PoolApplicants poolApplicants;
-	@Autowired
-	PoolCompanies poolCompanies;
-	@Autowired
-	PoolVacancies poolVacancies;
-	@Autowired
-	PoolRequests poolRequests;
+	private @Autowired AuthenticationManager authenticationManager;
+	private @Autowired PoolPasswords poolPW;
+	private @Autowired PoolApplicants poolApplicants;
+	private @Autowired PoolCompanies poolCompanies;
+	private @Autowired PoolVacancies poolVacancies;
+	private @Autowired PoolRequests poolRequests;
 
 	/*****************************************************************************************
 	 * This method will generate the view for an administrative login
@@ -61,10 +65,17 @@ public class AdminController {
 	 ****************************************************************************************/
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String adminLogin(LoginInfo info, ModelMap model, RedirectAttributes redirects) {
-		if (poolPW.matchThisAndAdmin(info)) {
+		try {
+			// Makes the user active
+			poolPW.makeActive(info.getUsername());
+			// Get authentication details
+			Authentication request = new UsernamePasswordAuthenticationToken(info.getUsername(), info.getPassword());
+			// Authenticate. If it fails, will throw an exception
+			Authentication result = authenticationManager.authenticate(request);
+			SecurityContextHolder.getContext().setAuthentication(result);
 			return "logins/admin_home";
-		} else {
-			redirects.addFlashAttribute("msg", "Login Failed!");
+		} catch (AuthenticationException ex) {
+			redirects.addFlashAttribute("msg", "Do not try to login if you're not the administrator!");
 			redirects.addFlashAttribute("css", "danger");
 			return "redirect:/admin/";
 		}

@@ -26,11 +26,19 @@ public class Vacancy {
 		this.applicant = applicant;
 		this.open = open;
 	}
+	
+	public Vacancy(String companyID, String companyName, String applicant, boolean open) {
+		this.companyID = companyID;
+		this.companyName = companyName;
+		this.applicant = applicant;
+		this.open = open;
+	}
 
-	public Vacancy(String title, String companyID, int salary, String description_1,
+	public Vacancy(String title, String companyID, String companyName, int salary, String description_1,
 			String description_2) {
 		this.title = title;
 		this.companyID = companyID;
+		this.companyName = companyName;
 		this.salary = salary;
 		this.description_1 = description_1;
 		this.description_2 = description_2;

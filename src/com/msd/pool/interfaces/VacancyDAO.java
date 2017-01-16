@@ -56,5 +56,8 @@ public interface VacancyDAO {
 
 	// Mark a vacancy as awarded
 	public int markAwarded(int vacancyID);
+
+	// Get applicant related to the vacancy
+	public String getApplicant(int vacancyID);
 	
 }

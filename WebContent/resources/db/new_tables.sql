@@ -6,15 +6,6 @@ CREATE TABLE IF NOT EXISTS password_table (
 	PRIMARY KEY(username)
 );
 	
-CREATE TABLE IF NOT EXISTS admin_table (
-	id INT(5) NOT NULL AUTO_INCREMENT,
-	username VARCHAR(50) NOT NULL,
-	password VARCHAR(300) NOT NULL,
-	user_type VARCHAR(50) NOT NULL,
-	active BOOL,
-	PRIMARY KEY(id)
-);
-	
 CREATE TABLE IF NOT EXISTS user_table (
 	id INT(5) AUTO_INCREMENT,
 	name VARCHAR(50) NOT NULL,
@@ -72,6 +63,7 @@ CREATE TABLE IF NOT EXISTS company_table (
 CREATE TABLE IF NOT EXISTS vacancy_table (
 	id INT(5) AUTO_INCREMENT,
 	company VARCHAR(100) NOT NULL,
+	companyName VARCHAR(150),
 	salary INT(10),
 	title VARCHAR(100) NOT NULL,
 	description_1 VARCHAR(250) NOT NULL,
@@ -112,3 +104,5 @@ CREATE TABLE IF NOT EXISTS request_table (
 	currentGradedPoint DECIMAL(5, 4) NOT NULL,
 	PRIMARY KEY(request_id)
 );
+
+INSERT INTO password_table (username, password, user_type) VALUES ('admin', '$2a$10$UaVZQpLxjWR9W3CGFhdJOeXqdpxUdM24CyOv37U9wIYkqBgLl2Nea', 'ROLE_ADMIN'); 
