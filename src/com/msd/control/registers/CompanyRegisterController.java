@@ -23,12 +23,9 @@ import com.msd.pool.validators.PoolCompanyValidator;
 @RequestMapping("reg/company")
 public class CompanyRegisterController implements Preferences {
 
-	@Autowired
-	PoolCompanyValidator companyValidator;
-	@Autowired
-	PoolCompanies poolCompanies;
-	@Autowired
-	PoolPasswords poolPW;
+	private @Autowired PoolCompanyValidator companyValidator;
+	private @Autowired PoolCompanies poolCompanies;
+	private @Autowired PoolPasswords poolPW;
 
 	/*****************************************************************************************
 	 * This method is the validator binder. It will bind the company details

@@ -21,22 +21,16 @@ import com.msd.items.LoginInfo;
 import com.msd.pool.interfaces.Preferences;
 import com.msd.pool.items.PoolApplicants;
 import com.msd.pool.items.PoolPasswords;
-import com.msd.pool.items.PoolVacancies;
 import com.msd.pool.validators.PoolUserValidator;
 
 @Controller
 @RequestMapping("reg/user")
 public class UserRegisterController implements Preferences {
 
-	@Autowired
-	PoolUserValidator userValidator;
-	@Autowired
-	PoolApplicants poolApplicants;
-	@Autowired
-	PoolPasswords poolPW;
-	@Autowired
-	PoolVacancies poolVacancies;
-
+	private @Autowired PoolUserValidator userValidator;
+	private @Autowired PoolApplicants poolApplicants;
+	private @Autowired PoolPasswords poolPW;
+	
 	/*****************************************************************************************
 	 * This method is the validator binder. It will bind the user details
 	 * validator to the registration page when a update or a new register is

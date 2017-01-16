@@ -15,7 +15,7 @@
 				<h1>Project MSD</h1>
 				<p class="lead">Where companies meet students!!!</p>
 				<p>				
-					<form:form action="user_login"><button class="bigbutton positivebtn">User Login</button></form:form>
+					<form:form action="user_login"><button class="bigbutton positivebtn">Student Login</button></form:form>
 					<form:form action="company_login"><button class="bigbutton positivebtn">Company Login</button></form:form>
 				</p>
 			</div>

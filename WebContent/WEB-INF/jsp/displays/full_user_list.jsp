@@ -1,6 +1,4 @@
-<%@ page session="false"%>
 <%@ include file="/WEB-INF/jsp/head.jsp"%>
-<html>
 <body>
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container-fluid">
@@ -67,4 +65,3 @@
 		</table>
 	</div>
 </body>
-</html>
